@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "Agent-OnBoarding",
+    "slug": "Agent-OnBoarding",
+    "version": "1.2.0",
+    "orientation": "portrait",
+    "icon": "./assets/app-icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/LOGO2.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#00425F"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.interswitchug.AgentOnBoarding"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/app-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "com.interswitchug.AgentOnBoarding"
+    },
+    "web": {
+      "favicon": "./assets/app-icon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "238ca16f-11a2-4c64-af90-d4be8e57cd42"
+      }
+    }
+  }
+}
