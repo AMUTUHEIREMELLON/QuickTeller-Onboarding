@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import TopBar from '../../components/TopBar';
 import TextField from './../../components/TextField';
 import Button from '../../components/Button';
-import Radio from '../../components/Radio';
+// import Radio from '../../components/Radio';
 
 import * as validationSchema from '../../validation/ValidationSchemas';
 import Styles from '../../constants/Styles';
@@ -35,9 +35,9 @@ function CompanyInfo() {
             validateOnBlur={true}
             initialValues={{
               DirectorName: '',
-              CompanyRegistrationNumber: '',
+              UraTin: '',
               NumberOfOutlets: '',
-              CompanyWebsite: '',
+              // CompanyWebsite: '',
               IsLicensedBusiness: '',
             }}
             onSubmit={(values) => {
@@ -63,30 +63,35 @@ function CompanyInfo() {
                 <Field
                   component={TextField}
                   name="NumberOfOutlets"
-                  label="Number of Outlets"
+                  label="Number of Outlets *"
                   keyboardType="numeric"
                 />
 
                 <>
                   <Field
                     component={TextField}
-                    name="CompanyRegistrationNumber"
-                    label="Company Registration Number *"
+                    name="UraTin"
+                    label="URA TIN (optional) *"
                     keyboardType="numeric"
-                    maxLength={14}
+                    maxLength={15}
                   />
-                  <Field
+                  {/* <Field
                     component={TextField}
                     name="CompanyWebsite"
                     label="Company Website"
-                  />
+                  /> */}
                   <Field
+                    component={TextField}
+                    name="NatureOfBusiness"
+                    label="Nature Of Business"
+                  />
+                  {/* <Field
                     component={Radio}
                     data={licensed}
                     onValueChange={handleChange('IsLicensedBusiness')}
                     label="Licensed Business"
                     value={values.IsLicensedBusiness}
-                  />
+                  /> */}
                   {errors.IsLicensedBusiness && (
                     <Text style={Styles.errorText}>
                       {errors.IsLicensedBusiness}
