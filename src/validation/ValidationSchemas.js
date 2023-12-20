@@ -50,7 +50,7 @@ export const locationInfoValidationSchema = yup.object().shape({
   District: yup.string().required(Messages.requiredMessage),
   Village: yup.string().required(Messages.requiredMessage),
   LC: yup.string().required(Messages.requiredMessage),
-  WorkinginAreaSince: yup.number().required(Messages.requiredMessage),
+  NumberOfYearsWorkingInArea: yup.number().required(Messages.requiredMessage),
   TypeofShop: yup.string().required(Messages.requiredMessage),
   RuralUrban: yup.string().required(Messages.requiredMessage),
   ResidentinArea: yup.string().required(Messages.requiredMessage),
