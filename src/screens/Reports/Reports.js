@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, Pressable, StyleSheet  } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { TextInput } from 'react-native-paper';
 import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import { getBSPApplications } from '../../helpers/request';
 
 import Styles from '../../constants/Styles';
@@ -125,7 +124,8 @@ export default function Reports({ navigation }) {
                 setNewReq,
                 setPending,
                 setDeclined,
-                setApproved, userDetails
+                setApproved,
+                userDetails
               )
             }
             title="Load Reports"
@@ -141,7 +141,7 @@ export default function Reports({ navigation }) {
           {pending && (
             <ReportCard
               backgroundColor={Color.yellow}
-            status="Pending"
+              status="Pending"
               icon="account-clock"
               applications={pending}
             />
@@ -152,18 +152,27 @@ export default function Reports({ navigation }) {
               status="Approved"
               icon="account-check"
               applications={approved}
+              onPress={() => navigation.navigate('#')}
+
             />
           )}
           {declined && (
-            <ReportCard
-              backgroundColor={Color.lightCoral}
-              status="Declined"
-              icon="account-cancel"
-              applications={declined}
-            />
+            
+              <ReportCard
+                backgroundColor={Color.lightCoral}
+                status="Declined"
+                icon="account-cancel"
+                applications={declined}
+                onPress={() => navigation.navigate('#')}
+              />
+            
           )}
+
+        
         </ScrollView>
       </View>
     </View>
   );
 }
+
+

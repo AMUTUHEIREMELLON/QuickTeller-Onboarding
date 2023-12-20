@@ -1,13 +1,14 @@
 import React from "react";
-import { Text } from "react-native";
+import { Text, Pressable } from "react-native";
 import { Surface } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 import Styles from "../constants/Styles";
 
 export default function ReportCard(props) {
-  const { backgroundColor, icon, applications, status } = props;
+  const { backgroundColor, icon, applications, status, onPress } = props;
   return (
+  <Pressable onPress={onPress}> 
     <Surface
       style={{
         width: "100%",
@@ -26,5 +27,6 @@ export default function ReportCard(props) {
         {status} Applications
       </Text>
     </Surface>
+  </Pressable> 
   );
 }

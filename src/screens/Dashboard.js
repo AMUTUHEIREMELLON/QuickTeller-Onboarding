@@ -106,6 +106,19 @@ export default function Dashboard() {
                 onPress={() => navigation.navigate('CardOnBoarding')}
               />
               <DashboardMenu
+                title="Declined Requests"
+                icon="cancel"
+                color={Color.red}
+                onPress={() => {
+                  let TempUseSessionId = makeSessionID();
+                  navigation.navigate('ExistingAgent', {
+                    screen: 'AgentInfo',
+                    params: { TempUseSessionId },
+                  });
+                }}
+              />
+
+              <DashboardMenu
                 title="Logout"
                 color={Color.red}
                 icon="logout"
