@@ -105,13 +105,13 @@ function LocationInfo() {
               District: '',
               Village: '',
               LC: '',
-              WorkinginAreaSince: '',
+              NumberOfYearsWorkingInArea: '',
               TypeofShop: '',
               RuralUrban: '',
               ResidentinArea: '',
               Ownership: '',
-              PostalAddress: '',
-              StreetName: '',
+              // PostalAddress: '',
+              // StreetName: '',
               BuildingName: '',
             }}
             onSubmit={(values) => {
@@ -168,20 +168,20 @@ function LocationInfo() {
 
                 <Field
                   component={TextField}
-                  name="WorkinginAreaSince"
-                  label="Working in Area Since"
+                  name="NumberOfYearsWorkingInArea"
+                  label="Number of years working in area"
                   keyboardType="numeric"
                 />
-                <Field
+                {/* <Field
                   component={TextField}
                   name="PostalAddress"
                   label="Postal Address"
-                />
-                <Field
+                /> */}
+                {/* <Field
                   component={TextField}
                   name="StreetName"
                   label="Street Name"
-                />
+                /> */}
                 <Field
                   component={TextField}
                   name="BuildingName"
