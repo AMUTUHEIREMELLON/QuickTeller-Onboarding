@@ -4,13 +4,16 @@ import { Surface } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Text } from "@react-native-material/core";
 
-export default function DashboardMenu(props) {
-  const { onPress, style, icon, color, title } = props;
+export default function DeclinedCard(props) {
+  const { onPress, style, name, color, agentId, phone, reason } = props;
   return (
     <Pressable onPress={onPress} style={[{ width: "50%" }, style]}>
       <Surface elevation={5} style={styles.surfaceStyle}>
-        <Icon name={icon} color={color} size={40} />
-        <Text style={styles.textStyle}>{title}</Text>
+        <Text style={styles.textStyle}>{agentId}</Text>
+        <Text style={styles.textStyle}>{name}</Text>
+        <Text style={styles.textStyle}>{phone}</Text>
+        <Text style={styles.textStyle}>{reason}</Text>
+
       </Surface>
     </Pressable>
   );
@@ -26,7 +29,7 @@ const styles = StyleSheet.create({
     padding: "5%",
   },
   textStyle: {
-    textAlign: "center",
+    textAlign: "left",
     padding: 5,
     fontFamily: "AvertaRegular",
     fontSize: 14,

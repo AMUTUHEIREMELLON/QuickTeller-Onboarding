@@ -163,7 +163,7 @@ export default function Reports({ navigation }) {
                 status="Declined"
                 icon="account-cancel"
                 applications={declined}
-                onPress={() => navigation.navigate('#')}
+                onPress={() => navigation.navigate('DeclinedReq')}
               />
             
           )}
