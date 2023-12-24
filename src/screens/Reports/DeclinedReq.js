@@ -5,7 +5,7 @@ import TextField from '../../components/TextField';
 import Color from '../../constants/Colors';
 import Button from '../../components/Button';
 import Styles from '../../constants/Styles';
-import DeclinedCard from '../../components/DeclinedCard';
+import DeclinedCard from '../../components/declinedCard';
 
 export default function DeclinedReq() {
   return (
@@ -18,10 +18,10 @@ export default function DeclinedReq() {
         <ScrollView>
           <View>
           <DeclinedCard 
-            agentId= ''
-            name= ''
-            phone=''
-            reason= ''
+            agentId= 'melon'
+            name= '1288'
+            phone='0783636363'
+            reason= 'dodged office time to do her own things'
           
           />
           </View>

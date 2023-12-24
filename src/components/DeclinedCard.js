@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 15,
     margin: "5%",
-    padding: "5%",
+    padding: "15%",
   },
   textStyle: {
     textAlign: "left",
