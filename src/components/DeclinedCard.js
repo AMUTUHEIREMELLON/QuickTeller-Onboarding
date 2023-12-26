@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Pressable } from "react-native";
+import { StyleSheet, Pressable, View } from "react-native";
 import { Surface } from "react-native-paper";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Text } from "@react-native-material/core";
@@ -9,10 +9,12 @@ export default function DeclinedCard(props) {
   return (
     <Pressable onPress={onPress} style={[{ width: "50%" }, style]}>
       <Surface elevation={5} style={styles.surfaceStyle}>
+        <View style={styles.textBox}>
         <Text style={styles.textStyle}>{agentId}</Text>
         <Text style={styles.textStyle}>{name}</Text>
         <Text style={styles.textStyle}>{phone}</Text>
         <Text style={styles.textStyle}>{reason}</Text>
+        </View>
 
       </Surface>
     </Pressable>
@@ -21,7 +23,8 @@ export default function DeclinedCard(props) {
 
 const styles = StyleSheet.create({
   surfaceStyle: {
-    height: 110,
+    height: 150,
+    width: 390,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 15,
@@ -32,8 +35,13 @@ const styles = StyleSheet.create({
     textAlign: "left",
     padding: 5,
     fontFamily: "AvertaRegular",
-    fontSize: 14,
+    fontSize: 15,
   },
+
+  textBox:{
+    paddingTop: 10,
+    paddingBottom: 15,
+  }
 
 
 });
