@@ -10,28 +10,50 @@ import Styles from '../../constants/Styles';
 import DeclinedCard from '../../components/declinedCard';
 
 export default function DeclinedReq() {
+  const declinedData = [
+    {
+      id: 1344,
+      name: 'linda',
+      phone: '0987654577',
+      reason: 'too short',
+    },
+
+    {
+      id: 1644,
+      name: 'Mary',
+      phone: '0457654577',
+      reason: 'too tall',
+    },
+
+    {
+      id: 1994,
+      name: 'jon',
+      phone: '0457884577',
+      reason: 'too hideous',
+    },
+    
+  ];
+
+  console.log('hhh', declinedData);
 
   const navigation = useNavigation();
-  
+
   return (
-    <View 
-    style={Styles.mainContainer}
-    >
+    <View style={Styles.mainContainer}>
       <TopBar title="Declined Requests" onPress={() => navigation.goBack()} />
 
       <View>
         <ScrollView>
           <View>
-          <DeclinedCard 
-            agentId= 'melon'
-            name= '1288'
-            phone='0783636363'
-            reason= 'dodged office time to do her own things'
-            onPress='#'
-          
-          />
+            {declinedData?.map((decline) => (
+              <DeclinedCard key={decline.id} 
+              name={decline.name}
+              agentId={decline.id}  
+              phone={decline.phone}
+              reason={decline.reason}
+              />
+            ))}
           </View>
-          <DeclinedCard />
         </ScrollView>
       </View>
     </View>

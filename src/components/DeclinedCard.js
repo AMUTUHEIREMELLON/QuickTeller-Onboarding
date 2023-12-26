@@ -10,10 +10,10 @@ export default function DeclinedCard(props) {
     <Pressable onPress={onPress} style={[{ width: "50%" }, style]}>
       <Surface elevation={5} style={styles.surfaceStyle}>
         <View style={styles.textBox}>
-        <Text style={styles.textStyle}>{agentId}</Text>
-        <Text style={styles.textStyle}>{name}</Text>
-        <Text style={styles.textStyle}>{phone}</Text>
-        <Text style={styles.textStyle}>{reason}</Text>
+          <Text style={styles.textStyle}>{agentId}</Text>
+          <Text style={styles.textStyle}>{name}</Text>
+          <Text style={styles.textStyle}>{phone}</Text>
+          <Text style={styles.textStyle}>{reason}</Text>
         </View>
 
       </Surface>
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 15,
     margin: "5%",
-    padding: "15%",
+    padding: "10%",
   },
   textStyle: {
     textAlign: "left",
@@ -39,8 +39,9 @@ const styles = StyleSheet.create({
   },
 
   textBox:{
-    paddingTop: 10,
-    paddingBottom: 15,
+    paddingTop: 5,
+    paddingBottom: 10,
+    paddingRight: 250,
   }
 
 
