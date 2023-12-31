@@ -105,6 +105,7 @@ export default function Dashboard() {
                 icon="credit-card"
                 onPress={() => navigation.navigate('CardOnBoarding')}
               />
+
               <DashboardMenu
                 title="Logout"
                 color={Color.red}
