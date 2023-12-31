@@ -32,6 +32,8 @@ export default function Dashboard() {
     getUserDetails();
   }, []);
 
+  console.log("users details", userDetails)
+
   return (
     <>
       {userDetails && (
