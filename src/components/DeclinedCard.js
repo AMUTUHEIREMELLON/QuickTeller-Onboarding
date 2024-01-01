@@ -39,9 +39,11 @@ const styles = StyleSheet.create({
   },
 
   textBox:{
-    paddingTop: 5,
+    paddingTop: 20,
     paddingBottom: 10,
-    paddingRight: 250,
+    paddingRight: 10,
+    paddingLeft: 80,
+    width: 500
   }
 
 

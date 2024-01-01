@@ -62,6 +62,8 @@ export default function Reports({ navigation }) {
     setToText(moment(value).format('L'));
   };
 
+  
+
   return (
     <View style={Styles.mainContainer}>
       <TopBar title="Reports" onPress={() => navigation.goBack()} />
@@ -157,7 +159,6 @@ export default function Reports({ navigation }) {
             />
           )}
           {declined && (
-            
               <ReportCard
                 backgroundColor={Color.lightCoral}
                 status="Declined"
