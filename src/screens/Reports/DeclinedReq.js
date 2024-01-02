@@ -10,7 +10,28 @@ import Styles from '../../constants/Styles';
 import DeclinedCard from '../../components/declinedCard';
 import axios from 'axios';
 
-export default function DeclinedReq() {
+export default function DeclinedReq({ route }){
+  const { userId } = route.params;
+   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (userId) {
+      fetchData(userId);
+    }
+  }, [userId]);
+
+  // const fetchData = async (userId) => {
+  //   try {
+  //     const response = await axios.get(
+  //       `https://paypointt.azurewebsites.net/api/AgentApplic/GetBspApplications?userId=${userId}&dateRange=12/18/2023 - 12/18/2024`
+  //     );
+  //     console.log('response on declined data', response);
+  //     // Handle the response data as needed
+  //   } catch (error) {
+  //     console.error('Error fetching data:', error);
+  //   }
+  // };
   // const declinedData = [
   //   {
   //     id: 1344,
@@ -37,21 +58,21 @@ export default function DeclinedReq() {
 
   // console.log('hhh', declinedData);
 
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // const [data, setData] = useState(null);
+  // const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
-  const fetchData = async () => {
+  const fetchData = async (userId) => {
     try {
       const res = await axios.get(
-        'https://paypointt.azurewebsites.net/api/AgentApplic/GetBspApplications?userId=26434&dateRange=12/18/2023 - 12/18/2023'
-      );
-      console.log('response on declined data',res);
+    `https://paypointt.azurewebsites.net/api/AgentApplic/GetBspApplications?userId=${userId}&dateRange=12/18/2023 - 12/18/2023`
+        );
+      console.log('response on declined data',response.data);
 
-      setData(res.data.response);
+      setData(response.data);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -59,7 +80,7 @@ export default function DeclinedReq() {
     }
   };
 
-  console.log('declined data',data);
+  // console.log('declined data',data);
 
   const navigation = useNavigation();
 
@@ -71,8 +92,8 @@ export default function DeclinedReq() {
         <ScrollView>
           <View>
           
-            {data?.map((decline) => (
-              <DeclinedCard key={decline.id} 
+            {data.map((decline) => (
+              <DeclinedCard key={decline.AgentNumber} 
               name={decline.AgentName}
               agentId={decline.AgentId}  
               phone={decline.Phone}

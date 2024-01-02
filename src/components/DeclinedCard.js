@@ -5,7 +5,7 @@ import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Text } from "@react-native-material/core";
 
 export default function DeclinedCard(props) {
-  const { onPress, style, name, color, agentId, phone, reason } = props;
+  const { onPress, style, name, color, agentId, phone, reason, AgentNumber } = props;
   return (
     <Pressable onPress={onPress} style={[{ width: "50%" }, style]}>
       <Surface elevation={5} style={styles.surfaceStyle}>

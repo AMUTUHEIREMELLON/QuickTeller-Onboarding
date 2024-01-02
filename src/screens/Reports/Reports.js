@@ -12,6 +12,8 @@ import Color from './../../constants/Colors';
 import TopBar from '../../components/TopBar';
 import ReportCard from '../../components/ReportCard';
 import Button from '../../components/Button';
+import axios from 'axios';
+
 
 export default function Reports({ navigation }) {
   const [fromDate, setFromDate] = useState(new Date());
@@ -45,6 +47,16 @@ export default function Reports({ navigation }) {
       console.error(error);
     }
   };
+
+  const navigateToDeclinedReq = () => {
+    if (userDetails) {
+      navigation.navigate('DeclinedReq', { userId: userDetails.userId });
+    } else {
+      console.warn('User details not found.');
+    }
+  };
+
+  
 
   useEffect(() => {
     getUserDetails();
@@ -164,7 +176,7 @@ export default function Reports({ navigation }) {
                 status="Declined"
                 icon="account-cancel"
                 applications={declined}
-                onPress={() => navigation.navigate('DeclinedReq')}
+                onPress={navigateToDeclinedReq}
               />
             
           )}
