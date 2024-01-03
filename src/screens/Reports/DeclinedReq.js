@@ -7,7 +7,7 @@ import TextField from '../../components/TextField';
 import Color from '../../constants/Colors';
 import Button from '../../components/Button';
 import Styles from '../../constants/Styles';
-import DeclinedCard from '../../components/declinedCard';
+import DeclinedCard from '../../components/DeclinedCard';
 import axios from 'axios';
 
 export default function DeclinedReq({ route }){
