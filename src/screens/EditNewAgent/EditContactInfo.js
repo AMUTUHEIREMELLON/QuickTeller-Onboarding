@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react';
-import { View, ScrollView, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, ScrollView, Text, Platform } from 'react-native';
 import { Formik, Field } from 'formik';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { TextInput, Snackbar, ActivityIndicator } from 'react-native-paper';
-import { useDispatch, useSelector } from 'react-redux';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 
@@ -26,11 +25,11 @@ import {
   setSnackbarVisible,
   setDob,
 } from '../../redux/reducers/ninSlice';
+import axios from 'axios';
 
 function ContactInfo() {
   const [id, setId] = useState('');
-  const { agentName } = useSelector((store) => store.ninDataStore);
-  const { dob } = useSelector((store) => store.ninDataStore);
+  const { agentName, dob: existingDob, gender: existingGender } = useSelector((store) => store.ninDataStore);
   const { dateText } = useSelector((store) => store.ninDataStore);
   const { snackbarVisible } = useSelector((store) => store.ninDataStore);
   const { snackbarMessage } = useSelector((store) => store.ninDataStore);
@@ -86,9 +85,34 @@ function ContactInfo() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
+  const route = useRoute();
+  const agentId = route.params?.agentId; // Assuming you passed agentId as a parameter
+
   useEffect(() => {
     dispatch(clearNinDetails());
-  }, []);
+
+    if (agentId) {
+      // Fetch existing agent data based on the agentId
+      const fetchAgentData = async () => {
+        try {
+          const response = await axios.get(`your-api-endpoint/${agentId}`);
+          const agentData = response.data; // Adjust based on your API response structure
+
+          // Use the fetched data to populate the form fields
+          setId(agentData.id || ''); // Adjust accordingly
+          setText(moment(agentData.dob || existingDob).format('LL'));
+          setNoNinDob(agentData.dob || '');
+          setDate(new Date(agentData.dob || existingDob));
+          dispatch(setDob(agentData.dob || existingDob));
+          dispatch(fetchSmileData(smileData));
+        } catch (error) {
+          console.error('Error fetching agent data:', error);
+        }
+      };
+
+      fetchAgentData();
+    }
+  }, [agentId, dispatch]);
 
   return (
     <View style={[{ zIndex: 1 }, Styles.mainContainer]}>

@@ -7,7 +7,7 @@ import TextField from '../../components/TextField';
 import Color from '../../constants/Colors';
 import Button from '../../components/Button';
 import Styles from '../../constants/Styles';
-import DeclinedCard from '../../components/declinedCard';
+import DeclinedCard from '../../components/DeclinedCard';
 import axios from 'axios';
 
 export default function DeclinedReq() {
@@ -36,6 +36,13 @@ export default function DeclinedReq() {
   // ];
 
   // console.log('hhh', declinedData);
+
+   // Function to handle the auto-population of forms in EditNewAgent
+   const handleAutoPopulateForms = (agentId) => {
+    // Assuming you have a navigation function for EditNewAgent
+    navigation.navigate('EditAgentType', { agentId });
+  };
+
 
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -77,7 +84,8 @@ export default function DeclinedReq() {
               agentId={decline.AgentId}  
               phone={decline.Phone}
               reason={decline.Status}
-              // onPress={}
+              // add endpoint for auto populate forms in EditNewAgent when onPress is fired up
+              onPress={() => handleAutoPopulateForms(decline.AgentId)}
               />
             ))}
           </View>
