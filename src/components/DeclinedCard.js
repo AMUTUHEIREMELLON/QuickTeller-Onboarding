@@ -8,7 +8,7 @@ export default function DeclinedCard(props) {
   const { onPress, style, name, color, agentId, phone, reason } = props;
   return (
     <Pressable onPress={onPress} style={[{ width: "50%" }, style]}>
-      <Surface elevation={5} style={styles.surfaceStyle}>
+      <Surface elevation={1} style={styles.surfaceStyle}>
         <View style={styles.textBox}>
           <Text style={styles.textStyle}>{agentId}</Text>
           <Text style={styles.textStyle}>{name}</Text>
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     paddingRight: 10,
     paddingLeft: 80,
-    width: 500
+    width: 500,
   }
 
 

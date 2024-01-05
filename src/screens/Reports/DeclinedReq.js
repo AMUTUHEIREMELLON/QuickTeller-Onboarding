@@ -11,31 +11,7 @@ import DeclinedCard from '../../components/DeclinedCard';
 import axios from 'axios';
 
 export default function DeclinedReq() {
-  // const declinedData = [
-  //   {
-  //     id: 1344,
-  //     name: 'linda',
-  //     phone: '0987654577',
-  //     reason: 'too short',
-  //   },
 
-  //   {
-  //     id: 1644,
-  //     name: 'Mary',
-  //     phone: '0457654577',
-  //     reason: 'too tall',
-  //   },
-
-  //   {
-  //     id: 1994,
-  //     name: 'jon',
-  //     phone: '0457884577',
-  //     reason: 'too hideous',
-  //   },
-
-  // ];
-
-  // console.log('hhh', declinedData);
 
   const handleAutoPopulateForms = async (ApplicationId) => {
     try {
@@ -63,7 +39,7 @@ export default function DeclinedReq() {
   const fetchData = async () => {
     try {
       const res = await axios.get(
-        'https://paypointt.azurewebsites.net/api/AgentApplic/GetBspApplications?userId=26434&dateRange=12/18/2023 - 12/18/2023'
+        'https://paypointt.azurewebsites.net/api/AgentApplic/GetBspApplications?userId=26434&dateRange=12/18/2023 - 12/18/2024'
       );
       console.log('response on declined data', res);
 
@@ -92,7 +68,7 @@ export default function DeclinedReq() {
                 name={decline.AgentName}
                 agentId={decline.AgentId}
                 phone={decline.Phone}
-                reason={decline.Recruiter}
+                reason={decline.Status}
                 // add endpoint for auto populate forms in EditNewAgent when onPress is fired up
                 onPress={() => handleAutoPopulateForms(decline.ApplicationId)}
               />

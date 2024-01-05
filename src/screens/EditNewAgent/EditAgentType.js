@@ -30,8 +30,8 @@ export default function NewAccount() {
 
   return (
     <View style={Styles.mainContainer}>
-      <TopBar title="New Agent" onPress={() => navigation.goBack()} />
-      <Text style={Styles.h1}>General Info</Text>
+      <TopBar title="Agent Type" onPress={() => navigation.goBack()} />
+      <Text style={Styles.h1}>Edit General Info</Text>
 
       <View style={Styles.formContainer}>
         <ScrollView style={Styles.scrollviewStyle}>
