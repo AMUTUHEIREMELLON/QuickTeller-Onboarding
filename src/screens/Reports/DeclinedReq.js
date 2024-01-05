@@ -37,12 +37,21 @@ export default function DeclinedReq() {
 
   // console.log('hhh', declinedData);
 
-   // Function to handle the auto-population of forms in EditNewAgent
-   const handleAutoPopulateForms = (agentId) => {
-    // Assuming you have a navigation function for EditNewAgent
-    navigation.navigate('EditAgentType', { agentId });
+  const handleAutoPopulateForms = async (ApplicationId) => {
+    try {
+      // Make API call to fetch agent data
+      const response = await axios.get(`https://paypointt.azurewebsites.net/api/AgentApplic/GetBspApplicationById?Id=${ApplicationId}`);
+      
+      // Extract agent data from the response
+      const agentData = response.data;
+  
+      // Navigate to the 'EditAgentType' screen and pass the agent data as a parameter
+      navigation.navigate('EditAgentType', { ...agentData });
+    } catch (error) {
+      console.error('Error fetching agent data:', error);
+    }
   };
-
+  
 
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -56,7 +65,7 @@ export default function DeclinedReq() {
       const res = await axios.get(
         'https://paypointt.azurewebsites.net/api/AgentApplic/GetBspApplications?userId=26434&dateRange=12/18/2023 - 12/18/2023'
       );
-      console.log('response on declined data',res);
+      console.log('response on declined data', res);
 
       setData(res.data.response);
       setLoading(false);
@@ -66,7 +75,7 @@ export default function DeclinedReq() {
     }
   };
 
-  console.log('declined data',data);
+  console.log('declined data', data);
 
   const navigation = useNavigation();
 
@@ -77,15 +86,15 @@ export default function DeclinedReq() {
       <View>
         <ScrollView>
           <View>
-          
             {data?.map((decline) => (
-              <DeclinedCard key={decline.id} 
-              name={decline.AgentName}
-              agentId={decline.AgentId}  
-              phone={decline.Phone}
-              reason={decline.Status}
-              // add endpoint for auto populate forms in EditNewAgent when onPress is fired up
-              onPress={() => handleAutoPopulateForms(decline.AgentId)}
+              <DeclinedCard
+                key={decline.id}
+                name={decline.AgentName}
+                agentId={decline.AgentId}
+                phone={decline.Phone}
+                reason={decline.Recruiter}
+                // add endpoint for auto populate forms in EditNewAgent when onPress is fired up
+                onPress={() => handleAutoPopulateForms(decline.ApplicationId)}
               />
             ))}
           </View>

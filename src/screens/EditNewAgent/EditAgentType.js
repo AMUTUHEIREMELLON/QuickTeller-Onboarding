@@ -15,20 +15,22 @@ import { useDispatch } from 'react-redux';
 import { addNewAgentFormData } from '../../redux/reducers/formSlice';
 
 export default function NewAccount() {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const route = useRoute();
+
+  const agentData = route.params;
+  const terminalDateOfRegistration = agentData.response.StageLastUpdatedOn;
+  const terminalAgentName = agentData.response.AgentName
 
   const agentTypes = [
     { key: '1', value: 'Individual' },
     { key: '2', value: 'Business' },
   ];
-  
-  const dispatch = useDispatch();
-  const navigation = useNavigation();
-  const route = useRoute();
 
   return (
     <View style={Styles.mainContainer}>
-      <TopBar title="New Agent" onPress={() => 
-        navigation.goBack()} />
+      <TopBar title="New Agent" onPress={() => navigation.goBack()} />
       <Text style={Styles.h1}>General Info</Text>
 
       <View style={Styles.formContainer}>
@@ -37,30 +39,28 @@ export default function NewAccount() {
             enableReinitialize={true}
             validationSchema={validationSchema.agentInfoValidationSchema}
             initialValues={{
-              terminalDateOfRegistration: new Date().toISOString(),
+              terminalDateOfRegistration,
+              terminalAgentName,
             }}
-            onSubmit={(values) => {
-              let { TempUseSessionId } = route.params
-              console.log({ ...values, TempUseSessionId });
-              dispatch(addNewAgentFormData({ ...values, TempUseSessionId }))
-              navigation.navigate('ContactInfo');
+            onSubmit={() => {
+              let agentData = route.params;
+              console.info({ ...agentData });
+              console.log({ ...agentData.response });
+              console.log(agentData.response.ActivityStatus);
+              // dispatch(addNewAgentFormData({ ...values, ...agentData }))
+              navigation.navigate('EditContactInfo', { ...agentData });
             }}
           >
-            {({
-              handleSubmit,
-              errors,
-              values,
-              handleChange,
-              isValid,
-            }) => (
+            {({ handleSubmit, errors, values, handleChange, isValid }) => (
               <>
                 <Field
                   component={TextField}
                   name="terminalDateOfRegistration"
                   label="Date of Registration"
                   editable={false}
-                  value={moment().format('LL')}
+                  // value={moment().format('LL')}
                 />
+
 
                 <Field
                   component={Radio}

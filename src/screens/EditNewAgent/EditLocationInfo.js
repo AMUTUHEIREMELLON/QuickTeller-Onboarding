@@ -1,43 +1,41 @@
+import React from 'react';
 import { useState, useEffect } from 'react';
-import { Text, View, ScrollView } from 'react-native';
-import { useRoute, useNavigation } from '@react-navigation/native';
+
+import { View, Text, ScrollView } from 'react-native';
 import { Formik, Field } from 'formik';
-import * as Location from 'expo-location';
-import { useDispatch } from 'react-redux';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import moment from 'moment';
 
 import TopBar from '../../components/TopBar';
-import TextField from '../../components/TextField';
-import Select from '../../components/Select';
 import Button from '../../components/Button';
 import Radio from '../../components/Radio';
+import TextField from '../../components/TextField';
+import Select from '../../components/Select';
+import * as Location from 'expo-location';
 
-import * as validationSchema from '../../validation/ValidationSchemas';
 import Styles from '../../constants/Styles';
+import * as validationSchema from '../../validation/ValidationSchemas';
+import { useDispatch } from 'react-redux';
 import { addNewAgentFormData } from '../../redux/reducers/formSlice';
-import { getCounties, getDistricts, getRegions } from '../../helpers/request';
 
-function LocationInfo() {
-  const areas = [
-    { key: '1', value: 'Rural' },
-    { key: '2', value: 'Urban' },
-  ];
+export default function NewAccount() {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const route = useRoute();
 
-  const resident = [
-    { key: '1', value: 'Yes' },
-    { key: '2', value: 'No' },
-  ];
+  const agentData = route.params;
+  const terminalDistrict = agentData.response.District;
+  const terminalVillage = agentData.response.Village;
+  const terminalLC = agentData.response.LC;
+  const terminalSex = agentData.response.Sex;
+  const terminalPhysicalLocation = agentData.response.PhysicalLocation;
+  const terminalBuilding = agentData.response.Building;
+  const terminalAgentTin = agentData.response.TIN_No;
+  const terminalNatureofBusiness = agentData.response.NatureofBusiness;
 
-  const ownership = [
-    { key: '1', value: 'Owned' },
-    { key: '2', value: 'Rented' },
-  ];
-
-  const shops = [
-    { value: 'Ddukka', label: 'Ddukka' },
-    { value: 'Supermarket', label: 'Supermarket' },
-    { value: 'Kiosk', label: 'Kiosk' },
-    { value: 'Umbrella', label: 'Umbrella' },
-    { value: 'Others', label: 'Others' },
+  const agentTypes = [
+    { key: '1', value: 'Individual' },
+    { key: '2', value: 'Business' },
   ];
 
   const regionList = [
@@ -49,25 +47,10 @@ function LocationInfo() {
   ];
 
   const [location, setLocation] = useState('');
-  // const [regionList, setRegionList] = useState([]);
-  // const [districtList, setDistrictList] = useState([]);
-  // const [countyList, setCountyList] = useState([]);
-
-  // const [selectedRegion, setSelectedRegion] = useState('');
-  // const [selectedDistrict, setSelectedDistrict] = useState('');
 
   useEffect(() => {
-    // getRegions(setRegionList);
     getLocation();
   }, []);
-
-  // useEffect(() => {
-  //   getDistricts(selectedRegion, setDistrictList);
-  // }, [selectedRegion]);
-
-  // useEffect(() => {
-  //   getCounties(selectedDistrict, setCountyList);
-  // }, [selectedDistrict]);
 
   const getLocation = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
@@ -83,48 +66,42 @@ function LocationInfo() {
     setLocation(locCoord);
   };
 
-  const dispatch = useDispatch();
-  const route = useRoute();
-  const navigation = useNavigation();
-
   return (
     <View style={Styles.mainContainer}>
       <TopBar title="New Agent" onPress={() => navigation.goBack()} />
+      <Text style={Styles.h1}>Edit Location Info</Text>
+
       <View style={Styles.formContainer}>
-        <Text style={Styles.h1}>Location Info</Text>
         <ScrollView style={Styles.scrollviewStyle}>
           <Formik
             enableReinitialize={true}
-            validationSchema={validationSchema.locationInfoValidationSchema}
-            validateOnBlur={true}
-            validateOnMount={true}
+            validationSchema={validationSchema.agentInfoValidationSchema}
             initialValues={{
               GPS_Co_ordinates: location,
-              PhysicalLocation: '',
-              Region: '',
-              District: '',
-              Village: '',
-              LC: '',
-              WorkinginAreaSince: '',
-              TypeofShop: '',
-              RuralUrban: '',
-              ResidentinArea: '',
-              Ownership: '',
-              PostalAddress: '',
-              StreetName: '',
-              BuildingName: '',
+              terminalDistrict,
+              terminalVillage,
+              terminalLC,
+              terminalSex,
+              terminalPhysicalLocation,
+              terminalBuilding,
+              terminalAgentTin,
+              terminalNatureofBusiness,
             }}
-            onSubmit={(values) => {
-              dispatch(addNewAgentFormData(values));
-              navigation.navigate('Beneficiary');
+            onSubmit={() => {
+              let agentData = route.params;
+              console.info({ ...agentData });
+              console.log({ ...agentData.response });
+              console.log(agentData.response.ActivityStatus);
+              // dispatch(addNewAgentFormData({ ...values, ...agentData }))
+              navigation.navigate('', { ...agentData });
             }}
           >
             {({
               handleSubmit,
+              errors,
+              values,
               handleChange,
               handleBlur,
-              values,
-              errors,
               isValid,
             }) => (
               <>
@@ -137,25 +114,37 @@ function LocationInfo() {
                   selectedValue={values.Region}
                   onBlur={handleBlur('Region')}
                 />
-                {errors.Region && (
-                  <Text style={Styles.errorText}>{errors.Region}</Text>
-                )}
 
                 <Field
                   component={TextField}
-                  name="District"
-                  label="District *"
+                  name="terminalDistrict"
+                  label="District"
+                  editable={false}
+                  // value={moment().format('LL')}
                 />
 
-                <Field component={TextField} name="Village" label="Village *" />
-
-                <Field component={TextField} name="LC" label="LC1 *" />
+                <Field
+                  component={TextField}
+                  name="terminalVillage"
+                  label="Village"
+                  editable={true}
+                  // value={moment().format('LL')}
+                />
 
                 <Field
                   component={TextField}
-                  name="PhysicalLocation"
-                  label="Physical 
-                  Location *"
+                  name="terminalLC"
+                  label="LC1"
+                  editable={false}
+                  // value={moment().format('LL')}
+                />
+
+                <Field
+                  component={TextField}
+                  name="terminalPhysicalLocation"
+                  label="Physical Location"
+                  editable={false}
+                  // value={moment().format('LL')}
                 />
 
                 <Field
@@ -168,24 +157,10 @@ function LocationInfo() {
 
                 <Field
                   component={TextField}
-                  name="WorkinginAreaSince"
-                  label="Working in Area Since"
-                  keyboardType="numeric"
-                />
-                <Field
-                  component={TextField}
-                  name="PostalAddress"
-                  label="Postal Address"
-                />
-                <Field
-                  component={TextField}
-                  name="StreetName"
-                  label="Street Name"
-                />
-                <Field
-                  component={TextField}
-                  name="BuildingName"
-                  label="Building Name"
+                  name="terminalBuilding"
+                  label="Building"
+                  editable={false}
+                  // value={moment().format('LL')}
                 />
 
                 <Field
@@ -197,42 +172,34 @@ function LocationInfo() {
                   selectedValue={values.TypeofShop}
                   onBlur={handleBlur('TypeofShop')}
                 />
-                {errors.TypeofShop && (
-                  <Text style={Styles.errorText}>{errors.TypeofShop}</Text>
-                )}
 
                 <Field
-                  component={Radio}
-                  data={areas}
-                  onValueChange={handleChange('RuralUrban')}
-                  label="Area"
-                  value={values.RuralUrban}
+                  component={TextField}
+                  name="terminalAgentTin"
+                  label="Tin"
+                  editable={false}
+                  // value={moment().format('LL')}
                 />
-                {errors.RuralUrban && (
-                  <Text style={Styles.errorText}>{errors.RuralUrban}</Text>
-                )}
 
                 <Field
-                  component={Radio}
-                  data={resident}
-                  onValueChange={handleChange('ResidentinArea')}
-                  label="Resident in Area"
-                  value={values.ResidentinArea}
+                  component={TextField}
+                  name="terminalNatureofBusiness"
+                  label="Nature of Business"
+                  editable={true}
+                  // value={moment().format('LL')}
                 />
-                {errors.ResidentinArea && (
-                  <Text style={Styles.errorText}>{errors.ResidentinArea}</Text>
-                )}
 
-                <Field
+                {/* <Field
                   component={Radio}
-                  data={ownership}
-                  onValueChange={handleChange('Ownership')}
-                  label="Shop Ownership"
-                  value={values.Ownership}
+                  data={agentTypes}
+                  onValueChange={handleChange('agentType')}
+                  label="Agent Type"
+                  value={values.agentType}
+                  style={{ backgroundColor: 'red' }}
                 />
-                {errors.Ownership && (
-                  <Text style={Styles.errorText}>{errors.Ownership}</Text>
-                )}
+                {errors.agentType && (
+                  <Text style={Styles.errorText}>{errors.agentType}</Text>
+                )} */}
 
                 <Button
                   style={Styles.nextButtonStyle}
@@ -248,5 +215,3 @@ function LocationInfo() {
     </View>
   );
 }
-
-export default LocationInfo;

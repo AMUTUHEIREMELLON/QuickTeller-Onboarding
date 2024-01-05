@@ -1,317 +1,111 @@
-import React, { useEffect, useState } from 'react';
-import { View, ScrollView, Text, Platform } from 'react-native';
+import React from 'react';
+import { View, Text, ScrollView } from 'react-native';
 import { Formik, Field } from 'formik';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { TextInput, Snackbar, ActivityIndicator } from 'react-native-paper';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 
 import TopBar from '../../components/TopBar';
-import TextField from '../../components/TextField';
 import Button from '../../components/Button';
-import Select from '../../components/Select';
+import Radio from '../../components/Radio';
+import TextField from '../../components/TextField';
 
 import Styles from '../../constants/Styles';
-import Color from '../../constants/Colors';
-import Messages from '../../constants/Messages';
-
 import * as validationSchema from '../../validation/ValidationSchemas';
-import { makeSignature } from '../../helpers/makeSignature';
-
+import { useDispatch } from 'react-redux';
 import { addNewAgentFormData } from '../../redux/reducers/formSlice';
-import {
-  clearNinDetails,
-  fetchSmileData,
-  setSnackbarVisible,
-  setDob,
-} from '../../redux/reducers/ninSlice';
-import axios from 'axios';
 
-function ContactInfo() {
-  const [id, setId] = useState('');
-  const { agentName, dob: existingDob, gender: existingGender } = useSelector((store) => store.ninDataStore);
-  const { dateText } = useSelector((store) => store.ninDataStore);
-  const { snackbarVisible } = useSelector((store) => store.ninDataStore);
-  const { snackbarMessage } = useSelector((store) => store.ninDataStore);
-  const { gender } = useSelector((store) => store.ninDataStore);
-  const { isLoading } = useSelector((store) => store.ninDataStore);
-  const ninError = useSelector((store) => store.ninDataStore.error);
-
-  const signatureDetails = makeSignature();
-
-  const [date, setDate] = useState(new Date());
-  const [open, setOpen] = useState(false);
-  const [text, setText] = useState('');
-
-  const [noNinDob, setNoNinDob] = useState('');
-
-  const maxDate = moment().subtract(18, 'years');
-
-  const showDatePicker = () => {
-    setOpen(true);
-  };
-
-  const onDateSelected = (e, value) => {
-    setOpen(false);
-    console.log(value);
-    setNoNinDob(value);
-    setDate(value);
-    setText(moment(value).format('LL'));
-  };
-
-  const genders = [
-    { label: 'Male', value: '1' },
-    { label: 'Female', value: '2' },
-    { label: 'Not Applicable', value: '0' },
-  ];
-
-  const smileData = {
-    source_sdk: 'rest_api',
-    source_sdk_version: '1.0.0',
-    signature: signatureDetails.signature,
-    timestamp: signatureDetails.timestamp,
-    partner_params: {
-      user_id: 'INTS',
-      job_id: 'INT',
-      job_type: 5,
-    },
-    country: 'UG',
-    id_type: 'NATIONAL_ID_NO_PHOTO',
-    id_number: id,
-    partner_id: '2384',
-  };
-
-  const { agentType } = useSelector((store) => store.formDataStore.newAgent);
+export default function NewAccount() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-
   const route = useRoute();
-  const agentId = route.params?.agentId; // Assuming you passed agentId as a parameter
 
-  useEffect(() => {
-    dispatch(clearNinDetails());
+  const agentData = route.params;
+  const terminalAgentNin = agentData.response.AgentNin;
+  const terminalAgentName = agentData.response.AgentName;
+  const terminalDateOfBirth = agentData.response.DateOfBirth;
+  const terminalSex = agentData.response.Sex;
+  const terminalPhone = agentData.response.Phone;
+  const terminalEmail = agentData.response.Email;
+  const terminalAgentTin = agentData.response.TIN_No;
+  const terminalNatureofBusiness = agentData.response.NatureofBusiness;
 
-    if (agentId) {
-      // Fetch existing agent data based on the agentId
-      const fetchAgentData = async () => {
-        try {
-          const response = await axios.get(`your-api-endpoint/${agentId}`);
-          const agentData = response.data; // Adjust based on your API response structure
-
-          // Use the fetched data to populate the form fields
-          setId(agentData.id || ''); // Adjust accordingly
-          setText(moment(agentData.dob || existingDob).format('LL'));
-          setNoNinDob(agentData.dob || '');
-          setDate(new Date(agentData.dob || existingDob));
-          dispatch(setDob(agentData.dob || existingDob));
-          dispatch(fetchSmileData(smileData));
-        } catch (error) {
-          console.error('Error fetching agent data:', error);
-        }
-      };
-
-      fetchAgentData();
-    }
-  }, [agentId, dispatch]);
+  const agentTypes = [
+    { key: '1', value: 'Individual' },
+    { key: '2', value: 'Business' },
+  ];
 
   return (
-    <View style={[{ zIndex: 1 }, Styles.mainContainer]}>
-      <TopBar title="New Agent" onPress={() => navigation.goBack()} />
+    <View style={Styles.mainContainer}>
+      <TopBar title="Contact Info" onPress={() => navigation.goBack()} />
+      <Text style={Styles.h1}>Edit Contact Info</Text>
 
       <View style={Styles.formContainer}>
-        <Text style={Styles.h1}>Contact Info</Text>
         <ScrollView style={Styles.scrollviewStyle}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignContent: 'center',
-              justifyContent: 'space-evenly',
-            }}
-          >
-            <TextInput
-              selectionColor={Color.silverChalice}
-              mode="outlined"
-              label="Agent NIN"
-              value={id}
-              maxLength={14}
-              onChangeText={(id) => setId(id)}
-              activeOutlineColor={Color.darkBlue}
-              style={[Styles.textInput, { width: '50%' }]}
-            />
-            <Button
-              style={{
-                width: '45%',
-                alignItems: 'center',
-                alignSelf: 'center',
-                backgroundColor: Color.darkBlue,
-                borderRadius: 5,
-                padding: '5%',
-              }}
-              textStyle={{ fontSize: 13 }}
-              onPress={() => {
-                dispatch(fetchSmileData(smileData));
-              }}
-              title="Check NIN"
-            />
-          </View>
-
-          {isLoading && (
-            <ActivityIndicator
-              size="small"
-              color={Color.red}
-              animating={isLoading}
-            />
-          )}
-
           <Formik
             enableReinitialize={true}
-            validationSchema={validationSchema.contactInfoValidationSchema}
+            // validationSchema={validationSchema.contactInfoValidationSchema}
             initialValues={{
-              AgentName: agentName,
-              AgentNin: id,
-              DateOfBirth: '',
-              Email: '',
-              TIN_No: '',
-              Sex: gender,
-              NatureofBusiness: '',
+              terminalAgentNin,
+              terminalAgentName,
+              terminalDateOfBirth,
+              terminalSex,
+              terminalPhone,
+              terminalEmail,
+              terminalAgentTin,
+              terminalNatureofBusiness,
             }}
-            onSubmit={(values) => {
-              if (ninError === null) {
-                dispatch(
-                  addNewAgentFormData({
-                    ...values,
-                    DateOfBirth: dob,
-                    Sex: gender === 'M' ? 1 : 2,
-                    isNinValidated: true,
-                    NumberOfOutlets: agentType === 'Individual' ? 1 : undefined,
-                    DirectorName:
-                      agentType === 'Individual' ? values.AgentName : undefined,
-                  })
-                );
-              } else {
-                dispatch(
-                  addNewAgentFormData({
-                    ...values,
-                    DateOfBirth: new Date(noNinDob).toISOString(),
-                    isNinValidated: false,
-                    NumberOfOutlets: agentType === 'Individual' ? 1 : undefined,
-                    DirectorName:
-                      agentType === 'Individual' ? values.AgentName : undefined,
-                  })
-                );
-              }
-
-              navigation.navigate(
-                agentType === 'Individual' ? 'LocationInfo' : 'CompanyInfo'
-              );
+            onSubmit={() => {
+              let agentData = route.params;
+              console.info({ ...agentData });
+              console.log({ ...agentData.response });
+              console.log(agentData.response.ActivityStatus);
+              // dispatch(addNewAgentFormData({ ...values, ...agentData }))
+              navigation.navigate('EditAttach', { ...agentData });
             }}
           >
-            {({
-              handleSubmit,
-              handleBlur,
-              errors,
-              values,
-              handleChange,
-              isValid,
-            }) => (
+            {({ handleSubmit, errors, values, handleChange, isValid }) => (
               <>
                 <Field
                   component={TextField}
-                  name="AgentName"
-                  label="Agent Full Name *"
-                  editable={!ninError ? false : true}
-                />
-
-                {ninError && (
-                  <>
-                    <TextInput
-                      label="Date of Birth"
-                      name="DateOfBirth"
-                      value={text}
-                      onPressIn={showDatePicker}
-                      showSoftInputOnFocus={false}
-                      selectionColor={Color.silverChalice}
-                      mode="outlined"
-                      activeOutlineColor={Color.darkBlue}
-                      style={Styles.textInput}
-                    />
-                    {open && (
-                      <DateTimePicker
-                        value={date}
-                        maximumDate={new Date(maxDate)}
-                        mode={'date'}
-                        display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-                        onChange={onDateSelected}
-                      />
-                    )}
-                    {text === '' && (
-                      <Text style={Styles.errorText}>
-                        {Messages.requiredMessage}
-                      </Text>
-                    )}
-
-                    <Field
-                      component={Select}
-                      name="Sex"
-                      label="Gender *"
-                      data={genders}
-                      onValueChange={handleChange('Sex')}
-                      selectedValue={values.Sex}
-                      onBlur={handleBlur('Sex')}
-                    />
-                    {errors.Sex && (
-                      <Text style={Styles.errorText}>{errors.Sex}</Text>
-                    )}
-                  </>
-                )}
-
-                {!ninError && (
-                  <>
-                    <Field
-                      component={TextField}
-                      name="DateofBirth"
-                      label="Date of Birth"
-                      value={dateText}
-                      editable={ninError === null ? false : true}
-                    />
-
-                    <Field
-                      component={TextField}
-                      name="Sex"
-                      label="Gender"
-                      editable={ninError === null ? false : true}
-                    />
-                  </>
-                )}
-
-                <Field
-                  component={TextField}
-                  name="Phone"
-                  label="Phone Number (07-- --- ---) *"
-                  keyboardType="numeric"
-                  maxLength={10}
+                  name="terminalAgentNin"
+                  label="NIN"
+                  editable={false}
+                  // value={moment().format('LL')}
                 />
 
                 <Field
                   component={TextField}
-                  name="Email"
+                  name="terminalAgentName"
+                  label="Agent Name"
+                  editable={true}
+                  // value={moment().format('LL')}
+                />
+
+              
+                <Field
+                  component={TextField}
+                  name="terminalPhone"
+                  label="Phone"
+                  editable={false}
+                  // value={moment().format('LL')}
+                />
+
+                <Field
+                  component={TextField}
+                  name="terminalEmail"
                   label="Email"
-                  keyboardType="Email-address"
+                  editable={true}
+                  // value={moment().format('LL')}
                 />
 
                 <Field
                   component={TextField}
-                  name="TIN_No"
-                  label="Agent TIN"
-                  keyboardType="numeric"
-                  maxLength={10}
+                  name="terminalAgentTin"
+                  label="Tin"
+                  editable={true}
+                  // value={moment().format('LL')}
                 />
-
-                <Field
-                  component={TextField}
-                  name="NatureofBusiness"
-                  label="Nature of Business *"
-                />
+             
 
                 <Button
                   style={Styles.nextButtonStyle}
@@ -324,18 +118,6 @@ function ContactInfo() {
           </Formik>
         </ScrollView>
       </View>
-      <Snackbar
-        style={[Styles.snackbarStyle]}
-        action={{
-          label: 'Please fill in your details',
-        }}
-        visible={snackbarVisible}
-        onDismiss={() => dispatch(setSnackbarVisible(false))}
-      >
-        {snackbarMessage}
-      </Snackbar>
     </View>
   );
 }
-
-export default ContactInfo;
