@@ -11,6 +11,8 @@ import IssueNavigator from './IssueNavigator';
 import Reports from '../screens/Reports/Reports';
 import Welcome from '../screens/Login/Welcome';
 import CardOnBoarding from '../screens/Card/CardOnBoarding';
+import ReportsNavigator from './ReportsNavigator';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -33,7 +35,7 @@ function RootNavigation() {
 
       <Stack.Screen name="Issues" component={IssueNavigator} />
 
-      <Stack.Screen name="Reports" component={Reports} />
+      <Stack.Screen name="Reports" component={ReportsNavigator} />
 
     </Stack.Navigator>
   );
@@ -64,7 +66,7 @@ function RootNavigation() {
 
         <Stack.Screen name="Issues" component={IssueNavigator} />
 
-        <Stack.Screen name="Reports" component={Reports} />
+        <Stack.Screen name="Reports" component={ReportsNavigator} />
 
         <Stack.Screen name="CardOnBoarding" component={CardOnBoarding} />
       </>

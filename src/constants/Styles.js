@@ -77,6 +77,7 @@ export default {
   mainContainer: {
     marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     backgroundColor: 'white',
+    // height: '100%'
   },
   nextButtonStyle: {
     width: '55%',

@@ -31,4 +31,6 @@ const styles = StyleSheet.create({
     fontFamily: "AvertaRegular",
     fontSize: 14,
   },
+
+
 });

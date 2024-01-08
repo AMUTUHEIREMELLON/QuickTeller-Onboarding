@@ -32,6 +32,8 @@ export default function Dashboard() {
     getUserDetails();
   }, []);
 
+  console.log("users details", userDetails)
+
   return (
     <>
       {userDetails && (
@@ -105,6 +107,7 @@ export default function Dashboard() {
                 icon="credit-card"
                 onPress={() => navigation.navigate('CardOnBoarding')}
               />
+
               <DashboardMenu
                 title="Logout"
                 color={Color.red}

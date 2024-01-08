@@ -6,7 +6,7 @@ import * as Location from 'expo-location';
 import { useDispatch } from 'react-redux';
 
 import TopBar from '../../components/TopBar';
-import TextField from './../../components/TextField';
+import TextField from '../../components/TextField';
 import Select from '../../components/Select';
 import Button from '../../components/Button';
 import Radio from '../../components/Radio';
@@ -105,13 +105,13 @@ function LocationInfo() {
               District: '',
               Village: '',
               LC: '',
-              NumberOfYearsWorkingInArea: '',
+              WorkinginAreaSince: '',
               TypeofShop: '',
               RuralUrban: '',
               ResidentinArea: '',
               Ownership: '',
-              // PostalAddress: '',
-              // StreetName: '',
+              PostalAddress: '',
+              StreetName: '',
               BuildingName: '',
             }}
             onSubmit={(values) => {
@@ -168,20 +168,20 @@ function LocationInfo() {
 
                 <Field
                   component={TextField}
-                  name="NumberOfYearsWorkingInArea"
-                  label="Number of years working in area"
+                  name="WorkinginAreaSince"
+                  label="Working in Area Since"
                   keyboardType="numeric"
                 />
-                {/* <Field
+                <Field
                   component={TextField}
                   name="PostalAddress"
                   label="Postal Address"
-                /> */}
-                {/* <Field
+                />
+                <Field
                   component={TextField}
                   name="StreetName"
                   label="Street Name"
-                /> */}
+                />
                 <Field
                   component={TextField}
                   name="BuildingName"
