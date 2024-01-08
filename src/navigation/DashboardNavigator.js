@@ -11,7 +11,6 @@ import LocationInfo from '../screens/NewAgent/LocationInfo';
 import Terms from '../screens/NewAgent/Terms';
 import Attach from '../screens/NewAgent/Attach';
 
-import CustomHeader from '../components/CustomHeader';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,24 +23,10 @@ function DashboardNavigator(props) {
         options={{ headerTitle: 'Agent Type', headerLeft: () => null }}
       />
       <Stack.Screen
-    name="ContactInfo"
-    component={ContactInfo}
-    options={{
-      header: ({ scene, previous, navigation }) => (
-        <CustomHeader
-          title="Contact Info"
-          onPress={() => navigation.goBack()}
-        />
-      ),
-      headerLeft: () => null
-    }}
-/>
-
-      {/* <Stack.Screen
         name="ContactInfo"
         component={ContactInfo}
         options={{ headerTitle: 'Contact Info', headerLeft: () => null }}
-      /> */}
+      />
       <Stack.Screen
         name="CompanyInfo"
         component={CompanyInfo}
