@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { TextInput, Snackbar, ActivityIndicator } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import moment from 'moment';
+import moment from 'moment' ;
 
 import TopBar from '../../components/TopBar';
 import TextField from './../../components/TextField';
@@ -104,6 +104,8 @@ function ContactInfo() {
               justifyContent: 'space-evenly',
             }}
           >
+
+            
             <TextInput
               selectionColor={Color.silverChalice}
               mode="outlined"
@@ -147,9 +149,7 @@ function ContactInfo() {
               AgentNin: id,
               DateOfBirth: '',
               Email: '',
-              TIN_No: '',
               Sex: gender,
-              NatureofBusiness: '',
             }}
             onSubmit={(values) => {
               if (ninError === null) {
@@ -273,20 +273,6 @@ function ContactInfo() {
                   name="Email"
                   label="Email"
                   keyboardType="Email-address"
-                />
-
-                <Field
-                  component={TextField}
-                  name="TIN_No"
-                  label="Agent TIN"
-                  keyboardType="numeric"
-                  maxLength={10}
-                />
-
-                <Field
-                  component={TextField}
-                  name="NatureofBusiness"
-                  label="Nature of Business *"
                 />
 
                 <Button

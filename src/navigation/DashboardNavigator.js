@@ -11,6 +11,7 @@ import LocationInfo from '../screens/NewAgent/LocationInfo';
 import Terms from '../screens/NewAgent/Terms';
 import Attach from '../screens/NewAgent/Attach';
 
+
 const Stack = createNativeStackNavigator();
 
 function DashboardNavigator(props) {
