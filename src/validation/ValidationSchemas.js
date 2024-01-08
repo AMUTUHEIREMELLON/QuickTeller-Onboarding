@@ -21,13 +21,13 @@ export const contactInfoValidationSchema = yup.object().shape({
     // .matches(Regexp.phoneNumberRegexp, Messages.validMessage)
     .required(Messages.requiredMessage),
   Email: yup.string().email(Messages.validMessage),
-  TIN_No: yup
-    .string()
-    .matches(Regexp.tinRegexp, Messages.validMessage)
-    .required(Messages.requiredMessage),
+  // TIN_No: yup
+  //   .string()
+  //   .matches(Regexp.tinRegexp, Messages.validMessage)
+  //   .required(Messages.requiredMessage),
   Sex: yup.string().required(Messages.optionsMessage),
   // DateOfBirth: yup.date(Messages.validMessage),
-  NatureofBusiness: yup.string().required(Messages.requiredMessage),
+  // NatureofBusiness: yup.string().required(Messages.requiredMessage),
 });
 
 export const companyInfoValidationSchema = yup.object().shape({
