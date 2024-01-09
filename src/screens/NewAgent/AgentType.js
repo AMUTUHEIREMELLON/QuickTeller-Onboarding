@@ -8,11 +8,15 @@ import TopBar from '../../components/TopBar';
 import Button from '../../components/Button';
 import Radio from '../../components/Radio';
 import TextField from '../../components/TextField';
+// import Color from '../constants/Colors';
+
 
 import Styles from '../../constants/Styles';
 import * as validationSchema from '../../validation/ValidationSchemas';
 import { useDispatch } from 'react-redux';
 import { addNewAgentFormData } from '../../redux/reducers/formSlice';
+import PageHeader from '../../components/PageHeader';
+import DashboardMenu from '../../components/DashboardMenu';
 
 export default function NewAccount() {
 
@@ -27,9 +31,18 @@ export default function NewAccount() {
 
   return (
     <View style={Styles.mainContainer}>
-      <TopBar title="New Agent" onPress={() => 
-        navigation.goBack()} />
-      <Text style={Styles.h1}>General Info</Text>
+      {/* <TopBar title="New Agent" onPress={() => 
+        navigation.goBack()} /> */}
+        <PageHeader 
+          icon="account-multiple-plus"
+          title="Set up a new agent"
+          content='To set up a new agent, provide all relevant information necessary for the KYC below.'
+          onPress={() => 
+            navigation.goBack()}
+        />
+
+
+      {/* <Text style={Styles.h1}>General Info</Text> */}
 
       <View style={Styles.formContainer}>
         <ScrollView style={Styles.scrollviewStyle}>

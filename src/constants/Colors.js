@@ -16,7 +16,10 @@ const Colors = {
   midnightGreen: '#004857',
   green: "#008060",
   etonBlue: '#87C09B',
-  lightGreen: '#8cd9b3'
+  lightGreen: '#8cd9b3',
+  offwhite: '#FAF9F6',
+  newblue: '#307399'
+
 };
 
 export default Colors;
