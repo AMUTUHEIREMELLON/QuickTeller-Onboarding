@@ -14,10 +14,10 @@ export default function PageHeader(props) {
       <View style={styles.card}>
         <View>
           <TouchableOpacity onPress={onPress} style={styles.backButton}>
-            <Icon name="chevron-left" size={24} color="black" />
+            <Icon name="chevron-left" size={24} color="white" />
           </TouchableOpacity>
         <View style={styles.iconStyle} >
-          {<Icon  name={icon} color={color} size={40} />}
+          {<Icon  name={icon} color="white" size={40}/>}
         </View>
           {<Text style={styles.title}>{title}</Text>}
           {<Text style={styles.content}>{content}</Text>}
@@ -30,12 +30,13 @@ export default function PageHeader(props) {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 8,
+    backgroundColor: 'rgba(128, 128, 128, 0.7)',
+    opacity: 0.8,
+    borderRadius: 2,
     padding: 16,
-    margin: 5,
+    margin: 0,
     height: 180,
-    width: 400,
+    width: 412,
     marginBottom: 30,
     marginTop: 30,
     // shadowColor: '#000',
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
     // shadowOpacity: 0.3,
     // shadowRadius: 2,
     // elevation: 5,
-    borderWidth: 2,
+    borderWidth: 0,
     borderColor: '#E1E6ED',
     
   },
@@ -57,12 +58,16 @@ const styles = StyleSheet.create({
 
   title: {
     fontSize: 18,
+    color: 'white',
+
     fontWeight: 'bold',
     marginBottom: 8,
     textAlign: 'center',
   },
   content: {
     fontSize: 16,
+    color: 'white',
+
     textAlign: 'center',
   },
 
@@ -71,7 +76,7 @@ const styles = StyleSheet.create({
   },
 
   background: {
-    backgroundColor: 'grey'
+    backgroundColor: '#1d6e87'
   }
    
 

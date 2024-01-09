@@ -15,6 +15,7 @@ import Select from '../../components/Select';
 import Styles from '../../constants/Styles';
 import Color from '../../constants/Colors';
 import Messages from '../../constants/Messages';
+import PageHeader from '../../components/PageHeader';
 
 import * as validationSchema from '../../validation/ValidationSchemas';
 import { makeSignature } from '../../helpers/makeSignature';
@@ -93,10 +94,18 @@ function ContactInfo() {
   return (
     <View style={[{ zIndex: 1 }, Styles.mainContainer]}>
       <TopBar title="New Agent" onPress={() => navigation.goBack()} />
+      {/* <PageHeader 
+          icon="account-multiple-plus"
+          title="Set up a new agent"
+          content='To set up a new agent, provide all relevant information necessary for the KYC below.'
+          onPress={() => 
+            navigation.goBack()}
+        /> */}
 
       <View style={Styles.formContainer}>
         <Text style={Styles.h1}>Contact Info</Text>
         <ScrollView style={Styles.scrollviewStyle}>
+          
           <View
             style={{
               flexDirection: 'row',
