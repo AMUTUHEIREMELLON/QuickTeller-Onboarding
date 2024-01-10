@@ -66,6 +66,12 @@ export const beneficiaryValidationSchema = yup.object().shape({
     .matches(Regexp.phoneNumberRegexp, Messages.validMessage),
 });
 
+export const combinedValidationSchema = yup.object().shape({
+  // ... other fields from different parts of your form
+  Beneficiary: beneficiaryValidationSchema,
+  // ... other fields
+});
+
 export const termsValidationSchema = yup.object().shape({
   agreed: yup.string().required(Messages.requiredMessage),
   verified: yup.string().required(Messages.requiredMessage),
