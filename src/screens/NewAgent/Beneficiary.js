@@ -1,18 +1,63 @@
-import { View, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { View, ScrollView, ActivityIndicator } from 'react-native';
 import { Text } from '@react-native-material/core';
-import { Formik, Field } from 'formik';
-import { useRoute, useNavigation } from '@react-navigation/native';
+import { Formik, Field, useFormikContext } from 'formik';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
 
+// Import your components and styles
 import TopBar from '../../components/TopBar';
 import TextField from './../../components/TextField';
 import Select from '../../components/Select';
 import Button from '../../components/Button';
 
-import Styles from '../../constants/Styles';
-import { useDispatch } from 'react-redux';
+// Import your Redux action and styles
 import { addNewAgentFormData } from '../../redux/reducers/formSlice';
+// Replace with the actual path to your Styles file
+import Styles from '../../constants/Styles'; 
+const NINField = ({ name, label, keyboardType }) => {
+  const { setFieldValue, setFieldError } = useFormikContext();
 
-function Beneficiary() {
+  const handleNINChange = async (nin) => {
+    try {
+      setFieldValue(name, nin);
+
+      if (nin.length === 14) {
+        const response = await axios.post(
+          'https://kycidentity.azurewebsites.net/Identity/nin_verification',
+          {
+            Nin: nin,
+            RequestReference: Date.now().toString(),
+            ClientId: 'YourClientId',
+            PhoneNumber: '0779848197', // Replace with actual phone number or make it dynamic
+          }
+        );
+
+        const details = { name: response.data.name };
+        setFieldValue('NameofBeneficiary', details.name);
+      } else {
+        setFieldValue('NameofBeneficiary', '');
+      }
+    } catch (error) {
+      console.error('Error fetching NIN details:', error);
+      setFieldError('NIN', 'Error verifying NIN');
+    }
+  };
+
+  return (
+    <View>
+      <Field
+        component={TextField}
+        name={name}
+        label={label}
+        keyboardType={keyboardType}
+        onChangeText={handleNINChange}
+      />
+    </View>
+  );
+};
+
+function Beneficiary({ navigation }) {
   const relations = [
     { value: 'Mother', label: 'Mother' },
     { value: 'Father', label: 'Father' },
@@ -24,9 +69,7 @@ function Beneficiary() {
     { value: 'Other', label: 'Other' },
   ];
 
-  const dispatch = useDispatch()
-  const route = useRoute();
-  const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   return (
     <View style={Styles.mainContainer}>
@@ -36,22 +79,36 @@ function Beneficiary() {
         <ScrollView style={Styles.scrollviewStyle}>
           <Formik
             initialValues={{
+              NIN: '',
               NameofBeneficiary: '',
               Residence: '',
               BeneficiaryPhoneNumber: '',
               BRelationship: '',
             }}
             onSubmit={(values) => {
-              dispatch(addNewAgentFormData(values))
-              navigation.navigate('Attach')
+              dispatch(addNewAgentFormData(values));
+              navigation.navigate('Review', { data: values });
             }}
           >
             {({ handleSubmit, handleChange, handleBlur, values }) => (
               <>
+                <NINField
+                  name="NIN"
+                  label="National Identification Number (NIN)"
+                  value={values.NIN}
+                  maxLength={14}
+                  onChangeText={(nin) => {
+                    handleChange('NIN')(nin);
+                  }}
+                  style={[Styles.textInput, { width: '50%' }]}
+                />
+
                 <Field
                   component={TextField}
                   name="NameofBeneficiary"
                   label="Beneficiary/Next of Kin Full Name"
+                  value={values.NameofBeneficiary}
+                  editable={false}
                 />
 
                 <Field
