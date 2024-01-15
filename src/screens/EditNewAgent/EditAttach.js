@@ -74,7 +74,7 @@ function Attach() {
           <Button
             style={Styles.nextButtonStyle}
             onPress={() =>
-              navigation.navigate('Terms')
+              navigation.navigate('EditTerms')
             }
             title="Next"
           />

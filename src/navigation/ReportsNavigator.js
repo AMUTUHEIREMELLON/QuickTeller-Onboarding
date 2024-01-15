@@ -10,6 +10,7 @@ import EditContactInfo from '../screens/EditNewAgent/EditContactInfo';
 import EditLocationInfo from '../screens/EditNewAgent/EditLocationInfo';
 import EditCompanyInfo from '../screens/EditNewAgent/EditCompanyInfo';
 import EditAttach from '../screens/EditNewAgent/EditAttach';
+import EditTerms from '../screens/EditNewAgent/EditTerms';
 
 
 const Stack = createNativeStackNavigator();
@@ -57,6 +58,12 @@ function ReportsNavigator(props) {
         name="EditAttach"
         component={EditAttach}
         options={{ headerTitle: 'Attach' }}
+      />
+
+      <Stack.Screen
+        name="EditTerms"
+        component={EditTerms}
+        options={{ headerTitle: 'Terms' }}
       />
     </Stack.Navigator>
   );
