@@ -12,7 +12,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import ContactInfo from '../screens/NewAgent/ContactInfo';
 
-export default function ModalButton(props) {
+export default function DropButton(props) {
   const { onPress, style, icon, color, title, subtitle, form } = props;
 
   const [modalOpen, setModalOpen] = useState(false);

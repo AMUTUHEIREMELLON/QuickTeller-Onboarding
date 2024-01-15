@@ -10,6 +10,7 @@ import ContactInfo from '../screens/NewAgent/ContactInfo';
 import LocationInfo from '../screens/NewAgent/LocationInfo';
 import Terms from '../screens/NewAgent/Terms';
 import Attach from '../screens/NewAgent/Attach';
+import DropdownForms from '../screens/DropdownScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -22,6 +23,12 @@ function DashboardNavigator(props) {
         component={AgentType}
         options={{ headerTitle: 'Agent Type', headerLeft: () => null }}
       />
+      <Stack.Screen
+        name="AgentKyc"
+        component={DropdownForms}
+        options={{ headerTitle: 'Dropdown forms', headerLeft: () => null }}
+      />
+
       <Stack.Screen
         name="ContactInfo"
         component={ContactInfo}

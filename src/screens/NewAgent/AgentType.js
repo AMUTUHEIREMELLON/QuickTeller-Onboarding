@@ -56,7 +56,7 @@ export default function NewAccount() {
               let { TempUseSessionId } = route.params
               console.log({ ...values, TempUseSessionId });
               dispatch(addNewAgentFormData({ ...values, TempUseSessionId }))
-              navigation.navigate('ContactInfo');
+              navigation.navigate('AgentKyc');
             }}
           >
             {({
