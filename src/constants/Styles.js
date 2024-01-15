@@ -50,6 +50,7 @@ export default {
   },
   formContainer: {
     marginTop: '3%',
+    marginBottom: '3%',
     height: '90%',
   },
   h1: {

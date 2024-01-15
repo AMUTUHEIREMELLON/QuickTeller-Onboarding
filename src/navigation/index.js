@@ -12,6 +12,7 @@ import Reports from '../screens/Reports/Reports';
 import Welcome from '../screens/Login/Welcome';
 import CardOnBoarding from '../screens/Card/CardOnBoarding';
 import ReportsNavigator from './ReportsNavigator';
+import EditDashboardNavigator from './EditDashboardNavigator'
 
 
 const Stack = createNativeStackNavigator();
@@ -36,6 +37,8 @@ function RootNavigation() {
       <Stack.Screen name="Issues" component={IssueNavigator} />
 
       <Stack.Screen name="Reports" component={ReportsNavigator} />
+
+      <Stack.Screen name="EditNewAgent" component={EditDashboardNavigator} />
 
     </Stack.Navigator>
   );

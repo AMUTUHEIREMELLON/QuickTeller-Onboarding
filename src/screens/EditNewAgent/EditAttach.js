@@ -34,9 +34,9 @@ function Attach() {
 
   return (
     <View style={Styles.mainContainer}>
-      <TopBar title="New Agent" onPress={() => navigation.goBack()} />
+      <TopBar title="Attach Docs" onPress={() => navigation.goBack()} />
       <View style={Styles.formContainer}>
-        <Text style={Styles.h1}>Attach Documents</Text>
+        <Text style={Styles.h1}>Edit Attach Documents</Text>
         <ScrollView style={Styles.scrollviewStyle}>
           <Attachment
             attach="Outlet Photo *"
@@ -74,7 +74,7 @@ function Attach() {
           <Button
             style={Styles.nextButtonStyle}
             onPress={() =>
-              navigation.navigate('Terms')
+              navigation.navigate('EditTerms')
             }
             title="Next"
           />
