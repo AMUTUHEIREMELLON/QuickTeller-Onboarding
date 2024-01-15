@@ -5,7 +5,7 @@ import TopBar from '../../components/TopBar';
 import DeclinedCard from '../../components/DeclinedCard';
 import Styles from '../../constants/Styles';
 import DeclinedCard from '../../components/DeclinedCard';
-import axios from 'axios';
+// import axios from 'axios'
 
 export default function DeclinedReq() {
   // const declinedData = [
