@@ -13,7 +13,10 @@ import Styles from '../../constants/Styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNewAgentFormData } from '../../redux/reducers/formSlice';
 
-function CompanyInfo() {
+function CompanyInfo(props) {
+
+  const { onFormSubmit } = props;
+
   const licensed = [
     { key: '1', value: 'Yes' },
     { key: '2', value: 'No' },
@@ -24,7 +27,7 @@ function CompanyInfo() {
 
   return (
     <View style={Styles.mainContainer}>
-      <TopBar title="New Agent" onPress={() => navigation.goBack()} />
+      {/* <TopBar title="New Agent" onPress={() => navigation.goBack()} /> */}
 
       <View style={Styles.formContainer}>
         <Text style={Styles.h1}>Company Info</Text>
@@ -42,7 +45,9 @@ function CompanyInfo() {
             }}
             onSubmit={(values) => {
               dispatch(addNewAgentFormData(values))
-              navigation.navigate('LocationInfo');
+              navigation.navigate('AgentKyc');
+              onFormSubmit(); // Call the callback function from props
+
             }}
           >
             {({

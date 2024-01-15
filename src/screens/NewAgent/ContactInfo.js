@@ -28,7 +28,10 @@ import {
   setDob,
 } from '../../redux/reducers/ninSlice';
 
-function ContactInfo() {
+function ContactInfo(props) {
+  const { onFormSubmit } = props;
+
+
   const [id, setId] = useState('');
   const { agentName } = useSelector((store) => store.ninDataStore);
   const { dob } = useSelector((store) => store.ninDataStore);
@@ -93,7 +96,7 @@ function ContactInfo() {
 
   return (
     <View style={[{ zIndex: 1 }, Styles.mainContainer]}>
-      <TopBar title="New Agent" onPress={() => navigation.goBack()} />
+      {/* <TopBar title="New Agent" onPress={() => navigation.goBack()} /> */}
       {/* <PageHeader 
           icon="account-multiple-plus"
           title="Set up a new agent"
@@ -186,8 +189,11 @@ function ContactInfo() {
                 );
               }
 
+              onFormSubmit(); // Call the callback function from props
+
+
               navigation.navigate(
-                agentType === 'Individual' ? 'LocationInfo' : 'CompanyInfo'
+                agentType === 'Individual' ? 'AgentKyc' : 'CompanyInfo'
               );
             }}
           >

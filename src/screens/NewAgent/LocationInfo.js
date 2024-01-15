@@ -16,7 +16,9 @@ import Styles from '../../constants/Styles';
 import { addNewAgentFormData } from '../../redux/reducers/formSlice';
 import { getCounties, getDistricts, getRegions } from '../../helpers/request';
 
-function LocationInfo() {
+function LocationInfo(props) {
+  const { onFormSubmit } = props;
+
   const areas = [
     { key: '1', value: 'Rural' },
     { key: '2', value: 'Urban' },
@@ -89,7 +91,7 @@ function LocationInfo() {
 
   return (
     <View style={Styles.mainContainer}>
-      <TopBar title="New Agent" onPress={() => navigation.goBack()} />
+      {/* <TopBar title="New Agent" onPress={() => navigation.goBack()} /> */}
       <View style={Styles.formContainer}>
         <Text style={Styles.h1}>Location Info</Text>
         <ScrollView style={Styles.scrollviewStyle}>
@@ -116,7 +118,9 @@ function LocationInfo() {
             }}
             onSubmit={(values) => {
               dispatch(addNewAgentFormData(values));
-              navigation.navigate('Beneficiary');
+              navigation.navigate('AgentKyc');
+              onFormSubmit(); // Call the callback function from props
+
             }}
           >
             {({

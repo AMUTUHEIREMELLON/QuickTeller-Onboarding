@@ -12,7 +12,9 @@ import Styles from '../../constants/Styles';
 import { useDispatch } from 'react-redux';
 import { addNewAgentFormData } from '../../redux/reducers/formSlice';
 
-function Beneficiary() {
+function Beneficiary(props) {
+  const { onFormSubmit } = props;
+
   const relations = [
     { value: 'Mother', label: 'Mother' },
     { value: 'Father', label: 'Father' },
@@ -30,7 +32,7 @@ function Beneficiary() {
 
   return (
     <View style={Styles.mainContainer}>
-      <TopBar title="New Agent" onPress={() => navigation.goBack()} />
+      {/* <TopBar title="New Agent" onPress={() => navigation.goBack()} /> */}
       <View style={Styles.formContainer}>
         <Text style={Styles.h1}>Next of Kin / Beneficiary</Text>
         <ScrollView style={Styles.scrollviewStyle}>
@@ -43,7 +45,9 @@ function Beneficiary() {
             }}
             onSubmit={(values) => {
               dispatch(addNewAgentFormData(values))
-              navigation.navigate('Attach')
+              navigation.navigate('AgentKyc')
+              onFormSubmit(); // Call the callback function from props
+
             }}
           >
             {({ handleSubmit, handleChange, handleBlur, values }) => (
