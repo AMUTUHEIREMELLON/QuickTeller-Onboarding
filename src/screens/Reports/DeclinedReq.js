@@ -17,7 +17,7 @@ export default function DeclinedReq() {
   const fetchData = async () => {
     try {
       const res = await axios.get(
-        'https://paypointt.azurewebsites.net/api/AgentApplic/GetBspApplications?userId=26434&dateRange=12/18/2023 - 01/18/2024'
+        'https://paypointt.azurewebsites.net/api/AgentApplic/GetBspApplications?userId=26434&dateRange=12/18/2023 - 12/18/2024'
       );
       console.log('response on declined data', res);
   
@@ -46,7 +46,10 @@ export default function DeclinedReq() {
             agentId={decline.AgentId}  
             phone={decline.Phone}
             reason={decline.Status}
-            // onPress={}
+            onPress={() => 
+
+              navigation.navigate('EditAttach')
+            }
           />
         ))}
       </ScrollView>
