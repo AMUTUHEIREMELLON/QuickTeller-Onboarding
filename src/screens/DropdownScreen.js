@@ -41,7 +41,7 @@ export default function DropdownForms() {
 
             <DropButton
               title="Company Information"
-              subtitle="Tell us about the agent's company"
+              subtitle="About the agent's company"
               form={<CompanyInfo />}
               onOpenModal={() => setModalOpen(true)} // Pass setModalOpen as a prop
             />
@@ -54,7 +54,7 @@ export default function DropdownForms() {
 
             <DropButton
               title="Next of Kin"
-              subtitle="Apart from agent who can we contact"
+              subtitle="Beside agent who do we contact"
               form={<Beneficiary />}
             />
 

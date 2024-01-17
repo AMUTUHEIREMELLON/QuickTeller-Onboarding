@@ -92,11 +92,12 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   textContainer: {
+    flex: 1,
     marginLeft: 20,
   },
 
   arrowIcon: {
-    paddingLeft: 20,
+    // paddingLeft: 20,
   },
   modalClose: {
     marginTop: 20,
@@ -112,7 +113,7 @@ const styles = StyleSheet.create({
     paddingRight: 50,
     width: 380,
     height: 60,
-    marginBottom: 15,
+    marginBottom: 20,
     borderWidth: 2,
     borderColor: '#E1E6ED',
     backgroundColor: '#FFFF',
@@ -124,7 +125,8 @@ const styles = StyleSheet.create({
   rowContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingLeft: 40,
+    justifyContent: 'center',
+    paddingLeft: 20,
   },
 
   text: {
