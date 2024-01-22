@@ -154,7 +154,7 @@ export default function Reports({ navigation }) {
               status="Approved"
               icon="account-check"
               applications={approved}
-              onPress={() => navigation.navigate('#')}
+              onPress={() => navigation.navigate('ApprovedReq')}
 
             />
           )}

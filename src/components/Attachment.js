@@ -135,7 +135,7 @@ export default function Attachment(props) {
   return (
     <>
       <Card
-        elevation={4}
+        elevation={0}
         style={[Styles.cardStyle, { marginTop: '3%' }]}
         onPress={PickDocument}
       >
