@@ -5,6 +5,7 @@ import agentDataStore from './reducers/agentSlice'
 import ninDataStore from "./reducers/ninSlice"
 import smileIdentityStore from './reducers/smileIdentitySlice';
 import iciStore from './reducers/cardOnboardingSlice';
+import signatureSlice from './reducers/signSlice' 
 
 const rootReducer = combineReducers({ 
   authStore,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   agentDataStore,
   ninDataStore,
   smileIdentityStore,
-  iciStore
+  iciStore,
+  signatureSlice,
 });
 
 const store = configureStore({
