@@ -22,7 +22,7 @@ export default function ApprovedReq() {
       console.log('response on declined data', res);
   
       // Filter out only declined requests
-      const filteredData = res.data.response.filter(item => item.Status === 'Approved');
+      const filteredData = res.data.response.filter(item => item.Status === 'Approved by => mellon.a');
       setDeclinedData(filteredData);
   
       setLoading(false);
