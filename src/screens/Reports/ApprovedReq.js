@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, ActivityIndicator } from 'react-native';
 import TopBar from '../../components/TopBar';
 import DeclinedCard from '../../components/DeclinedCard';
 import Styles from '../../constants/Styles';
@@ -36,8 +36,15 @@ export default function ApprovedReq() {
 
   return (
     <View style={Styles.mainContainer}>
-      <TopBar title="Declined Requests" onPress={() => navigation.goBack()} />
+      <TopBar title="Approved Requests" onPress={() => navigation.goBack()} />
 
+      {loading ? (
+        // Loading indicator
+        <View style={Styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#e8ecef" />
+        </View>
+      ) : (
+        // Display the data when loading is complete
       <ScrollView>
         {declinedData.map((decline) => (
           <DeclinedCard
@@ -48,11 +55,12 @@ export default function ApprovedReq() {
             reason={decline.Status}
             onPress={() => 
 
-              navigation.navigate('EditAttach')
+              navigation.navigate('#')
             }
           />
         ))}
       </ScrollView>
+      )}
     </View>
   );
 }

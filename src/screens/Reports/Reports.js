@@ -138,6 +138,7 @@ export default function Reports({ navigation }) {
               status="New"
               icon="account-check"
               applications={newReq}
+              onPress={() => navigation.navigate('NewReq')}
             />
           )}
           {pending && (
@@ -146,6 +147,7 @@ export default function Reports({ navigation }) {
               status="Pending"
               icon="account-clock"
               applications={pending}
+              onPress={() => navigation.navigate('PendingReq')}
             />
           )}
           {approved && (

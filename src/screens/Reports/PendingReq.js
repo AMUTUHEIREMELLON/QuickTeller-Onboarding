@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, ScrollView, ActivityIndicator  } from 'react-native';
+import { View, ScrollView, ActivityIndicator } from 'react-native';
 import TopBar from '../../components/TopBar';
 import DeclinedCard from '../../components/DeclinedCard';
 import Styles from '../../constants/Styles';
 import axios from 'axios';
 
-export default function DeclinedReq() {
+export default function PendingReq() {
   const [loading, setLoading] = useState(true);
   const [declinedData, setDeclinedData] = useState([]);
 
@@ -22,7 +22,7 @@ export default function DeclinedReq() {
       console.log('response on declined data', res);
   
       // Filter out only declined requests
-      const filteredData = res.data.response.filter(item => item.Status === 'Declined Application');
+      const filteredData = res.data.response.filter(item => item.Status === 'Pending Approval');
       setDeclinedData(filteredData);
   
       setLoading(false);
@@ -36,7 +36,7 @@ export default function DeclinedReq() {
 
   return (
     <View style={Styles.mainContainer}>
-      <TopBar title="Declined Requests" onPress={() => navigation.goBack()} />
+      <TopBar title="Pending Requests" onPress={() => navigation.goBack()} />
 
       {loading ? (
         // Loading indicator
@@ -55,7 +55,7 @@ export default function DeclinedReq() {
             reason={decline.Status}
             onPress={() => 
 
-              navigation.navigate('EditAttach')
+              navigation.navigate('#')
             }
           />
         ))}

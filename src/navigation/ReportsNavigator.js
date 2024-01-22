@@ -5,6 +5,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Reports from '../screens/Reports/Reports';
 import DeclinedReq from '../screens/Reports/DeclinedReq';
 import ApprovedReq from '../screens/Reports/ApprovedReq';
+import PendingReq from '../screens/Reports/PendingReq';
+import NewReq from '../screens/Reports/NewReq';
 import EditDashboardNavigator from './EditDashboardNavigator';
 import EditAgentType from '../screens/EditNewAgent/EditAgentType';
 import EditContactInfo from '../screens/EditNewAgent/EditContactInfo';
@@ -22,6 +24,18 @@ function ReportsNavigator(props) {
         name="Declined"
         component={Reports}
         options={{ headerTitle: 'Declined' }}
+      />
+
+      <Stack.Screen
+        name="NewReq"
+        component={NewReq}
+        options={{ headerTitle: 'New Requests' }}
+      />
+
+      <Stack.Screen
+        name="PendingReq"
+        component={PendingReq}
+        options={{ headerTitle: 'Pending Requests' }}
       />
 
       <Stack.Screen
