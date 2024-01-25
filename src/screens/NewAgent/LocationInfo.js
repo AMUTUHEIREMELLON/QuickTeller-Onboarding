@@ -4,6 +4,8 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import { Formik, Field } from 'formik';
 import * as Location from 'expo-location';
 import { useDispatch } from 'react-redux';
+import DistrictsList from '../../components/DistrictsList';
+import Color from '../../constants/Colors';
 
 import TopBar from '../../components/TopBar';
 import TextField from './../../components/TextField';
@@ -18,6 +20,12 @@ import { getCounties, getDistricts, getRegions } from '../../helpers/request';
 
 function LocationInfo(props) {
   const { onFormSubmit } = props;
+
+  const [selectedDistrict, setSelectedDistrict] = useState(null);
+
+  const handleDistrictChange = (value) => {
+    setSelectedDistrict(value);
+  };
 
   const areas = [
     { key: '1', value: 'Rural' },
@@ -120,7 +128,6 @@ function LocationInfo(props) {
               dispatch(addNewAgentFormData(values));
               navigation.navigate('AgentKyc');
               onFormSubmit(); // Call the callback function from props
-
             }}
           >
             {({
@@ -144,12 +151,30 @@ function LocationInfo(props) {
                 {errors.Region && (
                   <Text style={Styles.errorText}>{errors.Region}</Text>
                 )}
+                <View
+                  elevation={4}
+                  mode="outlined"
+                  category="medium"
+                  style={{
+                    padding: 5,
+                    marginVertical: 5,
+                    backgroundColor: Color.lightCultured,
+                    borderBottomColor: 'red',
+                  }}
+                >
+                  <DistrictsList
+                    name="DistrictList"
+                    label="Select District *"
+                    selectedValue={selectedDistrict}
+                    onValueChange={handleDistrictChange}
+                  />
+                </View>
 
-                <Field
+                {/* <Field
                   component={TextField}
                   name="District"
                   label="District *"
-                />
+                /> */}
 
                 <Field component={TextField} name="Village" label="Village *" />
 
