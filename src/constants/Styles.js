@@ -49,7 +49,7 @@ export default {
     textAlign: 'center',
   },
   formContainer: {
-    marginTop: '3%',
+    marginTop: '1%',
     marginBottom: '3%',
     height: '90%',
   },
@@ -134,5 +134,16 @@ export default {
     alignSelf: 'center',
     backgroundColor: Color.midnightGreen,
     borderRadius: 15,
+  },
+
+  saveButton: {
+    width: '60%',
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginBottom: '7%',
+    marginTop: '5%',
+    backgroundColor: Color.darkBlue,
+    borderRadius: 15,
+    padding: '3%',
   },
 };

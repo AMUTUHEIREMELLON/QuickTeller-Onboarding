@@ -20,6 +20,8 @@ import DashboardMenu from '../../components/DashboardMenu';
 
 export default function NewAccount() {
 
+  
+
   const agentTypes = [
     { key: '1', value: 'Individual' },
     { key: '2', value: 'Business' },
@@ -86,6 +88,7 @@ export default function NewAccount() {
                 {errors.agentType && (
                   <Text style={Styles.errorText}>{errors.agentType}</Text>
                 )}
+
 
                 <Button
                   style={Styles.nextButtonStyle}
