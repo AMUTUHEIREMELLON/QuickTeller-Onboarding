@@ -78,8 +78,16 @@ export default {
   mainContainer: {
     marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     backgroundColor: 'white',
+    // height: 1800,
+  },
+
+  dropContainer: {
+    marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    backgroundColor: 'white',
     height: 1800,
   },
+
+
   nextButtonStyle: {
     width: '55%',
     alignItems: 'center',

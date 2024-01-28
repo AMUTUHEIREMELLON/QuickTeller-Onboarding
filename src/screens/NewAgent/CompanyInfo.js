@@ -26,7 +26,7 @@ function CompanyInfo(props) {
   const navigation = useNavigation();
 
   return (
-    <View style={Styles.mainContainer}>
+    <View style={Styles.dropContainer}>
       {/* <TopBar title="New Agent" onPress={() => navigation.goBack()} /> */}
 
       <View style={Styles.formContainer}>

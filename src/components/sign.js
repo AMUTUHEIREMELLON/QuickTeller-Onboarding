@@ -24,9 +24,9 @@ const SignatureCapture = ({ onSave }) => {
         onOK={handleConfirm}
         style={styles.signatureCanvas}
       />
-      <TouchableOpacity style={Styles.saveButton} onPress={handleSave}>
+      {/* <TouchableOpacity style={Styles.saveButton} onPress={handleSave}>
         <Text style={styles.saveButtonText}>Save Signature</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };

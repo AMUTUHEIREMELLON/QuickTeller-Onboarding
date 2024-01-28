@@ -95,7 +95,7 @@ function ContactInfo(props) {
   }, []);
 
   return (
-    <View style={[{ zIndex: 1 }, Styles.mainContainer]}>
+    <View style={[{ zIndex: 1 }, Styles.dropContainer]}>
       {/* <TopBar title="New Agent" onPress={() => navigation.goBack()} /> */}
       {/* <PageHeader 
           icon="account-multiple-plus"

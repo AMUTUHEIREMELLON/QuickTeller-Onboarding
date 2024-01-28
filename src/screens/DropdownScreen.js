@@ -21,7 +21,7 @@ export default function DropdownForms() {
 
   return (
     <ScrollView>
-      <View style={Styles.mainContainer}>
+      <View style={Styles.dropContainer}>
         {/* <TopBar title="New Agent" onPress={() => 
         navigation.goBack()} /> */}
         <PageHeader

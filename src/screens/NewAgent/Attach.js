@@ -35,7 +35,7 @@ function Attach(props) {
   }, []);
 
   return (
-    <View style={Styles.mainContainer}>
+    <View style={Styles.dropContainer}>
       {/* <TopBar title="New Agent" onPress={() => navigation.goBack()} /> */}
       <View style={Styles.formContainer}>
         <Text style={Styles.h1}>Attach Documents</Text>
