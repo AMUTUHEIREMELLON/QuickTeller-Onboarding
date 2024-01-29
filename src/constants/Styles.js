@@ -154,4 +154,13 @@ export default {
     borderRadius: 15,
     padding: '3%',
   },
+
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 300,
+    height: '100%',
+    backgroundColor: 'white',
+  },
 };

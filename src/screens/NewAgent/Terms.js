@@ -1,5 +1,10 @@
 import { Formik, Field } from 'formik';
-import { View, ScrollView, useWindowDimensions } from 'react-native';
+import {
+  View,
+  ScrollView,
+  useWindowDimensions,
+  StyleSheet,
+} from 'react-native';
 import { RadioButton } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { Text } from '@react-native-material/core';
@@ -7,6 +12,7 @@ import RenderHTML from 'react-native-render-html';
 import { useSelector, useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SignatureCapture from '../../components/sign';
+import ModalButton from '../../components/modal';
 
 import TopBar from '../../components/TopBar';
 import Button from '../../components/Button';
@@ -21,11 +27,14 @@ import { postApplication } from '../../helpers/request';
 import { clearNewAgentFormData } from '../../redux/reducers/formSlice';
 
 function Terms() {
+
+ 
+
+
   const handleSaveSignature = (signature) => {
     // Handle the captured signature (e.g., save to state, send to server)
     console.log('Captured Signature:', signature);
   };
-
 
   const agreedOption = [{ key: '1', value: 'Agreed' }];
   const verifiedOption = [{ key: '1', value: 'Verified' }];
@@ -34,19 +43,19 @@ function Terms() {
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const formData = useSelector(store => store.formDataStore.newAgent)
+  const formData = useSelector((store) => store.formDataStore.newAgent);
 
   const submitData = async (values) => {
     const savedUser = await AsyncStorage.getItem('loginResponse');
-    if(!savedUser) return;
+    if (!savedUser) return;
 
     const user = JSON.parse(savedUser);
 
     const finalFormData = { ...formData, ...values, ...user };
     await postApplication(finalFormData);
-    dispatch(clearNewAgentFormData())
+    dispatch(clearNewAgentFormData());
     navigation.navigate('Dashboard');
-  }
+  };
 
   return (
     <View style={Styles.mainContainer}>
@@ -137,13 +146,14 @@ function Terms() {
                     }}
                   /> */}
 
+                <ModalButton title="Sign Here" onSave={handleSaveSignature} />
+
                 <Button
                   style={Styles.nextButtonStyle}
                   onPress={handleSubmit}
                   title="Submit"
                   disabled={!isValid}
                 />
-                
               </>
             )}
           </Formik>
