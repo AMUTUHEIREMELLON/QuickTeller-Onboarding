@@ -17,9 +17,9 @@ function Attach(props) {
 
   const [userDetails, setUserDetails] = useState(null);
 
-  const formData = useSelector(store => store.formDataStore.newAgent)
+  const formData = useSelector((store) => store.formDataStore.newAgent);
   const newData = { ...formData, ...userDetails };
-  const { agentType } = useSelector((store) => store.formDataStore.newAgent)
+  const { agentType } = useSelector((store) => store.formDataStore.newAgent);
 
   const getUserDetails = async () => {
     try {
@@ -42,11 +42,13 @@ function Attach(props) {
         <ScrollView style={Styles.scrollviewStyle}>
           <Attachment
             attach="Outlet Photo *"
+            subtitle="Photo of building where premises are located. no more than 10MB"
             fileData={{ ...newData }}
             fileName="OutletPhoto"
           />
           <Attachment
             attach="Agent Photo *"
+            subtitle="Photo of the Agent. no more than 10MB"
             fileData={{ ...newData }}
             fileName="AgentPassportPhoto"
           />
@@ -55,30 +57,33 @@ function Attach(props) {
               attach="Trading License *"
               fileData={{ ...newData }}
               fileName="TradingLicence"
-            />)
-          }
+            />
+          )}
           <Attachment
             attach="Agent Signature *"
+            
             fileData={{ ...newData }}
             fileName="SignedAgreementForm"
           />
           <Attachment
             attach="National ID *"
+            subtitle="Photo of the national ID both back and forth. no more than 10MB"
             fileData={{ ...newData }}
             fileName="OperatorNationalId"
           />
           <Attachment
             attach="Bank/MM Statement *"
+            subtitle="Bank or mobile money statement, at least 4 months back."
             fileData={{ ...newData }}
             fileName="BankStatement"
           />
 
           <Button
             style={Styles.nextButtonStyle}
-            onPress={() => { 
+            onPress={() => {
               onFormSubmit(); // Call the callback function from props
 
-              navigation.navigate('Terms')
+              navigation.navigate('Terms');
             }}
             title="Next"
           />

@@ -112,7 +112,7 @@ function LocationInfo(props) {
               GPS_Co_ordinates: location,
               PhysicalLocation: '',
               Region: '',
-              District: '',
+              DistrictList: '',
               Village: '',
               LC: '',
               NumberOfYearsWorkingInArea: '',
@@ -151,24 +151,25 @@ function LocationInfo(props) {
                 {errors.Region && (
                   <Text style={Styles.errorText}>{errors.Region}</Text>
                 )}
-                <View
-                  elevation={4}
-                  mode="outlined"
-                  category="medium"
-                  style={{
-                    padding: 5,
-                    marginVertical: 5,
-                    backgroundColor: Color.lightCultured,
-                    borderBottomColor: 'red',
-                  }}
-                >
-                  <DistrictsList
+
+                <Field
+                  component={DistrictsList}
+                  name="DistrictList"
+                  label="Select District *"
+                  selectedValue={selectedDistrict}
+                  onValueChange={handleDistrictChange}
+                />
+
+                {errors.DistrictList && (
+                  <Text style={Styles.errorText}>{errors.DistrictList}</Text>
+                )}
+
+                {/* <DistrictsList
                     name="DistrictList"
                     label="Select District *"
                     selectedValue={selectedDistrict}
                     onValueChange={handleDistrictChange}
-                  />
-                </View>
+                  /> */}
 
                 {/* <Field
                   component={TextField}

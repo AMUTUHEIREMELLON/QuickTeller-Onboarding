@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { TextInput } from 'react-native-paper';
+import { TextInput, useTheme  } from 'react-native-paper';
 import { Text } from '@react-native-material/core';
 
 import Color from './../constants/Colors';
@@ -14,6 +14,7 @@ const TextField = (props) => {
   } = props;
 
   const hasError = errors[name];
+  const theme = useTheme();
 
   return (
     <>
@@ -22,6 +23,7 @@ const TextField = (props) => {
         mode="outlined"
         label={label}
         activeOutlineColor={Color.darkBlue}
+        outlineColor={ Color.blueMunsell}
         style={Styles.textInput}
         value={value}
         onChangeText={(text) => onChange(name)(text)}

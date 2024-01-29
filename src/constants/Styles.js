@@ -25,8 +25,13 @@ export default {
     fontFamily: 'AvertaBold',
     color: 'white',
   },
-  cardStyle: { borderColor: 'grey', borderRadius: 20 },
-  cardContentStyle: { backgroundColor: Color.cultured, borderRadius: 20 },
+  cardStyle: { borderColor: 'grey', borderRadius: 20,  },
+  cardContentStyle: {
+    backgroundColor: Color.cultured,
+    borderRadius: 10,
+    
+    
+  },
   container: {
     flex: 1,
     alignContent: 'center',
@@ -87,7 +92,6 @@ export default {
     height: 1800,
   },
 
-
   nextButtonStyle: {
     width: '55%',
     alignItems: 'center',
@@ -121,6 +125,8 @@ export default {
     marginVertical: '2%',
     fontFamily: 'AvertaRegular',
     fontSize: 14,
+    // borderWidth: 1, // Add borderWidth to apply border styling
+    // borderRadius: 4,
   },
   underline: {
     fontSize: 14,
@@ -135,6 +141,7 @@ export default {
     fontSize: 14,
     alignSelf: 'center',
     fontFamily: 'AvertaRegular',
+    
   },
   snackbarStyle: {
     width: '100%',
@@ -153,5 +160,9 @@ export default {
     backgroundColor: Color.darkBlue,
     borderRadius: 15,
     padding: '3%',
+  },
+  subtitleStyle: {
+    fontFamily: 'AvertaRegular',
+    
   },
 };

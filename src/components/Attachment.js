@@ -17,7 +17,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { baseUrl } from '../helpers/config';
 
 const createFormData = (doc, fileData, fileName) => {
-
   const Region = fileData.Region;
   const BranchName = fileData.BranchName;
   const AgentName = fileData.AgentName;
@@ -25,7 +24,7 @@ const createFormData = (doc, fileData, fileName) => {
   const InstCode = fileData.InstitutionCode;
   const UploadedBy = fileData.Recruiter;
   const UserId = fileData.UserId;
-  const InstName = fileData.InstName
+  const InstName = fileData.InstName;
 
   const data = new FormData();
   data.append(fileName, {
@@ -45,7 +44,7 @@ const createFormData = (doc, fileData, fileName) => {
 };
 
 export default function Attachment(props) {
-  const { attach, fileData, fileName } = props;
+  const { attach, fileData, fileName, subtitle } = props;
   const [attached, setAttached] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false);
@@ -53,13 +52,12 @@ export default function Attachment(props) {
 
   const uploadFile = async (result, formData) => {
     try {
-
       // const savedUser = await AsyncStorage.getItem('loginResponse');
       // if(!savedUser) return;
       // const user = JSON.parse(savedUser);
 
       // const payload = {...formData, ...user};
-      console.log("Attach request: ", formData);
+      console.log('Attach request: ', formData);
 
       if (result) {
         const res = await axios.post(
@@ -74,7 +72,7 @@ export default function Attachment(props) {
         );
         let resCode = res.data.code || res.data.Code;
         if (resCode === statusCode) {
-          console.log("Attach Response: ", res.data)
+          console.log('Attach Response: ', res.data);
           setUploadSuccess(true);
         } else {
           setUploadSuccess(false);
@@ -82,7 +80,6 @@ export default function Attachment(props) {
         }
       }
     } catch (error) {
-
       console.error(JSON.stringify(error));
       setUploadSuccess(false);
       alert(Messages.retryMessage);
@@ -100,10 +97,10 @@ export default function Attachment(props) {
       setAttached(true);
 
       const savedUser = await AsyncStorage.getItem('loginResponse');
-      if(!savedUser) return;
+      if (!savedUser) return;
       const user = JSON.parse(savedUser);
 
-      const docData = {...fileData, user};
+      const docData = { ...fileData, user };
 
       const formData = createFormData(result, docData, fileName);
       console.log(formData);
@@ -145,6 +142,8 @@ export default function Attachment(props) {
               alignItems: 'center',
               flexDirection: 'row',
               height: 60,
+              marginRight: 90,
+              // height:150
             }}
           >
             <Surface
@@ -156,8 +155,8 @@ export default function Attachment(props) {
                 <ActivityIndicator size="large" color={Colors.lightBlue} />
               ) : (
                 <Icon
-                  name={attached && uploadSuccess ? 'check' : 'camera'}
-                  size={40}
+                  name={attached && uploadSuccess ? 'check' : 'upload'}
+                  size={30}
                   color={Colors.lightBlue}
                 />
               )}
@@ -167,10 +166,12 @@ export default function Attachment(props) {
               style={[
                 Styles.viewStyle,
                 Styles.avertaBold,
-                { marginHorizontal: '2%' },
+                { marginHorizontal: '2%', textAlign: 'justify'},
               ]}
             >
               {attach}
+              {'\n'}
+              <Text style={Styles.subtitleStyle}>{subtitle}</Text>
             </Text>
           </View>
         </Card.Content>
