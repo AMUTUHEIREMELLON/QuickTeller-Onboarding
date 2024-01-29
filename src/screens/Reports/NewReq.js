@@ -41,7 +41,7 @@ export default function NewReq() {
       {loading ? (
         // Loading indicator
         <View style={Styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#e8ecef" />
+          <ActivityIndicator size="large" color="#00425f" />
         </View>
       ) : (
         // Display the data when loading is complete

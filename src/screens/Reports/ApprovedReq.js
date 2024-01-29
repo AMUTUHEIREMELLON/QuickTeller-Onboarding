@@ -20,11 +20,13 @@ export default function ApprovedReq() {
         'https://paypointt.azurewebsites.net/api/AgentApplic/GetBspApplications?userId=26434&dateRange=12/18/2023 - 12/18/2024'
       );
       console.log('response on declined data', res);
-  
+
       // Filter out only declined requests
-      const filteredData = res.data.response.filter(item => item.Status === 'Approved by => mellon.a');
+      const filteredData = res.data.response.filter(
+        (item) => item.Status === 'Approved by => mellon.a'
+      );
       setDeclinedData(filteredData);
-  
+
       setLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -40,26 +42,25 @@ export default function ApprovedReq() {
 
       {loading ? (
         // Loading indicator
-        <View style={Styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#e8ecef" />
+        <View>
+          <View style={Styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#00425f" />
+          </View>
         </View>
       ) : (
         // Display the data when loading is complete
-      <ScrollView>
-        {declinedData.map((decline) => (
-          <DeclinedCard
-            key={decline.id} 
-            name={decline.AgentName}
-            agentId={decline.AgentId}  
-            phone={decline.Phone}
-            reason={decline.Status}
-            onPress={() => 
-
-              navigation.navigate('#')
-            }
-          />
-        ))}
-      </ScrollView>
+        <ScrollView>
+          {declinedData.map((decline) => (
+            <DeclinedCard
+              key={decline.id}
+              name={decline.AgentName}
+              agentId={decline.AgentId}
+              phone={decline.Phone}
+              reason={decline.Status}
+              onPress={() => navigation.navigate('#')}
+            />
+          ))}
+        </ScrollView>
       )}
     </View>
   );
