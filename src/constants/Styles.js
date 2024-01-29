@@ -165,4 +165,13 @@ export default {
     fontFamily: 'AvertaRegular',
     
   },
+
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 300,
+    height: '100%',
+    backgroundColor: 'white',
+  },
 };
