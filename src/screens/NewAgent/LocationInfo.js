@@ -58,6 +58,102 @@ function LocationInfo(props) {
     { value: 'Southern', label: 'Southern' },
   ];
 
+  const Districts = [
+    // Central Region
+    { value: 'BU', label: 'Buikwe' },
+    { value: 'BM', label: 'Bukomansimbi' },
+    { value: 'BT', label: 'Butambala' },
+    { value: 'BV', label: 'Buvuma' },
+    { value: 'GO', label: 'Gomba' },
+    { value: 'KA', label: 'Kalangala' },
+    { value: 'KG', label: 'Kalungu' },
+    { value: 'KJ', label: 'Kampala' },
+    { value: 'KD', label: 'Kasanda' },
+    { value: 'KY', label: 'Kayunga' },
+    { value: 'KB', label: 'Kiboga' },
+    { value: 'KW', label: 'Kyankwanzi' },
+    { value: 'KT', label: 'Kyotera' },
+    { value: 'LE', label: 'Luweero' },
+    { value: 'LW', label: 'Lwengo' },
+    { value: 'LT', label: 'Lyantonde' },
+    { value: 'MK', label: 'Masaka' },
+    { value: 'MT', label: 'Mityana' },
+    { value: 'MP', label: 'Mpigi' },
+    { value: 'MB', label: 'Mubende' },
+    { value: 'MU', label: 'Mukono' },
+    { value: 'NK', label: 'Nakaseke' },
+    { value: 'NS', label: 'Nakasongola' },
+    { value: 'RK', label: 'Rakai' },
+    { value: 'SB', label: 'Sembabule' },
+    { value: 'WK', label: 'Wakiso' },
+
+    // Eastern Region
+    { value: 'BU', label: 'Bukedea' },
+    { value: 'BU', label: 'Bukwo' },
+    { value: 'BU', label: 'Bulambuli' },
+    { value: 'BU', label: 'Busia' },
+    { value: 'BU', label: 'Butaleja' },
+    { value: 'KA', label: 'Kaberamaido' },
+    { value: 'KA', label: 'Kaliro' },
+    { value: 'KB', label: 'Kibuku' },
+    { value: 'KI', label: 'Kumi' },
+    { value: 'ML', label: 'Manafwa' },
+    { value: 'NA', label: 'Namayingo' },
+    { value: 'NG', label: 'Ngora' },
+    { value: 'SER', label: 'Serere' },
+    { value: 'SOR', label: 'Soroti' },
+    { value: 'TOR', label: 'Tororo' },
+
+    // Northern Region
+    { value: 'AMU', label: 'Amudat' },
+    { value: 'ARU', label: 'Arua' },
+    { value: 'DOK', label: 'Dokolo' },
+    { value: 'GUL', label: 'Gulu' },
+    { value: 'KAB', label: 'Kaberamaido' },
+    { value: 'KOT', label: 'Kotido' },
+    { value: 'LAM', label: 'Lamwo' },
+    { value: 'LIR', label: 'Lira' },
+    { value: 'MOY', label: 'Moyo' },
+    { value: 'NAB', label: 'Nabilatuk' },
+    { value: 'NAK', label: 'Nakapiripirit' },
+    { value: 'NAP', label: 'Napak' },
+    { value: 'NEB', label: 'Nebbi' },
+    { value: 'NWO', label: 'Nwoya' },
+    { value: 'OBO', label: 'Obongi' },
+    { value: 'OMO', label: 'Omoro' },
+    { value: 'OTU', label: 'Otuke' },
+    { value: 'OYA', label: 'Oyam' },
+    { value: 'PAD', label: 'Pader' },
+    { value: 'PAK', label: 'Pakwach' },
+    { value: 'TER', label: 'Terego' },
+    { value: 'YUM', label: 'Yumbe' },
+    { value: 'ZOM', label: 'Zombo' },
+
+    // Western Region
+    { value: 'HOI', label: 'Hoima' },
+    { value: 'IBA', label: 'Ibanda' },
+    { value: 'ISE', label: 'Isingiro' },
+    { value: 'KAB', label: 'Kabale' },
+    { value: 'KAM', label: 'Kamwenge' },
+    { value: 'KAN', label: 'Kanungu' },
+    { value: 'KAS', label: 'Kasese' },
+    { value: 'KIR', label: 'Kiruhura' },
+    { value: 'KIS', label: 'Kisoro' },
+    { value: 'KYE', label: 'Kyegegwa' },
+    { value: 'KYO', label: 'Kyankwanzi' },
+    { value: 'KYU', label: 'Kyenjojo' },
+    { value: 'MAS', label: 'Masindi' },
+    { value: 'MBR', label: 'Mbarara' },
+    { value: 'MIT', label: 'Mitooma' },
+    { value: 'NKS', label: 'Nakaseke' },
+    { value: 'NKL', label: 'Nakasongola' },
+    { value: 'NTU', label: 'Ntungamo' },
+    { value: 'RUB', label: 'Rubanda' },
+    { value: 'RUK', label: 'Rukiga' },
+    { value: 'RUM', label: 'Rukungiri' },
+    { value: 'SHE', label: 'Sheema' },
+  ];
+
   const [location, setLocation] = useState('');
   // const [regionList, setRegionList] = useState([]);
   // const [districtList, setDistrictList] = useState([]);
@@ -113,6 +209,7 @@ function LocationInfo(props) {
               PhysicalLocation: '',
               Region: '',
               DistrictList: '',
+              DistrictLists: '',
               Village: '',
               LC: '',
               NumberOfYearsWorkingInArea: '',
@@ -153,29 +250,19 @@ function LocationInfo(props) {
                 )}
 
                 <Field
-                  component={DistrictsList}
-                  name="DistrictList"
+                  component={Select}
+                  name="DistrictLists"
                   label="Select District *"
-                  selectedValue={selectedDistrict}
-                  onValueChange={handleDistrictChange}
+                  data={Districts}
+                  onValueChange={handleChange('DistrictLists')}
+                  selectedValue={values.DistrictLists}
+                  onBlur={handleBlur('DistrictLists')}
                 />
-
-                {errors.DistrictList && (
-                  <Text style={Styles.errorText}>{errors.DistrictList}</Text>
+                {errors.DistrictLists && (
+                  <Text style={Styles.errorText}>{errors.DistrictLists}</Text>
                 )}
 
-                {/* <DistrictsList
-                    name="DistrictList"
-                    label="Select District *"
-                    selectedValue={selectedDistrict}
-                    onValueChange={handleDistrictChange}
-                  /> */}
-
-                {/* <Field
-                  component={TextField}
-                  name="District"
-                  label="District *"
-                /> */}
+                
 
                 <Field component={TextField} name="Village" label="Village *" />
 
