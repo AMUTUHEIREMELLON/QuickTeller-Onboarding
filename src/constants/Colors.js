@@ -14,12 +14,14 @@ const Colors = {
   prussianBlue: '#003247',
   lightCoral: '#F79A97',
   midnightGreen: '#004857',
-  green: "#008060",
+  green: '#008060',
   etonBlue: '#87C09B',
   lightGreen: '#8cd9b3',
   offwhite: '#FAF9F6',
-  newblue: '#307399'
-
+  newblue: '#307399',
+  slightGrey: '#E1F2FE',
+  radioblue: '#0275D8',
+  slightdarkGrey: '#353F50'
 };
 
 export default Colors;

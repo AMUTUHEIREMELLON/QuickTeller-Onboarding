@@ -147,7 +147,7 @@ export default function Attachment(props) {
             }}
           >
             <Surface
-              elevation={0}
+              elevation={2}
               category="medium"
               style={styles.surfaceStyle}
             >
@@ -166,7 +166,7 @@ export default function Attachment(props) {
               style={[
                 Styles.viewStyle,
                 Styles.avertaBold,
-                { marginHorizontal: '2%', textAlign: 'justify'},
+                { marginHorizontal: '2%', textAlign: 'justify', color: Colors.slightdarkGrey},
               ]}
             >
               {attach}
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     width: '30%',
     height: '95%',
     padding: 10,
-    backgroundColor: Colors.warmGrey,
+    backgroundColor: Colors.slightGrey,
     alignSelf: 'center',
   },
 });

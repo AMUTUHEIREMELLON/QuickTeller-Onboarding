@@ -27,7 +27,7 @@ export default {
   },
   cardStyle: { borderColor: 'grey', borderRadius: 20,  },
   cardContentStyle: {
-    backgroundColor: Color.cultured,
+    backgroundColor: Color.slightGrey,
     borderRadius: 10,
     
     

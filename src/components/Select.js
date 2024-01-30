@@ -22,8 +22,9 @@ export default function Select(props) {
         style={{
           padding: 5,
           marginVertical: 5,
-          backgroundColor: Color.lightCultured,
+          backgroundColor: Color.slightGrey,
           borderBottomColor: 'red',
+          borderRadius: 0,
         }}
       >
         <Picker

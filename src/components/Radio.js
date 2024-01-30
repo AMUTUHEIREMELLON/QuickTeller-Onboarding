@@ -12,7 +12,7 @@ export default function Radio(props) {
   return (
     <>
       <Surface
-        elevation={5}
+        elevation={2}
         category="medium"
         style={{
           padding: 5,
@@ -31,7 +31,7 @@ export default function Radio(props) {
                 >
                   <RadioButton
                     value={item.value.toString()}
-                    color={Colors.red}
+                    color={Colors.radioblue}
                     key={item.key.toString()}
                   />
                   <Text style={Styles.viewStyle}>{item.value.toString()}</Text>
