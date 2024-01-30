@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Text, View, ScrollView } from 'react-native';
+import { Text, View, ScrollView, Alert  } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSelector } from 'react-redux';
@@ -11,6 +11,33 @@ import Styles from '../../constants/Styles';
 
 function Attach(props) {
   const { onFormSubmit } = props;
+
+  const [fileUploadStatus, setFileUploadStatus] = useState([
+    false, // Outlet Photo
+    false, // Agent Photo
+    false,
+    false,
+    
+  ]);
+
+  const handleFileUpload = async (attachmentIndex) => {
+    try {
+      // Simulate file upload logic, replace this with your actual logic
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // Update file upload status for the specific attachment
+      setFileUploadStatus((prevStatus) => {
+        const newStatus = [...prevStatus];
+        newStatus[attachmentIndex] = true;
+        return newStatus;
+      });
+
+      // You can add additional logic here if needed
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      // Handle the error, show an alert, or implement retry logic
+    }
+  };
 
   const route = useRoute();
   const navigation = useNavigation();
@@ -45,12 +72,14 @@ function Attach(props) {
             subtitle="Photo of building where premises are located. no more than 10MB"
             fileData={{ ...newData }}
             fileName="OutletPhoto"
+            onUploadSuccess={() => handleFileUpload(0)}
           />
           <Attachment
             attach="Agent Photo *"
             subtitle="Photo of the Agent. no more than 10MB"
             fileData={{ ...newData }}
             fileName="AgentPassportPhoto"
+            onUploadSuccess={() => handleFileUpload(1)}
           />
           {agentType === 'Business' && (
             <Attachment
@@ -61,7 +90,6 @@ function Attach(props) {
           )}
           <Attachment
             attach="Agent Signature *"
-            
             fileData={{ ...newData }}
             fileName="SignedAgreementForm"
           />
@@ -70,22 +98,31 @@ function Attach(props) {
             subtitle="Photo of the national ID both back and forth. no more than 10MB"
             fileData={{ ...newData }}
             fileName="OperatorNationalId"
+            onUploadSuccess={() => handleFileUpload(2)}
           />
           <Attachment
             attach="Bank/MM Statement *"
             subtitle="Bank or mobile money statement, at least 4 months back."
             fileData={{ ...newData }}
             fileName="BankStatement"
+            onUploadSuccess={() => handleFileUpload(3)}
           />
 
           <Button
             style={Styles.nextButtonStyle}
             onPress={() => {
-              onFormSubmit(); // Call the callback function from props
+               // Check if all files are uploaded
+               const allFilesUploaded = fileUploadStatus.every((status) => status);
 
-              navigation.navigate('Terms');
-            }}
-            title="Next"
+               if (allFilesUploaded) {
+                 onFormSubmit();
+                 navigation.navigate('Terms');
+               } else {
+                 // Show an alert if files are not uploaded
+                 Alert.alert('Alert', 'Please upload all required files before proceeding.');
+               }
+             }}
+             title="Next"
           />
         </ScrollView>
       </View>

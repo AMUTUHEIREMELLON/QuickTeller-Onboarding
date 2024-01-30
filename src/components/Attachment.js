@@ -44,7 +44,7 @@ const createFormData = (doc, fileData, fileName) => {
 };
 
 export default function Attachment(props) {
-  const { attach, fileData, fileName, subtitle } = props;
+  const { attach, fileData, fileName, subtitle, id } = props;
   const [attached, setAttached] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false);
