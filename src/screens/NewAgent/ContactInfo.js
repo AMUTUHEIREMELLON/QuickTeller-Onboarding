@@ -94,6 +94,13 @@ function ContactInfo(props) {
     dispatch(clearNinDetails());
   }, []);
 
+   // useEffect to trigger action when ID reaches 14 characters
+   useEffect(() => {
+    if (id.length === 14) {
+      dispatch(fetchSmileData(smileData)); // Replace smileData with the actual data or parameter you want to pass
+    }
+  }, [id]);
+
   return (
     <View style={[{ zIndex: 1 }, Styles.dropContainer]}>
       {/* <TopBar title="New Agent" onPress={() => navigation.goBack()} /> */}
@@ -120,15 +127,17 @@ function ContactInfo(props) {
             
             <TextInput
               selectionColor={Color.silverChalice}
+              outlineColor={ Color.blueMunsell}
               mode="outlined"
               label="Agent NIN"
               value={id}
               maxLength={14}
-              onChangeText={(id) => setId(id)}
+              // onChangeText={(id) => setId(id)}
+              onChangeText={(text) => setId(text)}
               activeOutlineColor={Color.darkBlue}
-              style={[Styles.textInput, { width: '50%' }]}
+              style={[Styles.textInput, { width: '100%' }]}
             />
-            <Button
+            {/* <Button
               style={{
                 width: '45%',
                 alignItems: 'center',
@@ -142,7 +151,7 @@ function ContactInfo(props) {
                 dispatch(fetchSmileData(smileData));
               }}
               title="Check NIN"
-            />
+            /> */}
           </View>
 
           {isLoading && (
