@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
 
   surfaceStyle: {
     height: 170,
-    width: 180,
+    width: '95%',
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 8,
