@@ -19,7 +19,7 @@ export default function ReportCard(props) {
         backgroundColor: backgroundColor,
         marginBottom: "10%",
       }}
-      elevation={5}
+      elevation={0}
     >
       <Icon name={icon} color="black" size={30} />
       <Text style={Styles.h2}>{applications}</Text>
