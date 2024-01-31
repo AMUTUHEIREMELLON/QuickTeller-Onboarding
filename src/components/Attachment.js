@@ -90,7 +90,7 @@ export default function Attachment(props) {
     setIsLoading(true);
     let result = await DocumentPicker.getDocumentAsync({
       multiple: false,
-      type: 'application/pdf',
+      type: ['application/pdf', 'image/*'],
     });
 
     if (result.type === 'success') {
@@ -166,7 +166,11 @@ export default function Attachment(props) {
               style={[
                 Styles.viewStyle,
                 Styles.avertaBold,
-                { marginHorizontal: '2%', textAlign: 'justify', color: Colors.slightdarkGrey},
+                {
+                  marginHorizontal: '2%',
+                  textAlign: 'justify',
+                  color: Colors.slightdarkGrey,
+                },
               ]}
             >
               {attach}

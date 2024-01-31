@@ -208,7 +208,6 @@ function LocationInfo(props) {
               GPS_Co_ordinates: location,
               PhysicalLocation: '',
               Region: '',
-              DistrictList: '',
               DistrictLists: '',
               Village: '',
               LC: '',
@@ -261,8 +260,6 @@ function LocationInfo(props) {
                 {errors.DistrictLists && (
                   <Text style={Styles.errorText}>{errors.DistrictLists}</Text>
                 )}
-
-                
 
                 <Field component={TextField} name="Village" label="Village *" />
 

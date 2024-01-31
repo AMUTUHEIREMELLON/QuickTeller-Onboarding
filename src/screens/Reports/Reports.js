@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet  } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { ActivityIndicator } from "@react-native-material/core";
 import { TextInput } from 'react-native-paper';
 import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -26,6 +27,7 @@ export default function Reports({ navigation }) {
   const [pending, setPending] = useState('');
   const [approved, setApproved] = useState('');
   const [declined, setDeclined] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const [userDetails, setUserDetails] = useState(null);
 
@@ -60,6 +62,25 @@ export default function Reports({ navigation }) {
     setOpenTo(false);
     setToDate(value);
     setToText(moment(value).format('L'));
+  };
+
+  const handleLoadReports = async () => {
+    setLoading(true);
+    try {
+      await getBSPApplications(
+        fromText,
+        toText,
+        setNewReq,
+        setPending,
+        setDeclined,
+        setApproved,
+        userDetails
+      );
+    } catch (error) {
+      console.error("Error loading reports:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   
@@ -119,19 +140,25 @@ export default function Reports({ navigation }) {
           </View>
           <Button
             style={Styles.nextButtonStyle}
-            onPress={() =>
-              getBSPApplications(
-                fromText,
-                toText,
-                setNewReq,
-                setPending,
-                setDeclined,
-                setApproved,
-                userDetails
-              )
-            }
+            onPress={handleLoadReports}
+            // onPress={() =>
+            //   getBSPApplications(
+            //     fromText,
+            //     toText,
+            //     setNewReq,
+            //     setPending,
+            //     setDeclined,
+            //     setApproved,
+            //     userDetails
+            //   )
+            // }
             title="Load Reports"
           />
+          {loading && (
+            <ActivityIndicator size="large" color={Color.darkBlue} />
+          )}
+
+
           {newReq && (
             <ReportCard
               backgroundColor={Color.lightBlue}

@@ -24,7 +24,7 @@ export default function DeclinedCard(props) {
 const styles = StyleSheet.create({
   surfaceStyle: {
     height: 150,
-    width: 390,
+    width: '190%',
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 15,
