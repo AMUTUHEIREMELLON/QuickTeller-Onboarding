@@ -5,6 +5,7 @@ import TopBar from '../../components/TopBar';
 import DeclinedCard from '../../components/DeclinedCard';
 import Styles from '../../constants/Styles';
 import axios from 'axios';
+import Color from '../../constants/Colors';
 
 export default function ApprovedReq() {
   const [loading, setLoading] = useState(true);
@@ -54,6 +55,8 @@ export default function ApprovedReq() {
             <DeclinedCard
               key={decline.id}
               name={decline.AgentName}
+              icon="account"
+              color={Color.newblue}
               agentId={decline.AgentId}
               phone={decline.Phone}
               reason={decline.Status}
