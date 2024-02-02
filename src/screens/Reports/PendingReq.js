@@ -4,7 +4,8 @@ import { View, ScrollView, ActivityIndicator } from 'react-native';
 import TopBar from '../../components/TopBar';
 import DeclinedCard from '../../components/DeclinedCard';
 import Styles from '../../constants/Styles';
-import axios from 'axios';
+import axios from 'axios';import Color from '../../constants/Colors';
+
 
 export default function PendingReq() {
   const [loading, setLoading] = useState(true);
@@ -50,6 +51,8 @@ export default function PendingReq() {
           <DeclinedCard
             key={decline.id} 
             name={decline.AgentName}
+            icon="account"
+            color={Color.newblue}
             agentId={decline.AgentId}  
             phone={decline.Phone}
             reason={decline.Status}
