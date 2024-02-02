@@ -62,7 +62,7 @@ function Terms() {
       <TopBar title="New Agent" onPress={() => navigation.goBack()} />
       <View style={Styles.formContainer}>
         <Text style={Styles.h1}>Terms and Conditions</Text>
-        <ScrollView style={Styles.scrollviewStyle}>
+        <View style={Styles.scrollviewStyle}>
           <ScrollView
             style={{
               marginHorizontal: '1%',
@@ -157,7 +157,7 @@ function Terms() {
               </>
             )}
           </Formik>
-        </ScrollView>
+        </View>
       </View>
     </View>
   );
