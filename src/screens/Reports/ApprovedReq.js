@@ -6,6 +6,7 @@ import DeclinedCard from '../../components/DeclinedCard';
 import Styles from '../../constants/Styles';
 import axios from 'axios';
 import Color from '../../constants/Colors';
+import { paypointAxios } from '../../helpers/axiosConfig';
 
 export default function ApprovedReq() {
   const [loading, setLoading] = useState(true);
@@ -17,8 +18,7 @@ export default function ApprovedReq() {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get(
-        'https://paypointt.azurewebsites.net/api/AgentApplic/GetBspApplications?userId=26434&dateRange=12/18/2023 - 12/18/2024'
+      const res = await paypointAxios.get('/api/AgentApplic/GetBspApplications?userId=26434&dateRange=12/18/2023 - 12/18/2024'
       );
       console.log('response on declined data', res);
 

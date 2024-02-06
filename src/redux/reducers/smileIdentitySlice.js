@@ -27,7 +27,8 @@ export const fetchSmileIdentityData = createAsyncThunk(
               };
 
             const response = await axios.post(
-                'https://api.smileidentity.com/v1/id_verification',
+                // 'https://api.smileidentity.com/v1/id_verification',
+                'https://services.interswitchug.com/kycservices/Identity/identity_verification',
                 smileData,
                 {
                     headers: {

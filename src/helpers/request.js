@@ -11,7 +11,7 @@ const postApplication = async (data) => {
     if (data) {
       const res = await paypointAxios.post(
         '/api/AgentApplic/CreateApplication',
-        data,
+        data
       );
       let statusCode = res.data.code || res.data.Code;
       if (statusCode === '9000') {
@@ -129,20 +129,17 @@ const getBSPApplications = async (
   userDetails
 ) => {
   try {
-    const res = await paypointAxios.get(
-      '/api/AgentApplic/GetBspApplications',
-      {
-        params: {
-          userId: userDetails.UserId,
-          dateRange: `${fromText} - ${toText}`,
-        },
-        headers: {
-          Accept: '*/*',
-        },
-      }
-    );
+    const res = await paypointAxios.get('/api/AgentApplic/GetBspApplications', {
+      params: {
+        userId: userDetails.UserId,
+        dateRange: `${fromText} - ${toText}`,
+      },
+      headers: {
+        Accept: '*/*',
+      },
+    });
 
-    console.log(res.data);
+    console.log('Applications', JSON.stringify(res.data));
 
     let resLength = res.data.response.length;
     let docs = res.data.response;
@@ -226,7 +223,7 @@ const getDistricts = async (selectedRegion, setDistrictList) => {
 
 const getCounties = async (selectedDistrict, setCountyList) => {
   try {
-    const res = await paypointAxios.get('/api/Location/GetCounties', { 
+    const res = await paypointAxios.get('/api/Location/GetCounties', {
       params: {
         district: selectedDistrict,
       },

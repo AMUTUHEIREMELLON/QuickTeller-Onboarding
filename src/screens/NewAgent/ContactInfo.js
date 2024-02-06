@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { TextInput, Snackbar, ActivityIndicator } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import moment from 'moment' ;
+import moment from 'moment';
 
 import TopBar from '../../components/TopBar';
 import TextField from './../../components/TextField';
@@ -21,18 +21,20 @@ import * as validationSchema from '../../validation/ValidationSchemas';
 import { makeSignature } from '../../helpers/makeSignature';
 
 import { addNewAgentFormData } from '../../redux/reducers/formSlice';
+
+
 import {
   clearNinDetails,
   fetchSmileData,
   setSnackbarVisible,
-  setDob,
+  
 } from '../../redux/reducers/ninSlice';
 
 function ContactInfo(props) {
   const { onFormSubmit } = props;
 
-
   const [id, setId] = useState('');
+  const [phone, setPhone] = useState('');
   const { agentName } = useSelector((store) => store.ninDataStore);
   const { dob } = useSelector((store) => store.ninDataStore);
   const { dateText } = useSelector((store) => store.ninDataStore);
@@ -71,19 +73,22 @@ function ContactInfo(props) {
   ];
 
   const smileData = {
-    source_sdk: 'rest_api',
-    source_sdk_version: '1.0.0',
-    signature: signatureDetails.signature,
-    timestamp: signatureDetails.timestamp,
-    partner_params: {
-      user_id: 'INTS',
-      job_id: 'INT',
-      job_type: 5,
-    },
-    country: 'UG',
-    id_type: 'NATIONAL_ID_NO_PHOTO',
-    id_number: id,
-    partner_id: '2384',
+    // source_sdk: 'rest_api',
+    // source_sdk_version: '1.0.0',
+    // signature: signatureDetails.signature,
+    // timestamp: signatureDetails.timestamp,
+    // partner_params: {
+    //   user_id: 'INTS',
+    //   job_id: 'INT',
+    //   job_type: 5,
+    // },
+    // country: 'UG',
+    // id_type: 'NATIONAL_ID_NO_PHOTO',
+    // id_number: id,
+    // partner_id: '2384',
+    NIN: id, 
+    phoneNumber: phone,
+    RequestReference: '234345',
   };
 
   const { agentType } = useSelector((store) => store.formDataStore.newAgent);
@@ -94,12 +99,12 @@ function ContactInfo(props) {
     dispatch(clearNinDetails());
   }, []);
 
-   // useEffect to trigger action when ID reaches 14 characters
-   useEffect(() => {
-    if (id.length === 14) {
-      dispatch(fetchSmileData(smileData)); // Replace smileData with the actual data or parameter you want to pass
+  // useEffect to trigger action when ID reaches 14 characters
+  useEffect(() => {
+    if (id.length === 14 && phone.length === 10) {
+      dispatch(fetchSmileData(smileData));
     }
-  }, [id]);
+  }, [id, phone]);
 
   return (
     <View style={[{ zIndex: 1 }, Styles.dropContainer]}>
@@ -115,7 +120,6 @@ function ContactInfo(props) {
       <View style={Styles.formContainer}>
         <Text style={Styles.h1}>Contact Info</Text>
         <ScrollView style={Styles.scrollviewStyle}>
-          
           <View
             style={{
               flexDirection: 'row',
@@ -123,11 +127,9 @@ function ContactInfo(props) {
               justifyContent: 'space-evenly',
             }}
           >
-
-            
             <TextInput
               selectionColor={Color.silverChalice}
-              outlineColor={ Color.blueMunsell}
+              outlineColor={Color.blueMunsell}
               mode="outlined"
               label="Agent NIN"
               value={id}
@@ -137,6 +139,7 @@ function ContactInfo(props) {
               activeOutlineColor={Color.darkBlue}
               style={[Styles.textInput, { width: '100%' }]}
             />
+
             {/* <Button
               style={{
                 width: '45%',
@@ -154,6 +157,27 @@ function ContactInfo(props) {
             /> */}
           </View>
 
+          <View
+            style={{
+              flexDirection: 'row',
+              alignContent: 'center',
+              justifyContent: 'space-evenly',
+            }}
+          >
+            <TextInput
+              selectionColor={Color.silverChalice}
+              outlineColor={Color.blueMunsell}
+              mode="outlined"
+              label="Phone number"
+              value={phone}
+              maxLength={10}
+              // onChangeText={(id) => setId(id)}
+              onChangeText={(text) => setPhone(text)}
+              activeOutlineColor={Color.darkBlue}
+              style={[Styles.textInput, { width: '100%' }]}
+            />
+          </View>
+
           {isLoading && (
             <ActivityIndicator
               size="small"
@@ -168,6 +192,7 @@ function ContactInfo(props) {
             initialValues={{
               AgentName: agentName,
               AgentNin: id,
+              Phone: phone,
               DateOfBirth: '',
               Email: '',
               Sex: gender,
@@ -199,7 +224,6 @@ function ContactInfo(props) {
               }
 
               onFormSubmit(); // Call the callback function from props
-
 
               navigation.navigate(
                 agentType === 'Individual' ? 'AgentKyc' : 'CompanyInfo'
@@ -284,13 +308,13 @@ function ContactInfo(props) {
                   </>
                 )}
 
-                <Field
+                {/* <Field
                   component={TextField}
                   name="Phone"
                   label="Phone Number (07-- --- ---) *"
                   keyboardType="numeric"
                   maxLength={10}
-                />
+                /> */}
 
                 <Field
                   component={TextField}
@@ -310,7 +334,7 @@ function ContactInfo(props) {
           </Formik>
         </ScrollView>
       </View>
-      <Snackbar
+      {/* <Snackbar
         style={[Styles.snackbarStyle]}
         action={{
           label: 'Please fill in your details',
@@ -319,7 +343,27 @@ function ContactInfo(props) {
         onDismiss={() => dispatch(setSnackbarVisible(false))}
       >
         {snackbarMessage}
-      </Snackbar>
+      </Snackbar> */}
+
+<Snackbar
+  style={[Styles.snackbarStyle]}
+  action={{
+    label: 'Please fill in your details',
+  }}
+  visible={snackbarVisible}
+  onDismiss={() => dispatch(setSnackbarVisible(false))}
+>
+  {snackbarMessage && typeof snackbarMessage === 'object' ? (
+    <Text>
+      {snackbarMessage.errors?.NIN && snackbarMessage.errors.NIN.join('\n')}
+      {snackbarMessage.errors?.PhoneNumber && snackbarMessage.errors.PhoneNumber.join('\n')}
+      {snackbarMessage.errors?.RequestReference && snackbarMessage.errors.RequestReference.join('\n')}
+    </Text>
+  ) : (
+    snackbarMessage
+  )}
+</Snackbar>
+
     </View>
   );
 }
