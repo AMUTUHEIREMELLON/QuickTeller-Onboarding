@@ -4,6 +4,7 @@ import { View, ScrollView, ActivityIndicator } from 'react-native';
 import TopBar from '../../components/TopBar';
 import DeclinedCard from '../../components/DeclinedCard';
 import Styles from '../../constants/Styles';
+import Color from '../../constants/Colors';
 import axios from 'axios';
 
 export default function PendingReq() {
@@ -45,11 +46,13 @@ export default function PendingReq() {
         </View>
       ) : (
         // Display the data when loading is complete
-      <ScrollView>
+        <ScrollView>
         {declinedData.map((decline) => (
           <DeclinedCard
             key={decline.id} 
             name={decline.AgentName}
+            icon="account"
+            color={Color.newblue}
             agentId={decline.AgentId}  
             phone={decline.Phone}
             reason={decline.Status}

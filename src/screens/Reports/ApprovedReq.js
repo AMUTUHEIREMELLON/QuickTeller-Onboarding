@@ -4,6 +4,7 @@ import { View, ScrollView, ActivityIndicator } from 'react-native';
 import TopBar from '../../components/TopBar';
 import DeclinedCard from '../../components/DeclinedCard';
 import Styles from '../../constants/Styles';
+import Color from '../../constants/Colors';
 import axios from 'axios';
 
 export default function ApprovedReq() {
@@ -50,17 +51,22 @@ export default function ApprovedReq() {
       ) : (
         // Display the data when loading is complete
         <ScrollView>
-          {declinedData.map((decline) => (
-            <DeclinedCard
-              key={decline.id}
-              name={decline.AgentName}
-              agentId={decline.AgentId}
-              phone={decline.Phone}
-              reason={decline.Status}
-              onPress={() => navigation.navigate('#')}
-            />
-          ))}
-        </ScrollView>
+        {declinedData.map((decline) => (
+          <DeclinedCard
+            key={decline.id} 
+            name={decline.AgentName}
+            icon="account"
+            color={Color.newblue}
+            agentId={decline.AgentId}  
+            phone={decline.Phone}
+            reason={decline.Status}
+            onPress={() => 
+
+              navigation.navigate('#')
+            }
+          />
+        ))}
+      </ScrollView>
       )}
     </View>
   );

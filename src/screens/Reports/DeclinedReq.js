@@ -4,6 +4,7 @@ import { View, ScrollView, ActivityIndicator  } from 'react-native';
 import TopBar from '../../components/TopBar';
 import DeclinedCard from '../../components/DeclinedCard';
 import Styles from '../../constants/Styles';
+import Color from '../../constants/Colors';
 import axios from 'axios';
 
 export default function DeclinedReq() {
@@ -45,14 +46,16 @@ export default function DeclinedReq() {
         </View>
       ) : (
         // Display the data when loading is complete
-      <ScrollView>
+        <ScrollView>
         {declinedData.map((decline) => (
           <DeclinedCard
             key={decline.id} 
+            icon="account"
+            color={Color.newblue}
             name={decline.AgentName}
             agentId={decline.AgentId}  
             phone={decline.Phone}
-            reason={decline.Status}
+            reason='Agent application declined, click to update agent information'
             onPress={() => 
 
               navigation.navigate('EditAttach')
