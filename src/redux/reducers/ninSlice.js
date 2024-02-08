@@ -1,5 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { v4 as uuidv4 } from 'react-native-uuid';
+
+//   const randomRequestReference = uuidv4();
 
 const initialState = {
   dateText: '',
@@ -11,53 +14,56 @@ const initialState = {
   isLoading: false,
   error: null,
   data: null,
-  requestReference: 100,
+  NIN: '',
+  phoneNumber: '',
+  RequestReference: 678867,
 };
 
 export const fetchSmileData = createAsyncThunk(
-    'smileData/fetchSmileData',
-    async (smileData, { rejectWithValue }) => {
-        try {
-            const response = await axios.post(
-                'https://api.smileidentity.com/v1/id_verification',
-                smileData,
-                {
-                    headers: {
-                        Accept: '*/*',
-                    },
-                }
-            );
+  'smileData/fetchSmileData',
+  async (smileData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        'https://services.interswitchug.com/kycservices/Identity/identity_verification',
+        smileData,
+        {
+          headers: {
+            Accept: '*/*',
+          },
+        }
+      );
+      console.info('response here' ,response.data);
 
-            return response.data;
+      return response.data;
     } catch (error) {
+      console.info('error 1 ', error.response);
+      // Handle network errors or other exceptions
       if (error.response && error.response.data.errors) {
-        const validationError = {
-          type: 'https://tools.ietf.org/html/rfc7231#section-6.5.1',
-          title: 'One or more validation errors occurred.',
-          status: 400,
-          traceId: error.response.data.traceId,
-          errors: {},
-        };
+        // const validationError = {
+        //   title: 'One or more validation errors occurred.',
+
+        // };
 
         // Check for "Nin" field error
         if (error.response.data.errors.Nin) {
-          validationError.errors.Nin = error.response.data.errors.Nin;
+          // validationError.errors.Nin = error.response.data.errors.Nin;
+          console.info('nin error ', error.response);
         }
 
         // Check for "PhoneNumber" field error
         if (error.response.data.errors.PhoneNumber) {
-          validationError.errors.PhoneNumber =
-            error.response.data.errors.PhoneNumber;
+          // validationError.errors.PhoneNumber = error.response.data.errors.PhoneNumber;
+          console.info('phone error ', error.response);
         }
 
         // Check for "RequestReference" field error
         if (error.response.data.errors.RequestReference) {
-          validationError.errors.RequestReference =
-            error.response.data.errors.RequestReference;
+          // validationError.errors.RequestReference = error.response.data.errors.RequestReference;
+          console.info('ref error ', error.response);
         }
 
-        console.error('Validation Error:', validationError);
-        return rejectWithValue(validationError);
+        // console.error('Validation Error:', validationError);
+        return rejectWithValue('validationError');
       } else if (error.response) {
         console.error('RES ERROR:', error.response.data);
         return rejectWithValue(error.response.data);
@@ -114,7 +120,6 @@ const smileDataSlice = createSlice({
     snackbarVisible: false,
     isLoading: false,
     error: null,
-    requestReference: 100,
   },
   reducers: {
     clearNinDetails: (state) => {
@@ -134,7 +139,7 @@ const smileDataSlice = createSlice({
       state.dateText = action.payload;
     },
     setAgentName: (state, action) => {
-      state.agentName = action.payload;
+      state.agentName = action.payload.response.name;
     },
     setGender: (state, action) => {
       state.gender = action.payload;
@@ -145,10 +150,6 @@ const smileDataSlice = createSlice({
     setSnackbarVisible: (state, action) => {
       state.snackbarVisible = action.payload;
     },
-    setRequestReference: (state, action) => {
-        state.requestReference = action.payload;
-      },
-
   },
   extraReducers: (builder) => {
     builder
@@ -157,15 +158,17 @@ const smileDataSlice = createSlice({
       })
       .addCase(fetchSmileData.fulfilled, (state, action) => {
         state.isLoading = false;
+        console.log('Fetching ', action.payload)
         if (action.payload.responseCode === 90000) {
-          state.dob = action.payload.response.result.dateOfBirth;
-          state.dateText = new Date(state.dob).toLocaleDateString();
-          state.agentName = action.payload.response.result.name;
-          state.gender = action.payload.response.result.gender;
+          // state.dob = action.payload.FullData.dateOfBirth;
+          // state.dateText = new Date(state.dob).toLocaleDateString();
+          state.agentName = action.payload.response.name;
+          console.info('payload here', action.payload.response.name);
+          // state.gender = action.payload.Gender;
         } else {
-          state.snackbarMessage = action.payload.response.responseMessage;
+          state.snackbarMessage = 'action.payload.ResultText';
           state.snackbarVisible = true;
-          state.error = action.payload.response.responseMessage;
+          state.error = 'action.payload.ResultTex';
         }
       })
       .addCase(fetchSmileData.rejected, (state, action) => {
@@ -176,7 +179,6 @@ const smileDataSlice = createSlice({
   },
 });
 
-export const { setRequestReference } = smileDataSlice.actions;
 export const { setSnackbarVisible, clearNinDetails, setDob } =
   smileDataSlice.actions;
 export default smileDataSlice.reducer;

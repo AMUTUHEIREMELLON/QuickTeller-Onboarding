@@ -6,6 +6,7 @@ import { TextInput, Snackbar, ActivityIndicator } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
+import uuid from 'react-native-uuid';
 
 import TopBar from '../../components/TopBar';
 import TextField from './../../components/TextField';
@@ -19,6 +20,8 @@ import PageHeader from '../../components/PageHeader';
 
 import * as validationSchema from '../../validation/ValidationSchemas';
 import { makeSignature } from '../../helpers/makeSignature';
+import axios from 'axios';
+
 
 import { addNewAgentFormData } from '../../redux/reducers/formSlice';
 
@@ -32,10 +35,15 @@ import {
 
 function ContactInfo(props) {
   const { onFormSubmit } = props;
+  const randomRequestReference = uuid.v4();
 
   const [id, setId] = useState('');
   const [phone, setPhone] = useState('');
+ const [name, setName] = useState('');
+  
   const { agentName } = useSelector((store) => store.ninDataStore);
+  console.log('logged data',  agentName)
+
   const { dob } = useSelector((store) => store.ninDataStore);
   const { dateText } = useSelector((store) => store.ninDataStore);
   const { snackbarVisible } = useSelector((store) => store.ninDataStore);
@@ -46,13 +54,18 @@ function ContactInfo(props) {
 
   const signatureDetails = makeSignature();
 
+
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [text, setText] = useState('');
+  // const [showDatePicker, setShowDatePicker] = useState(false); 
 
   const [noNinDob, setNoNinDob] = useState('');
 
   const maxDate = moment().subtract(18, 'years');
+
+ 
+
 
   const showDatePicker = () => {
     setOpen(true);
@@ -86,12 +99,13 @@ function ContactInfo(props) {
     // id_type: 'NATIONAL_ID_NO_PHOTO',
     // id_number: id,
     // partner_id: '2384',
-    NIN: id, 
+    NIN: id, // Assuming id is the NIN
     phoneNumber: phone,
-    RequestReference: '234345',
+    RequestReference: randomRequestReference,
   };
 
   const { agentType } = useSelector((store) => store.formDataStore.newAgent);
+   
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -102,9 +116,13 @@ function ContactInfo(props) {
   // useEffect to trigger action when ID reaches 14 characters
   useEffect(() => {
     if (id.length === 14 && phone.length === 10) {
-      dispatch(fetchSmileData(smileData));
+      const data = dispatch(fetchSmileData(smileData)); 
+      console.log('new name  ', data)
     }
   }, [id, phone]);
+
+  
+
 
   return (
     <View style={[{ zIndex: 1 }, Styles.dropContainer]}>
@@ -168,15 +186,17 @@ function ContactInfo(props) {
               selectionColor={Color.silverChalice}
               outlineColor={Color.blueMunsell}
               mode="outlined"
-              label="Phone number"
+              label="Phone"
               value={phone}
               maxLength={10}
               // onChangeText={(id) => setId(id)}
               onChangeText={(text) => setPhone(text)}
+              keyboardType="numeric"
               activeOutlineColor={Color.darkBlue}
               style={[Styles.textInput, { width: '100%' }]}
             />
           </View>
+
 
           {isLoading && (
             <ActivityIndicator
@@ -188,7 +208,7 @@ function ContactInfo(props) {
 
           <Formik
             enableReinitialize={true}
-            validationSchema={validationSchema.contactInfoValidationSchema}
+            // validationSchema={validationSchema.contactInfoValidationSchema}
             initialValues={{
               AgentName: agentName,
               AgentNin: id,
@@ -242,11 +262,13 @@ function ContactInfo(props) {
                 <Field
                   component={TextField}
                   name="AgentName"
+                  value={agentName}
+                  
                   label="Agent Full Name *"
                   editable={!ninError ? false : true}
                 />
 
-                {ninError && (
+                {/* {ninError && ( */}
                   <>
                     <TextInput
                       label="Date of Birth"
@@ -258,7 +280,8 @@ function ContactInfo(props) {
                       mode="outlined"
                       activeOutlineColor={Color.darkBlue}
                       style={Styles.textInput}
-                    />
+                      // editable={!ninError === null}
+                    /> 
                     {open && (
                       <DateTimePicker
                         value={date}
@@ -266,8 +289,10 @@ function ContactInfo(props) {
                         mode={'date'}
                         display={Platform.OS === 'ios' ? 'spinner' : 'default'}
                         onChange={onDateSelected}
+                        // editable={ninError === null}
+                        
                       />
-                    )}
+                      )} 
                     {text === '' && (
                       <Text style={Styles.errorText}>
                         {Messages.requiredMessage}
@@ -282,12 +307,13 @@ function ContactInfo(props) {
                       onValueChange={handleChange('Sex')}
                       selectedValue={values.Sex}
                       onBlur={handleBlur('Sex')}
+                      editable={ninError === null}
                     />
                     {errors.Sex && (
                       <Text style={Styles.errorText}>{errors.Sex}</Text>
                     )}
                   </>
-                )}
+                {/* )}
 
                 {!ninError && (
                   <>
@@ -305,8 +331,8 @@ function ContactInfo(props) {
                       label="Gender"
                       editable={ninError === null ? false : true}
                     />
-                  </>
-                )}
+                  </> */}
+                {/* )} */}
 
                 {/* <Field
                   component={TextField}
