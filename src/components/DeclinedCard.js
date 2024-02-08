@@ -10,10 +10,10 @@ export default function DeclinedCard(props) {
     <Pressable onPress={onPress} style={[{ width: '50%' }]}>
       <Surface elevation={0} style={styles.surfaceStyle}>
         <View style={styles.textBox}>
-          <Icon name={icon} color={color} size={30} />
-          {/* <Text style={styles.textStyle}>{agentId}</Text> */}
-          <Text style={styles.textStyles}>{name}</Text>
-          {/* <Text style={styles.textStyle}>{phone}</Text> */}
+          <View style={styles.rowContainer}>
+            <Icon name={icon} color={color} size={30} />
+            <Text style={styles.textStyles}>{name}</Text>
+          </View>
           <Text style={styles.textStyle}>{reason}</Text>
         </View>
       </Surface>
@@ -45,12 +45,12 @@ const styles = StyleSheet.create({
     color: '#5F738C',
   },
   textStyles: {
-    textAlign: "justify",
+    textAlign: 'justify',
     padding: 5,
-    fontFamily: "AvertaRegular",
+    fontFamily: 'AvertaRegular',
     fontSize: 14,
     fontWeight: 'bold',
-    color: "#307399"
+    color: '#307399',
   },
 
   textBox: {
@@ -59,5 +59,9 @@ const styles = StyleSheet.create({
     paddingRight: 100,
     paddingLeft: 80,
     width: 500,
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
