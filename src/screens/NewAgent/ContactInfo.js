@@ -40,7 +40,6 @@ function ContactInfo(props) {
  const [name, setName] = useState('');
   
   const { agentName } = useSelector((store) => store.ninDataStore);
-  // const {data} = useSelector((store) => store.ninDataStore)
   console.log('logged data',  agentName)
 
   const { dob } = useSelector((store) => store.ninDataStore);
@@ -57,10 +56,14 @@ function ContactInfo(props) {
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [text, setText] = useState('');
+  // const [showDatePicker, setShowDatePicker] = useState(false); 
 
   const [noNinDob, setNoNinDob] = useState('');
 
   const maxDate = moment().subtract(18, 'years');
+
+ 
+
 
   const showDatePicker = () => {
     setOpen(true);
@@ -202,7 +205,7 @@ function ContactInfo(props) {
 
           <Formik
             enableReinitialize={true}
-            validationSchema={validationSchema.contactInfoValidationSchema}
+            // validationSchema={validationSchema.contactInfoValidationSchema}
             initialValues={{
               AgentName: agentName,
               AgentNin: id,
@@ -261,7 +264,7 @@ function ContactInfo(props) {
                   editable={!ninError ? false : true}
                 />
 
-                {ninError && (
+                {/* {ninError && ( */}
                   <>
                     <TextInput
                       label="Date of Birth"
@@ -273,7 +276,8 @@ function ContactInfo(props) {
                       mode="outlined"
                       activeOutlineColor={Color.darkBlue}
                       style={Styles.textInput}
-                    />
+                      // editable={!ninError === null}
+                    /> 
                     {open && (
                       <DateTimePicker
                         value={date}
@@ -281,8 +285,10 @@ function ContactInfo(props) {
                         mode={'date'}
                         display={Platform.OS === 'ios' ? 'spinner' : 'default'}
                         onChange={onDateSelected}
+                        // editable={ninError === null}
+                        
                       />
-                    )}
+                      )} 
                     {text === '' && (
                       <Text style={Styles.errorText}>
                         {Messages.requiredMessage}
@@ -297,12 +303,13 @@ function ContactInfo(props) {
                       onValueChange={handleChange('Sex')}
                       selectedValue={values.Sex}
                       onBlur={handleBlur('Sex')}
+                      editable={ninError === null}
                     />
                     {errors.Sex && (
                       <Text style={Styles.errorText}>{errors.Sex}</Text>
                     )}
                   </>
-                )}
+                {/* )}
 
                 {!ninError && (
                   <>
@@ -320,8 +327,8 @@ function ContactInfo(props) {
                       label="Gender"
                       editable={ninError === null ? false : true}
                     />
-                  </>
-                )}
+                  </> */}
+                {/* )} */}
 
                 {/* <Field
                   component={TextField}
