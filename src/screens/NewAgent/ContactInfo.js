@@ -5,7 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 import { TextInput, Snackbar, ActivityIndicator } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import moment from 'moment' ;
+import moment from 'moment';
+import uuid from 'react-native-uuid';
 
 import TopBar from '../../components/TopBar';
 import TextField from './../../components/TextField';
@@ -19,6 +20,8 @@ import PageHeader from '../../components/PageHeader';
 
 import * as validationSchema from '../../validation/ValidationSchemas';
 import { makeSignature } from '../../helpers/makeSignature';
+import axios from 'axios';
+
 
 import { addNewAgentFormData } from '../../redux/reducers/formSlice';
 import {
@@ -30,10 +33,16 @@ import {
 
 function ContactInfo(props) {
   const { onFormSubmit } = props;
-
+  const randomRequestReference = uuid.v4();
 
   const [id, setId] = useState('');
+  const [phone, setPhone] = useState('');
+ const [name, setName] = useState('');
+  
   const { agentName } = useSelector((store) => store.ninDataStore);
+  // const {data} = useSelector((store) => store.ninDataStore)
+  console.log('logged data',  agentName)
+
   const { dob } = useSelector((store) => store.ninDataStore);
   const { dateText } = useSelector((store) => store.ninDataStore);
   const { snackbarVisible } = useSelector((store) => store.ninDataStore);
@@ -43,6 +52,7 @@ function ContactInfo(props) {
   const ninError = useSelector((store) => store.ninDataStore.error);
 
   const signatureDetails = makeSignature();
+
 
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
@@ -71,22 +81,26 @@ function ContactInfo(props) {
   ];
 
   const smileData = {
-    source_sdk: 'rest_api',
-    source_sdk_version: '1.0.0',
-    signature: signatureDetails.signature,
-    timestamp: signatureDetails.timestamp,
-    partner_params: {
-      user_id: 'INTS',
-      job_id: 'INT',
-      job_type: 5,
-    },
-    country: 'UG',
-    id_type: 'NATIONAL_ID_NO_PHOTO',
-    id_number: id,
-    partner_id: '2384',
+    // source_sdk: 'rest_api',
+    // source_sdk_version: '1.0.0',
+    // signature: signatureDetails.signature,
+    // timestamp: signatureDetails.timestamp,
+    // partner_params: {
+    //   user_id: 'INTS',
+    //   job_id: 'INT',
+    //   job_type: 5,
+    // },
+    // country: 'UG',
+    // id_type: 'NATIONAL_ID_NO_PHOTO',
+    // id_number: id,
+    // partner_id: '2384',
+    NIN: id, // Assuming id is the NIN
+    phoneNumber: phone,
+    RequestReference: randomRequestReference,
   };
 
   const { agentType } = useSelector((store) => store.formDataStore.newAgent);
+   
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -94,12 +108,16 @@ function ContactInfo(props) {
     dispatch(clearNinDetails());
   }, []);
 
-   // useEffect to trigger action when ID reaches 14 characters
-   useEffect(() => {
-    if (id.length === 14) {
-      dispatch(fetchSmileData(smileData)); // Replace smileData with the actual data or parameter you want to pass
+  // useEffect to trigger action when ID reaches 14 characters
+  useEffect(() => {
+    if (id.length === 14 && phone.length === 10) {
+      const data = dispatch(fetchSmileData(smileData)); 
+      console.log('new name  ', data)
     }
-  }, [id]);
+  }, [id, phone]);
+
+  
+
 
   return (
     <View style={[{ zIndex: 1 }, Styles.dropContainer]}>
@@ -115,7 +133,6 @@ function ContactInfo(props) {
       <View style={Styles.formContainer}>
         <Text style={Styles.h1}>Contact Info</Text>
         <ScrollView style={Styles.scrollviewStyle}>
-          
           <View
             style={{
               flexDirection: 'row',
@@ -123,11 +140,9 @@ function ContactInfo(props) {
               justifyContent: 'space-evenly',
             }}
           >
-
-            
             <TextInput
               selectionColor={Color.silverChalice}
-              outlineColor={ Color.blueMunsell}
+              outlineColor={Color.blueMunsell}
               mode="outlined"
               label="Agent NIN"
               value={id}
@@ -153,6 +168,29 @@ function ContactInfo(props) {
               title="Check NIN"
             /> */}
           </View>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              alignContent: 'center',
+              justifyContent: 'space-evenly',
+            }}
+          >
+            <TextInput
+              selectionColor={Color.silverChalice}
+              outlineColor={Color.blueMunsell}
+              mode="outlined"
+              label="Phone"
+              value={phone}
+              maxLength={10}
+              // onChangeText={(id) => setId(id)}
+              onChangeText={(text) => setPhone(text)}
+              keyboardType="numeric"
+              activeOutlineColor={Color.darkBlue}
+              style={[Styles.textInput, { width: '100%' }]}
+            />
+          </View>
+
 
           {isLoading && (
             <ActivityIndicator
@@ -200,7 +238,6 @@ function ContactInfo(props) {
 
               onFormSubmit(); // Call the callback function from props
 
-
               navigation.navigate(
                 agentType === 'Individual' ? 'AgentKyc' : 'CompanyInfo'
               );
@@ -218,6 +255,8 @@ function ContactInfo(props) {
                 <Field
                   component={TextField}
                   name="AgentName"
+                  value={agentName}
+                  
                   label="Agent Full Name *"
                   editable={!ninError ? false : true}
                 />
@@ -284,13 +323,13 @@ function ContactInfo(props) {
                   </>
                 )}
 
-                <Field
+                {/* <Field
                   component={TextField}
                   name="Phone"
                   label="Phone Number (07-- --- ---) *"
                   keyboardType="numeric"
                   maxLength={10}
-                />
+                /> */}
 
                 <Field
                   component={TextField}
