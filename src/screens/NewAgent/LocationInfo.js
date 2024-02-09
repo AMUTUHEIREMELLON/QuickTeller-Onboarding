@@ -201,14 +201,14 @@ function LocationInfo(props) {
         <ScrollView style={Styles.scrollviewStyle}>
           <Formik
             enableReinitialize={true}
-            validationSchema={validationSchema.locationInfoValidationSchema}
+            // validationSchema={validationSchema.locationInfoValidationSchema}
             validateOnBlur={true}
             validateOnMount={true}
             initialValues={{
               GPS_Co_ordinates: location,
               PhysicalLocation: '',
               Region: '',
-              DistrictLists: '',
+              District: '',
               Village: '',
               LC: '',
               NumberOfYearsWorkingInArea: '',
@@ -250,15 +250,15 @@ function LocationInfo(props) {
 
                 <Field
                   component={Select}
-                  name="DistrictLists"
+                  name="District"
                   label="Select District *"
                   data={Districts}
-                  onValueChange={handleChange('DistrictLists')}
-                  selectedValue={values.DistrictLists}
-                  onBlur={handleBlur('DistrictLists')}
+                  onValueChange={handleChange('District')}
+                  selectedValue={values.District}
+                  onBlur={handleBlur('District')}
                 />
-                {errors.DistrictLists && (
-                  <Text style={Styles.errorText}>{errors.DistrictLists}</Text>
+                {errors.District && (
+                  <Text style={Styles.errorText}>{errors.District}</Text>
                 )}
 
                 <Field component={TextField} name="Village" label="Village *" />

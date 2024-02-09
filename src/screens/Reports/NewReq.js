@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, ScrollView, ActivityIndicator } from 'react-native';
+import { View, ScrollView, ActivityIndicator, Text } from 'react-native';
 import TopBar from '../../components/TopBar';
 import DeclinedCard from '../../components/DeclinedCard';
 import Styles from '../../constants/Styles';
@@ -55,7 +55,7 @@ export default function NewReq() {
             color={Color.newblue}
             agentId={decline.AgentId}  
             phone={decline.Phone}
-            reason={decline.Status}
+            reason={<Text style={{ color: '#7276ff' }}>{decline.Status}</Text>}
             onPress={() => 
 
               navigation.navigate('#')

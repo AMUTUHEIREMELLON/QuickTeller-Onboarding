@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, ScrollView, ActivityIndicator  } from 'react-native';
+import { View, ScrollView, ActivityIndicator, Text } from 'react-native';
 import TopBar from '../../components/TopBar';
 import DeclinedCard from '../../components/DeclinedCard';
 import Styles from '../../constants/Styles';
@@ -10,6 +10,8 @@ import axios from 'axios';
 export default function DeclinedReq() {
   const [loading, setLoading] = useState(true);
   const [declinedData, setDeclinedData] = useState([]);
+
+
 
   useEffect(() => {
     fetchData();
@@ -21,11 +23,13 @@ export default function DeclinedReq() {
         'https://paypointt.azurewebsites.net/api/AgentApplic/GetBspApplications?userId=26434&dateRange=12/18/2023 - 12/18/2024'
       );
       console.log('response on declined data', res);
-  
+
       // Filter out only declined requests
-      const filteredData = res.data.response.filter(item => item.Status === 'Declined Application');
+      const filteredData = res.data.response.filter(
+        (item) => item.Status === 'Declined Application'
+      );
       setDeclinedData(filteredData);
-  
+
       setLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -41,28 +45,33 @@ export default function DeclinedReq() {
 
       {loading ? (
         // Loading indicator
-        <View style={Styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#00425f" />
+        <View
+          style={[Styles.loadingContainer, { backgroundColor: 'transparent' }]}
+        >
+          <ActivityIndicator
+            size="large"
+            color="#00425f"
+            backgroundColor="transparent"
+          />
         </View>
       ) : (
         // Display the data when loading is complete
         <ScrollView>
-        {declinedData.map((decline) => (
-          <DeclinedCard
-            key={decline.id} 
-            icon="account"
-            color={Color.newblue}
-            name={decline.AgentName}
-            agentId={decline.AgentId}  
-            phone={decline.Phone}
-            reason='Agent application declined, click to update agent information'
-            onPress={() => 
-
-              navigation.navigate('EditAttach')
-            }
-          />
-        ))}
-      </ScrollView>
+          {declinedData.map((decline) => (
+            <DeclinedCard
+              key={decline.id}
+              icon="account"
+              color={Color.newblue}
+              name={decline.AgentName}
+              agentId={decline.AgentId}
+              phone={decline.Phone}
+              reason={<Text style={{ color: 'red' }}>{decline.Status}</Text>}
+              date={decline.LogDate}
+              nin={decline.AgentNin}
+              onPress={() => navigation.navigate('EditAttach')}
+            />
+          ))}
+        </ScrollView>
       )}
     </View>
   );

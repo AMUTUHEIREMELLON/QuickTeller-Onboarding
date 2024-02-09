@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, ScrollView, ActivityIndicator } from 'react-native';
+import { View, ScrollView, ActivityIndicator, Text} from 'react-native';
 import TopBar from '../../components/TopBar';
 import DeclinedCard from '../../components/DeclinedCard';
 import Styles from '../../constants/Styles';
@@ -24,7 +24,7 @@ export default function ApprovedReq() {
 
       // Filter out only declined requests
       const filteredData = res.data.response.filter(
-        (item) => item.Status === 'Approved by => mellon.a'
+        (item) => item.CurrentStage === 'FullyApproved'
       );
       setDeclinedData(filteredData);
 
@@ -59,7 +59,7 @@ export default function ApprovedReq() {
             color={Color.newblue}
             agentId={decline.AgentId}  
             phone={decline.Phone}
-            reason={decline.Status}
+            reason={<Text style={{ color: 'green' }}>{decline.CurrentStage}</Text>}
             onPress={() => 
 
               navigation.navigate('#')

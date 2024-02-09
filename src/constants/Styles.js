@@ -172,6 +172,6 @@ export default {
     alignItems: 'center',
     marginTop: 300,
     height: '100%',
-    backgroundColor: 'white',
+    // backgroundColor: 'blue',
   },
 };

@@ -47,7 +47,7 @@ export const locationInfoValidationSchema = yup.object().shape({
   PhysicalLocation: yup.string().required(Messages.requiredMessage),
   GPS_Co_ordinates: yup.string().required(Messages.requiredMessage),
   Region: yup.string().required(Messages.requiredMessage),
-  DistrictLists: yup.string().required(Messages.requiredMessage),
+  District: yup.string().required(Messages.requiredMessage),
   Village: yup.string().required(Messages.requiredMessage),
   LC: yup.string().required(Messages.requiredMessage),
   NumberOfYearsWorkingInArea: yup.number().required(Messages.requiredMessage),

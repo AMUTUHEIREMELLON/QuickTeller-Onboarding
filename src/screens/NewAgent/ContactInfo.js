@@ -184,6 +184,7 @@ function ContactInfo(props) {
               outlineColor={Color.blueMunsell}
               mode="outlined"
               label="Phone"
+              name="Phone"
               value={phone}
               maxLength={10}
               // onChangeText={(id) => setId(id)}
