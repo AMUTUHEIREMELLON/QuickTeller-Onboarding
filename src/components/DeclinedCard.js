@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     // paddingLeft: '40%',
     // borderWidth: 0,
     // borderColor: '#E1E6ED',
-    backgroundColor: '#E1F2FE',
+    backgroundColor: '#FAF9F6',
   },
   textStyle: {
     textAlign: 'left',
@@ -96,6 +96,12 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     flexDirection: 'row',
-    marginLeft: 0,
+    marginBottom: 10,
+    // backgroundColor: 'blue'
   },
+  rowContainer2: {
+    marginTop: 40,
+    
+  },
+  
 });

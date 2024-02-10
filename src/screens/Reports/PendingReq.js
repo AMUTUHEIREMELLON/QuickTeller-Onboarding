@@ -55,7 +55,7 @@ export default function PendingReq() {
             color={Color.newblue}
             agentId={decline.AgentId}  
             phone={decline.Phone}
-            reason={decline.Status}
+            reason={<Text style={{ color: 'yellow' }}>{decline.Status}</Text>}
             onPress={() => 
 
               navigation.navigate('#')
