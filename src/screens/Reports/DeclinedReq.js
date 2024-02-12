@@ -4,60 +4,26 @@ import { View, ScrollView, ActivityIndicator, Text } from 'react-native';
 import TopBar from '../../components/TopBar';
 import DeclinedCard from '../../components/DeclinedCard';
 import Styles from '../../constants/Styles';
+import { declinedRes } from '../../helpers/request';
 import Color from '../../constants/Colors';
 import axios from 'axios';
 
 export default function DeclinedReq() {
-  const [loading, setLoading] = useState(true);
-  const [declinedData, setDeclinedData] = useState([]);
 
 
 
-  useEffect(() => {
-    fetchData();
-  }, []);
 
-  const fetchData = async () => {
-    try {
-      const res = await axios.get(
-        'https://paypointt.azurewebsites.net/api/AgentApplic/GetBspApplications?userId=26434&dateRange=12/18/2023 - 12/18/2024'
-      );
-      console.log('response on declined data', res);
-
-      // Filter out only declined requests
-      const filteredData = res.data.response.filter(
-        (item) => item.Status === 'Declined Application'
-      );
-      setDeclinedData(filteredData);
-
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      setLoading(false);
-    }
-  };
 
   const navigation = useNavigation();
 
   return (
     <View style={Styles.mainContainer}>
-      <TopBar title="Declined Requests" onPress={() => navigation.goBack()} />
+      <TopBar title="Declined Applications" onPress={() => navigation.goBack()} />
 
-      {loading ? (
-        // Loading indicator
-        <View
-          style={[Styles.loadingContainer, { backgroundColor: 'transparent' }]}
-        >
-          <ActivityIndicator
-            size="large"
-            color="#00425f"
-            backgroundColor="transparent"
-          />
-        </View>
-      ) : (
-        // Display the data when loading is complete
+     
+      
         <ScrollView>
-          {declinedData.map((decline) => (
+          {declinedRes.map((decline) => (
             <DeclinedCard
               key={decline.id}
               icon="account"
@@ -72,7 +38,7 @@ export default function DeclinedReq() {
             />
           ))}
         </ScrollView>
-      )}
+   
     </View>
   );
 }

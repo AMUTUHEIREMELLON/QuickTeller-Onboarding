@@ -11,7 +11,7 @@ const postApplication = async (data) => {
     if (data) {
       const res = await paypointAxios.post(
         '/api/AgentApplic/CreateApplication',
-        data,
+        data
       );
       let statusCode = res.data.code || res.data.Code;
       if (statusCode === '9000') {
@@ -119,6 +119,90 @@ const uploadFile = async (result, formData) => {
   }
 };
 
+// // Define arrays outside the function to make them accessible globally
+// let newApp = [];
+// let pendingRes = [];
+// let declinedRes = [];
+// let approvedRes = [];
+
+// const getBSPApplications = async (
+//   fromText,
+//   toText,
+//   setNewReq,
+//   setPending,
+//   setDeclined,
+//   setApproved,
+//   setUserDetails,
+//   setData // New parameter to receive fetched data
+// ) => {
+//   try {
+//     const res = await paypointAxios.get('/api/AgentApplic/GetBspApplications', {
+//       params: {
+//         userId: setUserDetails.UserId,
+//         dateRange: `${fromText} - ${toText}`,
+//       },
+//       headers: {
+//         Accept: '*/*',
+//       },
+//     });
+
+//     let resLength = res.data.response.length;
+//     let docs = res.data.response;
+//     console.info('REPORTS:', docs);
+
+//     // Reset arrays
+//     newApp = [];
+//     pendingRes = [];
+//     declinedRes = [];
+//     approvedRes = [];
+
+//     if (resLength > 0) {
+//       docs.forEach((doc) => {
+//         let currentStage = doc.CurrentStage;
+//         switch (currentStage) {
+//           case 'NewRequest':
+//             newApp.push(doc);
+//             break;
+//           case 'PendingBOU':
+//             pendingRes.push(doc);
+//             break;
+//           case 'DeclinedBOU':
+//             declinedRes.push(doc);
+//             break;
+//           case 'FullyApproved':
+//             approvedRes.push(doc);
+//             break;
+//           default:
+//             break;
+//         }
+//       });
+
+//       // Set the fetched data using the provided setData function
+//       setData({
+//         newApp,
+//         pendingRes,
+//         declinedRes,
+//         approvedRes
+//       });
+
+//       // Update other state variables if needed
+//       setNewReq(newApp.length.toString());
+//       setPending(pendingRes.length.toString());
+//       setDeclined(declinedRes.length.toString());
+//       setApproved(approvedRes.length.toString());
+//     } else {
+//       alert('You have no application Records.');
+//     }
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
+
+let newApp = [];
+let pendingRes = [];
+let declinedRes = [];
+let approvedRes = [];
+
 const getBSPApplications = async (
   fromText,
   toText,
@@ -129,28 +213,24 @@ const getBSPApplications = async (
   userDetails
 ) => {
   try {
-    const res = await paypointAxios.get(
-      '/api/AgentApplic/GetBspApplications',
-      {
-        params: {
-          userId: userDetails.UserId,
-          dateRange: `${fromText} - ${toText}`,
-        },
-        headers: {
-          Accept: '*/*',
-        },
-      }
-    );
-
-    console.log(res.data);
+    const res = await paypointAxios.get('/api/AgentApplic/GetBspApplications', {
+      params: {
+        userId: userDetails.UserId,
+        dateRange: `${fromText} - ${toText}`,
+      },
+      headers: {
+        Accept: '*/*',
+      },
+    });
 
     let resLength = res.data.response.length;
     let docs = res.data.response;
+    console.info('REPORTS:', docs);
 
-    let newApp = [];
-    let pendingRes = [];
-    let declinedRes = [];
-    let approvedRes = [];
+    // let newApp = [];
+    // let pendingRes = [];
+    // let declinedRes = [];
+    // let approvedRes = [];
 
     if (resLength > 0) {
       docs.forEach((doc) => {
@@ -162,7 +242,7 @@ const getBSPApplications = async (
           case 'PendingBOU':
             pendingRes.push(doc);
             break;
-          case 'DeclinedBOU':
+          case 'DeclinedApplication':
             declinedRes.push(doc);
             break;
           case 'FullyApproved':
@@ -176,12 +256,15 @@ const getBSPApplications = async (
       setPending(pendingRes.length.toString());
       setDeclined(declinedRes.length.toString());
       setApproved(approvedRes.length.toString());
+      //filter out pending and approved. push to the applications/reports store
     } else {
       alert('You have no application Records.');
     }
   } catch (error) {
     console.error(error);
   }
+
+  console.info('DECLINED HERE', declinedRes )
 };
 
 const getRegions = async (setRegionList) => {
@@ -226,7 +309,7 @@ const getDistricts = async (selectedRegion, setDistrictList) => {
 
 const getCounties = async (selectedDistrict, setCountyList) => {
   try {
-    const res = await paypointAxios.get('/api/Location/GetCounties', { 
+    const res = await paypointAxios.get('/api/Location/GetCounties', {
       params: {
         district: selectedDistrict,
       },
@@ -254,4 +337,8 @@ export {
   getRegions,
   getDistricts,
   getCounties,
+  newApp,
+  pendingRes,
+  declinedRes,
+  approvedRes,
 };
