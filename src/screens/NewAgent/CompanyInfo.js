@@ -14,7 +14,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addNewAgentFormData } from '../../redux/reducers/formSlice';
 
 function CompanyInfo(props) {
-
   const { onFormSubmit } = props;
 
   const licensed = [
@@ -24,6 +23,17 @@ function CompanyInfo(props) {
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
+
+  const { DirectorName } = useSelector((state) => state.formDataStore.newAgent);
+
+  const { NumberOfOutlets } = useSelector(
+    (state) => state.formDataStore.newAgent
+  );
+  const { UraTin } = useSelector((state) => state.formDataStore.newAgent);
+
+  const { NatureOfBusiness } = useSelector(
+    (state) => state.formDataStore.newAgent
+  );
 
   return (
     <View style={Styles.dropContainer}>
@@ -37,17 +47,16 @@ function CompanyInfo(props) {
             validateOnMount={true}
             validateOnBlur={true}
             initialValues={{
-              DirectorName: '',
-              UraTin: '',
-              NumberOfOutlets: '',
-              // CompanyWebsite: '',
+              DirectorName: DirectorName,
+              UraTin: UraTin,
+              NumberOfOutlets: NumberOfOutlets,
+              NatureOfBusiness: NatureOfBusiness,
               IsLicensedBusiness: '',
             }}
             onSubmit={(values) => {
-              dispatch(addNewAgentFormData(values))
+              dispatch(addNewAgentFormData(values));
               navigation.navigate('AgentKyc');
               onFormSubmit(); // Call the callback function from props
-
             }}
           >
             {({
@@ -63,6 +72,7 @@ function CompanyInfo(props) {
                   component={TextField}
                   name="DirectorName"
                   label="Director Full Name * "
+                  onChange={handleChange('DirectorName')}
                 />
 
                 <Field
@@ -70,6 +80,7 @@ function CompanyInfo(props) {
                   name="NumberOfOutlets"
                   label="Number of Outlets *"
                   keyboardType="numeric"
+                  onChange={handleChange('NumberOfOutlets')}
                 />
 
                 <>
@@ -79,6 +90,7 @@ function CompanyInfo(props) {
                     label="URA TIN (optional) *"
                     keyboardType="numeric"
                     maxLength={15}
+                    onChange={handleChange('UraTin')}
                   />
                   {/* <Field
                     component={TextField}
@@ -89,6 +101,7 @@ function CompanyInfo(props) {
                     component={TextField}
                     name="NatureOfBusiness"
                     label="Nature Of Business"
+                    onChange={handleChange('NatureOfBusiness')}
                   />
                   {/* <Field
                     component={Radio}

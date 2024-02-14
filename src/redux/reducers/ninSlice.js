@@ -129,6 +129,8 @@ const smileDataSlice = createSlice({
         state.isLoading = false;
         console.log('Fetching ', action.payload)
         if (action.payload.responseCode === 90000) {
+          
+
           // state.dob = action.payload.FullData.dateOfBirth;
           // state.dateText = new Date(state.dob).toLocaleDateString();
           state.agentName = action.payload.response.name;
