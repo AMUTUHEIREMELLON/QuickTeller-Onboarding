@@ -3,7 +3,7 @@ import { Text, View, ScrollView } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { Formik, Field } from 'formik';
 import * as Location from 'expo-location';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import DistrictsList from '../../components/DistrictsList';
 import Color from '../../constants/Colors';
 
@@ -22,6 +22,19 @@ function LocationInfo(props) {
   const { onFormSubmit } = props;
 
   const [selectedDistrict, setSelectedDistrict] = useState(null);
+
+  const { Region } = useSelector((state) => state.formDataStore.newAgent);
+  const { District } = useSelector((state) => state.formDataStore.newAgent);
+  const { Village } = useSelector((state) => state.formDataStore.newAgent);
+  const { LC } = useSelector((state) => state.formDataStore.newAgent);
+  const { PhysicalLocation } = useSelector((state) => state.formDataStore.newAgent);
+  const { GPS_Co_ordinates } = useSelector((state) => state.formDataStore.newAgent);
+  const { NumberOfYearsWorkingInArea } = useSelector((state) => state.formDataStore.newAgent);
+  const { BuildingName } = useSelector((state) => state.formDataStore.newAgent);
+  const { TypeofShop } = useSelector((state) => state.formDataStore.newAgent);
+const { RuralUrban } = useSelector((state) => state.formDataStore.newAgent);
+const { ResidentinArea } = useSelector((state) => state.formDataStore.newAgent);
+const { Ownership } = useSelector((state) => state.formDataStore.newAgent);
 
   const handleDistrictChange = (value) => {
     setSelectedDistrict(value);
@@ -206,19 +219,19 @@ function LocationInfo(props) {
             validateOnMount={true}
             initialValues={{
               GPS_Co_ordinates: location,
-              PhysicalLocation: '',
-              Region: '',
-              District: '',
-              Village: '',
-              LC: '',
-              NumberOfYearsWorkingInArea: '',
-              TypeofShop: '',
-              RuralUrban: '',
-              ResidentinArea: '',
-              Ownership: '',
+              PhysicalLocation: PhysicalLocation,
+              Region: Region,
+              District: District,
+              Village: Village,
+              LC: LC,
+              NumberOfYearsWorkingInArea: NumberOfYearsWorkingInArea,
+              TypeofShop: TypeofShop,
+              RuralUrban: RuralUrban,
+              ResidentinArea: ResidentinArea,
+              Ownership: Ownership,
               // PostalAddress: '',
               // StreetName: '',
-              BuildingName: '',
+              BuildingName: BuildingName,
             }}
             onSubmit={(values) => {
               dispatch(addNewAgentFormData(values));
@@ -261,15 +274,16 @@ function LocationInfo(props) {
                   <Text style={Styles.errorText}>{errors.District}</Text>
                 )}
 
-                <Field component={TextField} name="Village" label="Village *" />
+                <Field component={TextField} name="Village" label="Village *" onChange={handleChange('Village')}/>
 
-                <Field component={TextField} name="LC" label="LC1 *" />
+                <Field component={TextField} name="LC" label="LC1 *" onChange={handleChange('LC')}/>
 
                 <Field
                   component={TextField}
                   name="PhysicalLocation"
                   label="Physical 
                   Location *"
+                  onChange={handleChange('PhysicalLocation')}
                 />
 
                 <Field
@@ -285,6 +299,7 @@ function LocationInfo(props) {
                   name="NumberOfYearsWorkingInArea"
                   label="Number of years working in area"
                   keyboardType="numeric"
+                  onChange={handleChange('NumberOfYearsWorkingInArea')}
                 />
                 {/* <Field
                   component={TextField}
@@ -300,6 +315,7 @@ function LocationInfo(props) {
                   component={TextField}
                   name="BuildingName"
                   label="Building Name"
+                  onChange={handleChange('BuildingName')}
                 />
 
                 <Field
