@@ -129,18 +129,28 @@ const smileDataSlice = createSlice({
         state.isLoading = false;
         console.log('Fetching ', action.payload)
         if (action.payload.responseCode === 90000) {
-          
+
+          if (action.payload.response.validationMode === 'nin') {
+
+          state.dob = action.payload.FullData.dateOfBirth;
+          state.dateText = new Date(state.dob).toLocaleDateString();
+          state.agentName = action.payload.response.name;
+          state.gender = action.payload.Gender;
+
+        }if (action.payload.response.validationMode === 'phone') {
 
           // state.dob = action.payload.FullData.dateOfBirth;
           // state.dateText = new Date(state.dob).toLocaleDateString();
           state.agentName = action.payload.response.name;
           console.info('payload here', action.payload.response.name);
           // state.gender = action.payload.Gender;
-        } else {
+        
+        }else {
           state.snackbarMessage = 'action.payload.ResultText';
           state.snackbarVisible = true;
           state.error = 'action.payload.ResultTex';
         }
+      }
       })
       .addCase(fetchSmileData.rejected, (state, action) => {
         state.isLoading = false;
