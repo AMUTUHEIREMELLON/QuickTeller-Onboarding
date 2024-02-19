@@ -19,15 +19,15 @@ export default function NewAccount() {
   const navigation = useNavigation();
   const route = useRoute();
 
-  const agentData = route.params;
-  const terminalAgentNin = agentData.response.AgentNin;
-  const terminalAgentName = agentData.response.AgentName;
-  const terminalDateOfBirth = agentData.response.DateOfBirth;
-  const terminalSex = agentData.response.Sex;
-  const terminalPhone = agentData.response.Phone;
-  const terminalEmail = agentData.response.Email;
-  const terminalAgentTin = agentData.response.TIN_No;
-  const terminalNatureofBusiness = agentData.response.NatureofBusiness;
+  // const agentData = route.params;
+  // const terminalAgentNin = agentData.response.AgentNin;
+  // const terminalAgentName = agentData.response.AgentName;
+  // const terminalDateOfBirth = agentData.response.DateOfBirth;
+  // const terminalSex = agentData.response.Sex;
+  // const terminalPhone = agentData.response.Phone;
+  // const terminalEmail = agentData.response.Email;
+  // const terminalAgentTin = agentData.response.TIN_No;
+  // const terminalNatureofBusiness = agentData.response.NatureofBusiness;
 
   const agentTypes = [
     { key: '1', value: 'Individual' },
@@ -45,22 +45,23 @@ export default function NewAccount() {
             enableReinitialize={true}
             // validationSchema={validationSchema.contactInfoValidationSchema}
             initialValues={{
-              terminalAgentNin,
-              terminalAgentName,
-              terminalDateOfBirth,
-              terminalSex,
-              terminalPhone,
-              terminalEmail,
-              terminalAgentTin,
-              terminalNatureofBusiness,
+              // terminalAgentNin,
+              // terminalAgentName,
+              // terminalDateOfBirth,
+              // terminalSex,
+              // terminalPhone,
+              // terminalEmail,
+              // terminalAgentTin,
+              // terminalNatureofBusiness,
             }}
             onSubmit={() => {
-              let agentData = route.params;
-              console.info({ ...agentData });
-              console.log({ ...agentData.response });
-              console.log(agentData.response.ActivityStatus);
+              // let agentData = route.params;
+              // console.info({ ...agentData });
+              // console.log({ ...agentData.response });
+              // console.log(agentData.response.ActivityStatus);
               // dispatch(addNewAgentFormData({ ...values, ...agentData }))
-              navigation.navigate('EditAttach', { ...agentData });
+              // navigation.navigate('EditAttach', { ...agentData });
+              navigation.navigate('EditAttach');
             }}
           >
             {({ handleSubmit, errors, values, handleChange, isValid }) => (
