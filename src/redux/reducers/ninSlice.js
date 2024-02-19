@@ -142,7 +142,7 @@ const smileDataSlice = createSlice({
           // state.dob = action.payload.FullData.dateOfBirth;
           // state.dateText = new Date(state.dob).toLocaleDateString();
           state.agentName = action.payload.response.name;
-          console.info('payload here', action.payload.response.name);
+          // console.info('payload here', action.payload.response.name);
           // state.gender = action.payload.Gender;
         
         }else {
