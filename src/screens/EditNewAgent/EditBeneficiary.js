@@ -12,7 +12,8 @@ import Styles from '../../constants/Styles';
 import { useDispatch } from 'react-redux';
 import { addNewAgentFormData } from '../../redux/reducers/formSlice';
 
-function Beneficiary() {
+function Beneficiary(props) {
+  const { onFormSubmit } = props;
   const relations = [
     { value: 'Mother', label: 'Mother' },
     { value: 'Father', label: 'Father' },
@@ -26,24 +27,26 @@ function Beneficiary() {
 
   const dispatch = useDispatch()
   const route = useRoute();
+  const { decline } = route.params;
   const navigation = useNavigation();
 
   return (
-    <View style={Styles.mainContainer}>
-      <TopBar title="New Agent" onPress={() => navigation.goBack()} />
+    <View style={Styles.dropContainer}>
+      {/* <TopBar title="New Agent" onPress={() => navigation.goBack()} /> */}
       <View style={Styles.formContainer}>
         <Text style={Styles.h1}>Next of Kin / Beneficiary</Text>
         <ScrollView style={Styles.scrollviewStyle}>
           <Formik
             initialValues={{
-              NameofBeneficiary: '',
-              Residence: '',
-              BeneficiaryPhoneNumber: '',
-              BRelationship: '',
+              NameofBeneficiary: decline.NameofBeneficiary,
+              Residence: decline.Residence,
+              BeneficiaryPhoneNumber: decline.BeneficiaryPhoneNumber,
+              BRelationship: decline.BRelationship,
             }}
             onSubmit={(values) => {
               dispatch(addNewAgentFormData(values))
-              navigation.navigate('Attach')
+              onFormSubmit()
+              navigation.navigate('EditAgentKyc')
             }}
           >
             {({ handleSubmit, handleChange, handleBlur, values }) => (

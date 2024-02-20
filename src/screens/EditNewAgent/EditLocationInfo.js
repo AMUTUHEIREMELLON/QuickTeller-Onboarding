@@ -20,22 +20,25 @@ import * as validationSchema from '../../validation/ValidationSchemas';
 import { addNewAgentFormData } from '../../redux/reducers/formSlice';
 
 export default function EditLocationInfo(props) {
+  
   const { onFormSubmit } = props;
+
+
 
   const [selectedDistrict, setSelectedDistrict] = useState(null);
 
-  const { Region } = useSelector((state) => state.formDataStore.newAgent);
-  const { District } = useSelector((state) => state.formDataStore.newAgent);
-  const { Village } = useSelector((state) => state.formDataStore.newAgent);
-  const { LC } = useSelector((state) => state.formDataStore.newAgent);
-  const { PhysicalLocation } = useSelector((state) => state.formDataStore.newAgent);
-  const { GPS_Co_ordinates } = useSelector((state) => state.formDataStore.newAgent);
-  const { NumberOfYearsWorkingInArea } = useSelector((state) => state.formDataStore.newAgent);
-  const { BuildingName } = useSelector((state) => state.formDataStore.newAgent);
-  const { TypeofShop } = useSelector((state) => state.formDataStore.newAgent);
-const { RuralUrban } = useSelector((state) => state.formDataStore.newAgent);
-const { ResidentinArea } = useSelector((state) => state.formDataStore.newAgent);
-const { Ownership } = useSelector((state) => state.formDataStore.newAgent);
+  // const { Region } = useSelector((state) => state.formDataStore.newAgent);
+  // const { District } = useSelector((state) => state.formDataStore.newAgent);
+  // const { Village } = useSelector((state) => state.formDataStore.newAgent);
+  // const { LC } = useSelector((state) => state.formDataStore.newAgent);
+  // const { PhysicalLocation } = useSelector((state) => state.formDataStore.newAgent);
+  // const { GPS_Co_ordinates } = useSelector((state) => state.formDataStore.newAgent);
+  // const { NumberOfYearsWorkingInArea } = useSelector((state) => state.formDataStore.newAgent);
+  // const { BuildingName } = useSelector((state) => state.formDataStore.newAgent);
+  // const { TypeofShop } = useSelector((state) => state.formDataStore.newAgent);
+  // const { RuralUrban } = useSelector((state) => state.formDataStore.newAgent);
+  // const { ResidentinArea } = useSelector((state) => state.formDataStore.newAgent);
+  // const { Ownership } = useSelector((state) => state.formDataStore.newAgent);
 
   const handleDistrictChange = (value) => {
     setSelectedDistrict(value);
@@ -205,6 +208,8 @@ const { Ownership } = useSelector((state) => state.formDataStore.newAgent);
 
   const dispatch = useDispatch();
   const route = useRoute();
+  const { decline } = route.params;
+
   const navigation = useNavigation();
 
   return (
@@ -219,24 +224,24 @@ const { Ownership } = useSelector((state) => state.formDataStore.newAgent);
             validateOnBlur={true}
             validateOnMount={true}
             initialValues={{
-              GPS_Co_ordinates: location,
-              PhysicalLocation: PhysicalLocation,
-              Region: Region,
-              District: District,
-              Village: Village,
-              LC: LC,
-              NumberOfYearsWorkingInArea: NumberOfYearsWorkingInArea,
-              TypeofShop: TypeofShop,
-              RuralUrban: RuralUrban,
-              ResidentinArea: ResidentinArea,
-              Ownership: Ownership,
+              GPS_Co_ordinates: decline.GPS_Co_ordinates,
+              PhysicalLocation: decline.PhysicalLocation,
+              Region: decline.Region,
+              District: decline.District,
+              Village: decline.Village,
+              LC: decline.LC,
+              // NumberOfYearsWorkingInArea: NumberOfYearsWorkingInArea,
+              TypeofShop: decline.TypeofShop,
+              RuralUrban: decline.RuralUrban,
+              ResidentinArea: decline.ResidentinArea,
+              Ownership: decline.Ownership,
               // PostalAddress: '',
               // StreetName: '',
-              BuildingName: BuildingName,
+              BuildingName: decline.BuildingName,
             }}
             onSubmit={(values) => {
               dispatch(addNewAgentFormData(values));
-              navigation.navigate('AgentKyc');
+              navigation.navigate('EditAgentKyc');
               onFormSubmit(); // Call the callback function from props
             }}
           >
@@ -275,9 +280,19 @@ const { Ownership } = useSelector((state) => state.formDataStore.newAgent);
                   <Text style={Styles.errorText}>{errors.District}</Text>
                 )}
 
-                <Field component={TextField} name="Village" label="Village *" onChange={handleChange('Village')}/>
+                <Field
+                  component={TextField}
+                  name="Village"
+                  label="Village *"
+                  onChange={handleChange('Village')}
+                />
 
-                <Field component={TextField} name="LC" label="LC1 *" onChange={handleChange('LC')}/>
+                <Field
+                  component={TextField}
+                  name="LC"
+                  label="LC1 *"
+                  onChange={handleChange('LC')}
+                />
 
                 <Field
                   component={TextField}
@@ -379,4 +394,3 @@ const { Ownership } = useSelector((state) => state.formDataStore.newAgent);
     </View>
   );
 }
-

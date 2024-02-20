@@ -34,7 +34,7 @@ export default function DeclinedReq() {
               reason={<Text style={{ color: 'red' }}>{decline.Status}</Text>}
               date={decline.LogDate}
               nin={decline.AgentNin}
-              onPress={() => navigation.navigate('EditAgentKyc')}
+              onPress={() => navigation.navigate('EditAgentKyc', { decline })}
             />
           ))}
         </ScrollView>
