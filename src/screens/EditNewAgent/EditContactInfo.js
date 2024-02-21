@@ -31,7 +31,8 @@ export default function NewAccount(props) {
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [text, setText] = useState('');
-
+  const [noNinDob, setNoNinDob] = useState('');
+ const maxDate = moment().subtract(18, 'years');
   const showDatePicker = () => {
     setOpen(true);
   };
@@ -44,7 +45,7 @@ export default function NewAccount(props) {
     setText(moment(value).format('LL'));
   };
 
-  const maxDate = moment().subtract(18, 'years');
+ 
 
   const genders = [
     { label: 'Male', value: '1' },
@@ -68,6 +69,7 @@ export default function NewAccount(props) {
               terminalPhone: decline.Phone,
               terminalEmail: decline.Email,
               Sex: decline.Sex,
+              DateOfBirth: decline.DateOfBirth,
             }}
             onSubmit={() => {
               // let agentData = route.params;
@@ -82,11 +84,11 @@ export default function NewAccount(props) {
           >
             {({
               handleSubmit,
+              handleBlur,
               errors,
               values,
               handleChange,
               isValid,
-              handleBlur,
             }) => (
               <>
                 <Field
@@ -103,29 +105,29 @@ export default function NewAccount(props) {
                   editable={true}
                 />
                 <>
-                  <TextInput
-                    label="Date of Birth"
-                    name="DateOfBirth"
-                    value={text}
-                    onPressIn={showDatePicker}
-                    showSoftInputOnFocus={false}
-                    selectionColor={Color.silverChalice}
-                    mode="outlined"
-                    activeOutlineColor={Color.darkBlue}
-                    style={Styles.textInput}
-                    // editable={!ninError === null}
-                  />
-
-                  {open && (
-                    <DateTimePicker
-                      value={date}
-                      maximumDate={new Date(maxDate)}
-                      mode={'date'}
-                      display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-                      onChange={onDateSelected}
-                      // editable={ninError === null}
-                    />
-                  )}
+                    <TextInput
+                      label="Date of Birth"
+                      name="DateOfBirth"
+                      value={text}
+                      onPressIn={showDatePicker}
+                      showSoftInputOnFocus={false}
+                      selectionColor={Color.silverChalice}
+                      mode="outlined"
+                      activeOutlineColor={Color.darkBlue}
+                      style={Styles.textInput}
+                      // editable={!ninError === null}
+                    /> 
+                    {open && (
+                      <DateTimePicker
+                        value={date}
+                        maximumDate={new Date(maxDate)}
+                        mode={'date'}
+                        display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                        onChange={onDateSelected}
+                        // editable={ninError === null}
+                        
+                      />
+                      )} 
                 </>
                 <Field
                   component={Select}
