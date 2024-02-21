@@ -81,7 +81,7 @@ export const fetchSmileData = createAsyncThunk(
 const smileDataSlice = createSlice({
   name: 'smileData',
   initialState: {
-    dob: '',
+    dateOfBirth: '',
     dateText: '',
     agentName: '',
     gender: '',
@@ -89,10 +89,11 @@ const smileDataSlice = createSlice({
     snackbarVisible: false,
     isLoading: false,
     error: null,
+    validationMode: '',
   },
   reducers: {
     clearNinDetails: (state) => {
-      state.dob = '';
+      state.dateOfBirth = '';
       state.dateText = '';
       state.agentName = '';
       state.gender = '';
@@ -100,9 +101,10 @@ const smileDataSlice = createSlice({
       state.snackbarVisible = false;
       state.isLoading = false;
       state.error = null;
+      state.validationMode = '';
     },
     setDob: (state, action) => {
-      state.dob = action.payload;
+      state.dateOfBirth = action.payload.response.dateOfBirth;
     },
     setDateText: (state, action) => {
       state.dateText = action.payload;
@@ -111,13 +113,16 @@ const smileDataSlice = createSlice({
       state.agentName = action.payload.response.name;
     },
     setGender: (state, action) => {
-      state.gender = action.payload;
+      state.gender = action.payload.response.gender;
     },
     setSnackbarMessage: (state, action) => {
       state.snackbarMessage = action.payload;
     },
     setSnackbarVisible: (state, action) => {
       state.snackbarVisible = action.payload;
+    },
+    setValidationMode: (state, action) => { // New reducer to set validationMode
+      state.validationMode = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -132,10 +137,11 @@ const smileDataSlice = createSlice({
 
           if (action.payload.response.validationMode === 'nin') {
 
-          state.dob = action.payload.FullData.dateOfBirth;
-          state.dateText = new Date(state.dob).toLocaleDateString();
+          state.dateOfBirth = action.payload.response.dateOfBirth;
+          state.dateText = new Date(state.dateOfBirth).toLocaleDateString();
           state.agentName = action.payload.response.name;
-          state.gender = action.payload.Gender;
+          state.gender = action.payload.response.gender;
+          state.validationMode = action.payload.response.validationMode;
 
         }if (action.payload.response.validationMode === 'phone') {
 
