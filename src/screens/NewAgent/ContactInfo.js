@@ -214,7 +214,7 @@ const { AgentNin } = useSelector((state) => state.formDataStore.newAgent);
               AgentNin: AgentNin || id,
               DateOfBirth: DateOfBirth || dateOfBirth,
               Email: Email,
-              Sex: Sex || (gender === 'M' ? 1 : 2),
+              Sex: Sex || gender,
             }}
             onSubmit={(values) => {
               if (validationMode === 'nin') {
@@ -282,7 +282,7 @@ const { AgentNin } = useSelector((state) => state.formDataStore.newAgent);
                       component={TextField}
                       name="Sex"
                       label="Gender"
-                      value={Sex || (gender === 'M' ? 1 : 2)}
+                      value={Sex || gender }
                       editable={false}
                     />
                   </>
