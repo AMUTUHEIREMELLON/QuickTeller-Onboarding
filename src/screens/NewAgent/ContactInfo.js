@@ -39,8 +39,14 @@ function ContactInfo(props) {
   const [name, setName] = useState('');
 
   const { newAgent } = useSelector((store) => store.formDataStore);
+  const { AgentName } = useSelector((state) => state.formDataStore.newAgent);
+const { Email } = useSelector((state) => state.formDataStore.newAgent);
+const { Sex } = useSelector((state) => state.formDataStore.newAgent);
+const { DateOfBirth } = useSelector((state) => state.formDataStore.newAgent);
+const { AgentNin } = useSelector((state) => state.formDataStore.newAgent);
 
   const { agentName } = useSelector((store) => store.ninDataStore);
+
   // console.log('logged data',  agentName)
 
   const { dateOfBirth } = useSelector((store) => store.ninDataStore);
@@ -145,7 +151,7 @@ function ContactInfo(props) {
               outlineColor={Color.blueMunsell}
               mode="outlined"
               label="Agent NIN"
-              value={id}
+              value={AgentNin || id}
               maxLength={14}
               // onChangeText={(id) => setId(id)}
               onChangeText={(text) => setId(text)}
@@ -204,11 +210,11 @@ function ContactInfo(props) {
             enableReinitialize={true}
             // validationSchema={validationSchema.contactInfoValidationSchema}
             initialValues={{
-              AgentName: newAgent.AgentName || agentName,
-              AgentNin: newAgent.AgentNin || id,
-              DateOfBirth: newAgent.DateOfBirth || dateOfBirth,
-              Email: newAgent.Email || '',
-              Sex: newAgent.Sex || (gender === 'M' ? 1 : 2),
+              AgentName: AgentName || agentName,
+              AgentNin: AgentNin || id,
+              DateOfBirth: DateOfBirth || dateOfBirth,
+              Email: Email,
+              Sex: Sex || (gender === 'M' ? 1 : 2),
             }}
             onSubmit={(values) => {
               if (validationMode === 'nin') {
@@ -257,7 +263,7 @@ function ContactInfo(props) {
                 <Field
                   component={TextField}
                   name="AgentName"
-                  value={agentName}
+                  value={AgentName || agentName}
                   label="Agent Full Name *"
                   // editable={!ninError ? false : true}
                 />
@@ -268,7 +274,7 @@ function ContactInfo(props) {
                       component={TextField}
                       name="DateOfBirth"
                       label="Date of Birth"
-                      value={dateOfBirth}
+                      value={DateOfBirth || dateOfBirth}
                       editable={false}
                     />
 
@@ -276,7 +282,7 @@ function ContactInfo(props) {
                       component={TextField}
                       name="Sex"
                       label="Gender"
-                      value={gender}
+                      value={Sex || (gender === 'M' ? 1 : 2)}
                       editable={false}
                     />
                   </>
