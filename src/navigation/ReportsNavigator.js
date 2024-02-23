@@ -14,6 +14,7 @@ import EditLocationInfo from '../screens/EditNewAgent/EditLocationInfo';
 import EditCompanyInfo from '../screens/EditNewAgent/EditCompanyInfo';
 import EditAttach from '../screens/EditNewAgent/EditAttach';
 import EditTerms from '../screens/EditNewAgent/EditTerms';
+import EditDropdownForms from '../screens/Reports/editDropdwnScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -48,6 +49,12 @@ function ReportsNavigator(props) {
         name="DeclinedReq"
         component={DeclinedReq}
         options={{ headerTitle: 'Declined Requests' }}
+      />
+
+      <Stack.Screen
+        name="EditAgentKyc"
+        component={EditDropdownForms}
+        options={{ headerTitle: 'edit Dropdown forms', headerLeft: () => null }}
       />
 
       <Stack.Screen

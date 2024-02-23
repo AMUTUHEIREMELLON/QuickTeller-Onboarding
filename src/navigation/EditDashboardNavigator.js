@@ -1,4 +1,4 @@
- import React from 'react';
+import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // Import Screens
@@ -9,7 +9,8 @@ import EditCompanyInfo from '../screens/EditNewAgent/EditCompanyInfo';
 import EditLocationInfo from '../screens/EditNewAgent/EditLocationInfo';
 import EditTerms from '../screens/EditNewAgent/EditTerms';
 import EditAttach from '../screens/EditNewAgent/EditAttach';
-import EditContactInfo from "../screens/EditNewAgent/EditContactInfo"
+import EditContactInfo from '../screens/EditNewAgent/EditContactInfo';
+import EditDropdownForms from '../screens/Reports/editDropdwnScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +22,12 @@ function EditDashboardNavigator(props) {
         component={EditAgentType}
         options={{ headerTitle: 'Agent Type', headerLeft: () => null }}
       />
+      <Stack.Screen
+        name="EditAgentKyc"
+        component={EditDropdownForms}
+        options={{ headerTitle: 'edit Dropdown forms', headerLeft: () => null }}
+      />
+
       <Stack.Screen
         name="EditContactInfo"
         component={EditContactInfo}

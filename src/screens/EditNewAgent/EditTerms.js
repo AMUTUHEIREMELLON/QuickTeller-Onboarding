@@ -122,7 +122,7 @@ function Terms() {
                 )}
 
                 <Button
-                  style={Styles.nextButtonStyle}
+                  style={Styles.nextButtonStyles}
                   onPress={handleSubmit}
                   title="Submit"
                   disabled={!isValid}

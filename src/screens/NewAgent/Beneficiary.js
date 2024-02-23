@@ -9,8 +9,11 @@ import Select from '../../components/Select';
 import Button from '../../components/Button';
 
 import Styles from '../../constants/Styles';
-import { useDispatch } from 'react-redux';
-import { addNewAgentFormData } from '../../redux/reducers/formSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  addNewAgentFormData,
+  formDataSelector,
+} from '../../redux/reducers/formSlice';
 
 function Beneficiary(props) {
   const { onFormSubmit } = props;
@@ -26,9 +29,21 @@ function Beneficiary(props) {
     { value: 'Other', label: 'Other' },
   ];
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const route = useRoute();
   const navigation = useNavigation();
+
+  // const newAgent = useSelector(formDataSelector);
+  const { NameofBeneficiary } = useSelector(
+    (state) => state.formDataStore.newAgent
+  );
+  const { BRelationship } = useSelector(
+    (state) => state.formDataStore.newAgent
+  );
+  const { BeneficiaryPhoneNumber } = useSelector(
+    (state) => state.formDataStore.newAgent
+  );
+  const { Residence } = useSelector((state) => state.formDataStore.newAgent);
 
   return (
     <View style={Styles.dropContainer}>
@@ -37,17 +52,17 @@ function Beneficiary(props) {
         <Text style={Styles.h1}>Next of Kin / Beneficiary</Text>
         <ScrollView style={Styles.scrollviewStyle}>
           <Formik
+            // initialValues={newAgent}
             initialValues={{
-              NameofBeneficiary: '',
-              Residence: '',
-              BeneficiaryPhoneNumber: '',
-              BRelationship: '',
+              NameofBeneficiary: NameofBeneficiary,
+              Residence: Residence,
+              BeneficiaryPhoneNumber: BeneficiaryPhoneNumber,
+              BRelationship: BRelationship,
             }}
             onSubmit={(values) => {
-              dispatch(addNewAgentFormData(values))
-              navigation.navigate('AgentKyc')
+              dispatch(addNewAgentFormData(values));
+              navigation.navigate('AgentKyc');
               onFormSubmit(); // Call the callback function from props
-
             }}
           >
             {({ handleSubmit, handleChange, handleBlur, values }) => (
@@ -56,12 +71,15 @@ function Beneficiary(props) {
                   component={TextField}
                   name="NameofBeneficiary"
                   label="Beneficiary/Next of Kin Full Name"
+                  // value={NameofBeneficiary || ''}
+                  onChange={handleChange('NameofBeneficiary')}
                 />
 
                 <Field
                   component={TextField}
                   name="Residence"
                   label="Residence"
+                  onChange={handleChange('Residence')}
                 />
 
                 <Field
@@ -69,6 +87,7 @@ function Beneficiary(props) {
                   name="BeneficiaryPhoneNumber"
                   label="Phone Number (07-- --- ---)"
                   keyboardType="numeric"
+                  onChange={handleChange('BeneficiaryPhoneNumber')}
                 />
 
                 <Field

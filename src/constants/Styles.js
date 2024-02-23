@@ -102,6 +102,20 @@ export default {
     borderRadius: 15,
     padding: '3%',
   },
+
+  nextButtonStyles: {
+    width: '55%',
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginBottom: '7%',
+    marginTop: '19%',
+    backgroundColor: Color.darkBlue,
+    borderRadius: 15,
+    padding: '3%',
+  },
+
+
+
   radioButtonContainer: {
     alignItems: 'center',
     flexDirection: 'row',

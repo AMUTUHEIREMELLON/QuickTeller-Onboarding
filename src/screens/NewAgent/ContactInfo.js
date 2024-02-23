@@ -22,7 +22,6 @@ import * as validationSchema from '../../validation/ValidationSchemas';
 import { makeSignature } from '../../helpers/makeSignature';
 import axios from 'axios';
 
-
 import { addNewAgentFormData } from '../../redux/reducers/formSlice';
 import {
   clearNinDetails,
@@ -37,33 +36,40 @@ function ContactInfo(props) {
 
   const [id, setId] = useState('');
   const [phone, setPhone] = useState('');
- const [name, setName] = useState('');
-  
-  const { agentName } = useSelector((store) => store.ninDataStore);
-  console.log('logged data',  agentName)
+  const [name, setName] = useState('');
 
-  const { dob } = useSelector((store) => store.ninDataStore);
+  const { newAgent } = useSelector((store) => store.formDataStore);
+  const { AgentName } = useSelector((state) => state.formDataStore.newAgent);
+const { Email } = useSelector((state) => state.formDataStore.newAgent);
+const { Sex } = useSelector((state) => state.formDataStore.newAgent);
+const { DateOfBirth } = useSelector((state) => state.formDataStore.newAgent);
+const { AgentNin } = useSelector((state) => state.formDataStore.newAgent);
+
+  const { agentName } = useSelector((store) => store.ninDataStore);
+
+  // console.log('logged data',  agentName)
+
+  const { dateOfBirth } = useSelector((store) => store.ninDataStore);
+
   const { dateText } = useSelector((store) => store.ninDataStore);
   const { snackbarVisible } = useSelector((store) => store.ninDataStore);
   const { snackbarMessage } = useSelector((store) => store.ninDataStore);
   const { gender } = useSelector((store) => store.ninDataStore);
+  console.log('logged date', gender);
   const { isLoading } = useSelector((store) => store.ninDataStore);
   const ninError = useSelector((store) => store.ninDataStore.error);
+  const { validationMode } = useSelector((store) => store.ninDataStore);
 
   const signatureDetails = makeSignature();
-
 
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [text, setText] = useState('');
-  // const [showDatePicker, setShowDatePicker] = useState(false); 
+  // const [showDatePicker, setShowDatePicker] = useState(false);
 
   const [noNinDob, setNoNinDob] = useState('');
 
   const maxDate = moment().subtract(18, 'years');
-
- 
-
 
   const showDatePicker = () => {
     setOpen(true);
@@ -103,7 +109,7 @@ function ContactInfo(props) {
   };
 
   const { agentType } = useSelector((store) => store.formDataStore.newAgent);
-   
+
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -114,13 +120,10 @@ function ContactInfo(props) {
   // useEffect to trigger action when ID reaches 14 characters
   useEffect(() => {
     if (id.length === 14 && phone.length === 10) {
-      const data = dispatch(fetchSmileData(smileData)); 
-      console.log('new name  ', data)
+      const data = dispatch(fetchSmileData(smileData));
+      console.log('new name  ', data);
     }
   }, [id, phone]);
-
-  
-
 
   return (
     <View style={[{ zIndex: 1 }, Styles.dropContainer]}>
@@ -148,7 +151,7 @@ function ContactInfo(props) {
               outlineColor={Color.blueMunsell}
               mode="outlined"
               label="Agent NIN"
-              value={id}
+              value={AgentNin || id}
               maxLength={14}
               // onChangeText={(id) => setId(id)}
               onChangeText={(text) => setId(text)}
@@ -195,7 +198,6 @@ function ContactInfo(props) {
             />
           </View>
 
-
           {isLoading && (
             <ActivityIndicator
               size="small"
@@ -208,18 +210,18 @@ function ContactInfo(props) {
             enableReinitialize={true}
             // validationSchema={validationSchema.contactInfoValidationSchema}
             initialValues={{
-              AgentName: agentName,
-              AgentNin: id,
-              DateOfBirth: '',
-              Email: '',
-              Sex: gender,
+              AgentName: AgentName || agentName,
+              AgentNin: AgentNin || id,
+              DateOfBirth: DateOfBirth || dateOfBirth,
+              Email: Email,
+              Sex: Sex || gender,
             }}
             onSubmit={(values) => {
-              if (ninError === null) {
+              if (validationMode === 'nin') {
                 dispatch(
                   addNewAgentFormData({
                     ...values,
-                    DateOfBirth: dob,
+                    DateOfBirth: dateOfBirth,
                     Sex: gender === 'M' ? 1 : 2,
                     isNinValidated: true,
                     NumberOfOutlets: agentType === 'Individual' ? 1 : undefined,
@@ -227,11 +229,12 @@ function ContactInfo(props) {
                       agentType === 'Individual' ? values.AgentName : undefined,
                   })
                 );
-              } else {
+              } else if (validationMode === 'phone') {
                 dispatch(
                   addNewAgentFormData({
                     ...values,
-                    DateOfBirth: new Date(noNinDob).toISOString(),
+                    DateOfBirth: values.DateOfBirth,
+                    Sex: values.Sex,
                     isNinValidated: false,
                     NumberOfOutlets: agentType === 'Individual' ? 1 : undefined,
                     DirectorName:
@@ -239,11 +242,11 @@ function ContactInfo(props) {
                   })
                 );
               }
-
+            
               onFormSubmit(); // Call the callback function from props
-
+            
               navigation.navigate(
-                agentType === 'Individual' ? 'AgentKyc' : 'CompanyInfo'
+                agentType === 'Individual' ? 'AgentKyc' : 'AgentKyc'
               );
             }}
           >
@@ -254,18 +257,38 @@ function ContactInfo(props) {
               values,
               handleChange,
               isValid,
+              
             }) => (
               <>
                 <Field
                   component={TextField}
                   name="AgentName"
-                  value={agentName}
-                  
+                  value={AgentName || agentName}
                   label="Agent Full Name *"
-                  editable={!ninError ? false : true}
+                  // editable={!ninError ? false : true}
                 />
 
-                {/* {ninError && ( */}
+                {validationMode === 'nin' && (
+                  <>
+                    <Field
+                      component={TextField}
+                      name="DateOfBirth"
+                      label="Date of Birth"
+                      value={DateOfBirth || dateOfBirth}
+                      editable={false}
+                    />
+
+                    <Field
+                      component={TextField}
+                      name="Sex"
+                      label="Gender"
+                      value={Sex || gender }
+                      editable={false}
+                    />
+                  </>
+                )}
+
+                {validationMode === 'phone' && (
                   <>
                     <TextInput
                       label="Date of Birth"
@@ -277,8 +300,7 @@ function ContactInfo(props) {
                       mode="outlined"
                       activeOutlineColor={Color.darkBlue}
                       style={Styles.textInput}
-                      // editable={!ninError === null}
-                    /> 
+                    />
                     {open && (
                       <DateTimePicker
                         value={date}
@@ -286,10 +308,8 @@ function ContactInfo(props) {
                         mode={'date'}
                         display={Platform.OS === 'ios' ? 'spinner' : 'default'}
                         onChange={onDateSelected}
-                        // editable={ninError === null}
-                        
                       />
-                      )} 
+                    )}
                     {text === '' && (
                       <Text style={Styles.errorText}>
                         {Messages.requiredMessage}
@@ -301,35 +321,16 @@ function ContactInfo(props) {
                       name="Sex"
                       label="Gender *"
                       data={genders}
+                      // value={gender}
                       onValueChange={handleChange('Sex')}
                       selectedValue={values.Sex}
                       onBlur={handleBlur('Sex')}
-                      editable={ninError === null}
                     />
                     {errors.Sex && (
                       <Text style={Styles.errorText}>{errors.Sex}</Text>
                     )}
                   </>
-                {/* )}
-
-                {!ninError && (
-                  <>
-                    <Field
-                      component={TextField}
-                      name="DateofBirth"
-                      label="Date of Birth"
-                      value={dateText}
-                      editable={ninError === null ? false : true}
-                    />
-
-                    <Field
-                      component={TextField}
-                      name="Sex"
-                      label="Gender"
-                      editable={ninError === null ? false : true}
-                    />
-                  </> */}
-                {/* )} */}
+                )}
 
                 {/* <Field
                   component={TextField}
