@@ -212,6 +212,11 @@ const getBSPApplications = async (
   setApproved,
   userDetails
 ) => {
+  let newApp = [];
+  let pendingRes = [];
+  let declinedRes = [];
+  let approvedRes = [];
+
   try {
     const res = await paypointAxios.get('/api/AgentApplic/GetBspApplications', {
       params: {
@@ -223,16 +228,11 @@ const getBSPApplications = async (
       },
     });
 
-    let resLength = res.data.response.length;
-    let docs = res.data.response;
-    console.info('REPORTS:', docs);
+    console.log('res here>>>', res)
 
-    // let newApp = [];
-    // let pendingRes = [];
-    // let declinedRes = [];
-    // let approvedRes = [];
+    if (res && res.data && res.data.response) {
+      let docs = res.data.response;
 
-    if (resLength > 0) {
       docs.forEach((doc) => {
         let currentStage = doc.CurrentStage;
         switch (currentStage) {
@@ -252,19 +252,23 @@ const getBSPApplications = async (
             break;
         }
       });
-      setNewReq(newApp.length.toString());
-      setPending(pendingRes.length.toString());
-      setDeclined(declinedRes.length.toString());
-      setApproved(approvedRes.length.toString());
-      //filter out pending and approved. push to the applications/reports store
+
+      setNewReq(newApp);
+      setPending(pendingRes);
+      setDeclined(declinedRes);
+      setApproved(approvedRes);
+
+      if (newApp.length === 0 && pendingRes.length === 0 && declinedRes.length === 0 && approvedRes.length === 0) {
+        alert('You have no application Records.');
+      }
     } else {
-      alert('You have no application Records.');
+      console.error('res.data or res.data.response is undefined');
     }
   } catch (error) {
     console.error(error);
   }
 
-  console.info('DECLINED HERE', declinedRes )
+  console.info('DECLINED HERE', declinedRes)
 };
 
 const getRegions = async (setRegionList) => {

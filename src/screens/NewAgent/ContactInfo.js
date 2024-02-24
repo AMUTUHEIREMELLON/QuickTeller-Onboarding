@@ -37,17 +37,29 @@ function ContactInfo(props) {
   const [id, setId] = useState('');
   const [phone, setPhone] = useState('');
   const [name, setName] = useState('');
+  // const [ValidationMode, setValidationMode] = useState('');
 
   const { newAgent } = useSelector((store) => store.formDataStore);
   const { AgentName } = useSelector((state) => state.formDataStore.newAgent);
-const { Email } = useSelector((state) => state.formDataStore.newAgent);
-const { Sex } = useSelector((state) => state.formDataStore.newAgent);
-const { DateOfBirth } = useSelector((state) => state.formDataStore.newAgent);
-const { AgentNin } = useSelector((state) => state.formDataStore.newAgent);
+  const { Email } = useSelector((state) => state.formDataStore.newAgent);
+  const { Sex } = useSelector((state) => state.formDataStore.newAgent);
+  const { DateOfBirth } = useSelector((state) => state.formDataStore.newAgent);
+  const { AgentNin } = useSelector((state) => state.formDataStore.newAgent);
+  const { Phone } = useSelector((store) => store.formDataStore.newAgent);
+  // const { validationMode: storedValidationMode } = useSelector((store) => store.formDataStore.newAgent);
+
+  // New useEffect
+  // useEffect(() => {
+  //   setValidationMode(storedValidationMode);
+  // }, []);
+
+
+
+
 
   const { agentName } = useSelector((store) => store.ninDataStore);
 
-  // console.log('logged data',  agentName)
+
 
   const { dateOfBirth } = useSelector((store) => store.ninDataStore);
 
@@ -188,7 +200,7 @@ const { AgentNin } = useSelector((state) => state.formDataStore.newAgent);
               mode="outlined"
               label="Phone"
               name="Phone"
-              value={phone}
+              value={Phone || phone}
               maxLength={10}
               // onChangeText={(id) => setId(id)}
               onChangeText={(text) => setPhone(text)}
@@ -215,36 +227,31 @@ const { AgentNin } = useSelector((state) => state.formDataStore.newAgent);
               DateOfBirth: DateOfBirth || dateOfBirth,
               Email: Email,
               Sex: Sex || gender,
+              Phone: Phone || phone,
             }}
             onSubmit={(values) => {
-              if (validationMode === 'nin') {
-                dispatch(
-                  addNewAgentFormData({
-                    ...values,
-                    DateOfBirth: dateOfBirth,
-                    Sex: gender === 'M' ? 1 : 2,
-                    isNinValidated: true,
-                    NumberOfOutlets: agentType === 'Individual' ? 1 : undefined,
-                    DirectorName:
-                      agentType === 'Individual' ? values.AgentName : undefined,
-                  })
-                );
-              } else if (validationMode === 'phone') {
-                dispatch(
-                  addNewAgentFormData({
-                    ...values,
-                    DateOfBirth: values.DateOfBirth,
-                    Sex: values.Sex,
-                    isNinValidated: false,
-                    NumberOfOutlets: agentType === 'Individual' ? 1 : undefined,
-                    DirectorName:
-                      agentType === 'Individual' ? values.AgentName : undefined,
-                  })
-                );
-              }
-            
+              dispatch(
+                addNewAgentFormData({
+                  ...values,
+                  Phone: values.Phone,
+                  DateOfBirth:
+                    validationMode === 'nin' ? dateOfBirth : values.DateOfBirth,
+                  Sex:
+                    validationMode === 'nin'
+                      ? gender === 'M'
+                        ? 1
+                        : 2
+                      : values.Sex,
+                  isNinValidated: validationMode === 'nin',
+                  NumberOfOutlets: agentType === 'Individual' ? 1 : undefined,
+                  DirectorName:
+                    agentType === 'Individual' ? values.AgentName : undefined,
+                  validationMode: validationMode,
+                })
+              );
+
               onFormSubmit(); // Call the callback function from props
-            
+
               navigation.navigate(
                 agentType === 'Individual' ? 'AgentKyc' : 'AgentKyc'
               );
@@ -257,7 +264,6 @@ const { AgentNin } = useSelector((state) => state.formDataStore.newAgent);
               values,
               handleChange,
               isValid,
-              
             }) => (
               <>
                 <Field
@@ -267,26 +273,6 @@ const { AgentNin } = useSelector((state) => state.formDataStore.newAgent);
                   label="Agent Full Name *"
                   // editable={!ninError ? false : true}
                 />
-
-                {validationMode === 'nin' && (
-                  <>
-                    <Field
-                      component={TextField}
-                      name="DateOfBirth"
-                      label="Date of Birth"
-                      value={DateOfBirth || dateOfBirth}
-                      editable={false}
-                    />
-
-                    <Field
-                      component={TextField}
-                      name="Sex"
-                      label="Gender"
-                      value={Sex || gender }
-                      editable={false}
-                    />
-                  </>
-                )}
 
                 {validationMode === 'phone' && (
                   <>
@@ -331,6 +317,70 @@ const { AgentNin } = useSelector((state) => state.formDataStore.newAgent);
                     )}
                   </>
                 )}
+
+                {validationMode === 'nin' && (
+                  <>
+                    <Field
+                      component={TextField}
+                      name="DateOfBirth"
+                      label="Date of Birth"
+                      value={DateOfBirth || dateOfBirth}
+                      editable={false}
+                    />
+
+                    <Field
+                      component={TextField}
+                      name="Sex"
+                      label="Gender"
+                      value={Sex || gender}
+                      editable={false}
+                    />
+                  </>
+                )}
+
+                {/* {validationMode === 'phone' && (
+                  <>
+                    <TextInput
+                      label="Date of Birth"
+                      name="DateOfBirth"
+                      value={text}
+                      onPressIn={showDatePicker}
+                      showSoftInputOnFocus={false}
+                      selectionColor={Color.silverChalice}
+                      mode="outlined"
+                      activeOutlineColor={Color.darkBlue}
+                      style={Styles.textInput}
+                    />
+                    {open && (
+                      <DateTimePicker
+                        value={date}
+                        maximumDate={new Date(maxDate)}
+                        mode={'date'}
+                        display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                        onChange={onDateSelected}
+                      />
+                    )}
+                    {text === '' && (
+                      <Text style={Styles.errorText}>
+                        {Messages.requiredMessage}
+                      </Text>
+                    )}
+
+                    <Field
+                      component={Select}
+                      name="Sex"
+                      label="Gender *"
+                      data={genders}
+                      // value={gender}
+                      onValueChange={handleChange('Sex')}
+                      selectedValue={values.Sex}
+                      onBlur={handleBlur('Sex')}
+                    />
+                    {errors.Sex && (
+                      <Text style={Styles.errorText}>{errors.Sex}</Text>
+                    )}
+                  </>
+                )} */}
 
                 {/* <Field
                   component={TextField}

@@ -3,7 +3,9 @@ import PageHeader from '../components/PageHeader';
 import { View, ScrollView, Text, StyleSheet } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 // import * as validationSchema from '../../validation/ValidationSchemas';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { clearNewAgentFormData } from '../redux/reducers/formSlice';
 
 import Styles from '../constants/Styles';
 import ContactInfo from './NewAgent/ContactInfo';
@@ -18,6 +20,14 @@ export default function DropdownForms() {
 
   const navigation = useNavigation();
   const route = useRoute();
+
+  const dispatch = useDispatch();
+
+useEffect(() => {
+  return () => {
+    dispatch(clearNewAgentFormData());
+  };
+}, []);
 
   return (
     <ScrollView>
