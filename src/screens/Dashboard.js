@@ -105,14 +105,14 @@ export default function Dashboard() {
               />
               <DashboardMenu
                 title="Reports"
-                subtitle="Lorem ipsum dolor sit amet"
+                subtitle="Insights and Analysis"
                 color={Color.newblue}
                 icon="finance"
                 onPress={() => navigation.navigate('Reports')}
               />
               <DashboardMenu
                 title="Card Onboarding"
-                subtitle="Lorem ipsum dolor sit amet"
+                subtitle="Register and Activate Your New Card"
                 color={Color.newblue}
                 icon="credit-card"
                 onPress={() => navigation.navigate('CardOnBoarding')}
@@ -120,7 +120,7 @@ export default function Dashboard() {
 
               <DashboardMenu
                 title="Logout"
-                subtitle="Lorem ipsum dolor sit amet"
+                subtitle="End Your Session"
 
                 color={Color.newblue}
                 icon="logout"

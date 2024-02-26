@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { View, Text, ScrollView, Pressable, StyleSheet  } from 'react-native';
+import { View, Text, ScrollView, Pressable, StyleSheet } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { ActivityIndicator } from "@react-native-material/core";
+import { ActivityIndicator } from '@react-native-material/core';
 import { TextInput } from 'react-native-paper';
 import moment from 'moment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -23,10 +23,10 @@ export default function Reports({ navigation }) {
   const [openTo, setOpenTo] = useState(false);
   const [toText, setToText] = useState('');
 
-  const [newReq, setNewReq] = useState('');
-  const [pending, setPending] = useState('');
-  const [approved, setApproved] = useState('');
-  const [declined, setDeclined] = useState('');
+  const [newReq, setNewReq] = useState([]);
+  const [pending, setPending] = useState([]);
+  const [approved, setApproved] = useState([]);
+  const [declined, setDeclined] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const [userDetails, setUserDetails] = useState(null);
@@ -66,6 +66,11 @@ export default function Reports({ navigation }) {
 
   const handleLoadReports = async () => {
     setLoading(true);
+    // Clear the arrays
+    setNewReq([]);
+    setPending([]);
+    setDeclined([]);
+    setApproved([]);
     try {
       await getBSPApplications(
         fromText,
@@ -77,13 +82,11 @@ export default function Reports({ navigation }) {
         userDetails
       );
     } catch (error) {
-      console.error("Error loading reports:", error);
+      console.error('Error loading reports:', error);
     } finally {
       setLoading(false);
     }
   };
-
-  
 
   return (
     <View style={Styles.mainContainer}>
@@ -154,17 +157,14 @@ export default function Reports({ navigation }) {
             // }
             title="Load Reports"
           />
-          {loading && (
-            <ActivityIndicator size="large" color={Color.darkBlue} />
-          )}
-
+          {loading && <ActivityIndicator size="large" color={Color.darkBlue} />}
 
           {newReq && (
             <ReportCard
               backgroundColor={Color.lightBlue}
               status="New"
               icon="account-check"
-              applications={newReq}
+              applications={newReq.length.toString()}
               onPress={() => navigation.navigate('NewReq')}
             />
           )}
@@ -173,7 +173,7 @@ export default function Reports({ navigation }) {
               backgroundColor={Color.yellow}
               status="Pending"
               icon="account-clock"
-              applications={pending}
+              applications={pending.length.toString()}
               onPress={() => navigation.navigate('PendingReq')}
             />
           )}
@@ -182,27 +182,25 @@ export default function Reports({ navigation }) {
               backgroundColor={Color.etonBlue}
               status="Approved"
               icon="account-check"
-              applications={approved}
+              applications={approved.length.toString()}
               onPress={() => navigation.navigate('ApprovedReq')}
-
             />
           )}
           {declined && (
-              <ReportCard
-                backgroundColor={Color.lightCoral}
-                status="Declined"
-                icon="account-cancel"
-                applications={declined}
-                onPress={() => navigation.navigate('DeclinedReq')}
-              />
-            
+            <ReportCard
+              backgroundColor={Color.lightCoral}
+              status="Declined"
+              icon="account-cancel"
+              applications={declined.length.toString()}
+              onPress={() =>
+                navigation.navigate('DeclinedReq', {
+                  declinedApplications: declined,
+                })
+              }
+            />
           )}
-
-        
         </ScrollView>
       </View>
     </View>
   );
 }
-
-

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { View, ScrollView, ActivityIndicator, Text } from 'react-native';
 import TopBar from '../../components/TopBar';
 import DeclinedCard from '../../components/DeclinedCard';
@@ -10,20 +10,19 @@ import axios from 'axios';
 
 export default function DeclinedReq() {
 
-
-
-
-
   const navigation = useNavigation();
+  const route = useRoute();
+  // Get the declinedApplications from the route parameters
+  const { declinedApplications } = route.params;
 
   return (
-    <View style={Styles.mainContainer}>
-      <TopBar title="Declined Applications" onPress={() => navigation.goBack()} />
+    <View style={Styles.declinedContainer}>
+      <TopBar title="Declined Applications"  onPress={() => navigation.goBack()} />
 
      
       
         <ScrollView>
-          {declinedRes.map((decline) => (
+          {declinedApplications.map((decline) => (
             <DeclinedCard
               key={decline.id}
               icon="account"
@@ -34,6 +33,7 @@ export default function DeclinedReq() {
               reason={<Text style={{ color: 'red' }}>{decline.Status}</Text>}
               date={decline.LogDate}
               nin={decline.AgentNin}
+              comment={decline.Memo}
               onPress={() => navigation.navigate('EditAgentKyc', { decline })}
             />
           ))}

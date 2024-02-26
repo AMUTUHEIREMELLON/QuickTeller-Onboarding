@@ -29,9 +29,9 @@ function CompanyInfo(props) {
   const { NumberOfOutlets } = useSelector(
     (state) => state.formDataStore.newAgent
   );
-  const { UraTin } = useSelector((state) => state.formDataStore.newAgent);
+  const { TIN_No } = useSelector((state) => state.formDataStore.newAgent);
 
-  const { NatureOfBusiness } = useSelector(
+  const { NatureofBusiness } = useSelector(
     (state) => state.formDataStore.newAgent
   );
 
@@ -48,9 +48,9 @@ function CompanyInfo(props) {
             validateOnBlur={true}
             initialValues={{
               DirectorName: DirectorName,
-              UraTin: UraTin,
+              TIN_No: TIN_No,
               NumberOfOutlets: NumberOfOutlets,
-              NatureOfBusiness: NatureOfBusiness,
+              NatureofBusiness: NatureofBusiness,
               IsLicensedBusiness: '',
             }}
             onSubmit={(values) => {
@@ -86,11 +86,11 @@ function CompanyInfo(props) {
                 <>
                   <Field
                     component={TextField}
-                    name="UraTin"
+                    name="TIN_No"
                     label="URA TIN (optional) *"
                     keyboardType="numeric"
                     maxLength={15}
-                    onChange={handleChange('UraTin')}
+                    onChange={handleChange('TIN_No')}
                   />
                   {/* <Field
                     component={TextField}
@@ -99,9 +99,9 @@ function CompanyInfo(props) {
                   /> */}
                   <Field
                     component={TextField}
-                    name="NatureOfBusiness"
+                    name="NatureofBusiness"
                     label="Nature Of Business"
-                    onChange={handleChange('NatureOfBusiness')}
+                    onChange={handleChange('NatureofBusiness')}
                   />
                   {/* <Field
                     component={Radio}

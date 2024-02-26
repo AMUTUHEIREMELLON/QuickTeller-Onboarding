@@ -32,9 +32,9 @@ function LocationInfo(props) {
   const { NumberOfYearsWorkingInArea } = useSelector((state) => state.formDataStore.newAgent);
   const { BuildingName } = useSelector((state) => state.formDataStore.newAgent);
   const { TypeofShop } = useSelector((state) => state.formDataStore.newAgent);
-const { RuralUrban } = useSelector((state) => state.formDataStore.newAgent);
+const { Area } = useSelector((state) => state.formDataStore.newAgent);
 const { ResidentinArea } = useSelector((state) => state.formDataStore.newAgent);
-const { Ownership } = useSelector((state) => state.formDataStore.newAgent);
+const { ShopOwnership } = useSelector((state) => state.formDataStore.newAgent);
 
   const handleDistrictChange = (value) => {
     setSelectedDistrict(value);
@@ -244,9 +244,9 @@ const { Ownership } = useSelector((state) => state.formDataStore.newAgent);
               LC: LC,
               NumberOfYearsWorkingInArea: NumberOfYearsWorkingInArea,
               TypeofShop: TypeofShop,
-              RuralUrban: RuralUrban,
+              Area: Area,
               ResidentinArea: ResidentinArea,
-              Ownership: Ownership,
+              ShopOwnership: ShopOwnership,
               // PostalAddress: '',
               // StreetName: '',
               BuildingName: BuildingName,
@@ -306,19 +306,19 @@ const { Ownership } = useSelector((state) => state.formDataStore.newAgent);
 
                 <Field
                   component={TextField}
-                  name="GPS_ Co_ordinates"
+                  name="GPS_Co_ordinates"
                   label="GPS Coordinates *"
                   editable={false}
                   value={location}
                 />
 
-                <Field
+                {/* <Field
                   component={TextField}
                   name="NumberOfYearsWorkingInArea"
                   label="Number of years working in area"
                   keyboardType="numeric"
                   onChange={handleChange('NumberOfYearsWorkingInArea')}
-                />
+                /> */}
                 {/* <Field
                   component={TextField}
                   name="PostalAddress"
@@ -352,12 +352,13 @@ const { Ownership } = useSelector((state) => state.formDataStore.newAgent);
                 <Field
                   component={Radio}
                   data={areas}
-                  onValueChange={handleChange('RuralUrban')}
+                  onValueChange={handleChange('Area')}
                   label="Area"
-                  value={values.RuralUrban}
+                  name="Area"
+                  value={values.Area}
                 />
-                {errors.RuralUrban && (
-                  <Text style={Styles.errorText}>{errors.RuralUrban}</Text>
+                {errors.Area && (
+                  <Text style={Styles.errorText}>{errors.Area}</Text>
                 )}
 
                 <Field
@@ -365,6 +366,7 @@ const { Ownership } = useSelector((state) => state.formDataStore.newAgent);
                   data={resident}
                   onValueChange={handleChange('ResidentinArea')}
                   label="Resident in Area"
+                  name="ResidentinArea"
                   value={values.ResidentinArea}
                 />
                 {errors.ResidentinArea && (
@@ -374,12 +376,13 @@ const { Ownership } = useSelector((state) => state.formDataStore.newAgent);
                 <Field
                   component={Radio}
                   data={ownership}
-                  onValueChange={handleChange('Ownership')}
+                  onValueChange={handleChange('ShopOwnership')}
                   label="Shop Ownership"
-                  value={values.Ownership}
+                  name="ShopOwnership"
+                  value={values.ShopOwnership}
                 />
-                {errors.Ownership && (
-                  <Text style={Styles.errorText}>{errors.Ownership}</Text>
+                {errors.ShopOwnership && (
+                  <Text style={Styles.errorText}>{errors.ShopOwnership}</Text>
                 )}
 
                 <Button

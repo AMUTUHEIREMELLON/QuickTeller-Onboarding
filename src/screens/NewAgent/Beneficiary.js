@@ -34,13 +34,13 @@ function Beneficiary(props) {
   const navigation = useNavigation();
 
   // const newAgent = useSelector(formDataSelector);
-  const { NameofBeneficiary } = useSelector(
+  const { NextofKin } = useSelector(
     (state) => state.formDataStore.newAgent
   );
-  const { BRelationship } = useSelector(
+  const { KinRelationship } = useSelector(
     (state) => state.formDataStore.newAgent
   );
-  const { BeneficiaryPhoneNumber } = useSelector(
+  const { KinPhoneNumber } = useSelector(
     (state) => state.formDataStore.newAgent
   );
   const { Residence } = useSelector((state) => state.formDataStore.newAgent);
@@ -54,10 +54,10 @@ function Beneficiary(props) {
           <Formik
             // initialValues={newAgent}
             initialValues={{
-              NameofBeneficiary: NameofBeneficiary,
+              NextofKin: NextofKin,
               Residence: Residence,
-              BeneficiaryPhoneNumber: BeneficiaryPhoneNumber,
-              BRelationship: BRelationship,
+              KinPhoneNumber: KinPhoneNumber,
+              KinRelationship: KinRelationship,
             }}
             onSubmit={(values) => {
               dispatch(addNewAgentFormData(values));
@@ -69,10 +69,10 @@ function Beneficiary(props) {
               <>
                 <Field
                   component={TextField}
-                  name="NameofBeneficiary"
+                  name="NextofKin"
                   label="Beneficiary/Next of Kin Full Name"
-                  // value={NameofBeneficiary || ''}
-                  onChange={handleChange('NameofBeneficiary')}
+                  // value={NextofKin || ''}
+                  onChange={handleChange('NextofKin')}
                 />
 
                 <Field
@@ -84,20 +84,20 @@ function Beneficiary(props) {
 
                 <Field
                   component={TextField}
-                  name="BeneficiaryPhoneNumber"
+                  name="KinPhoneNumber"
                   label="Phone Number (07-- --- ---)"
                   keyboardType="numeric"
-                  onChange={handleChange('BeneficiaryPhoneNumber')}
+                  onChange={handleChange('KinPhoneNumber')}
                 />
 
                 <Field
                   component={Select}
-                  name="BRelationship"
+                  name="KinRelationship"
                   label="Select Relationship"
                   data={relations}
-                  onValueChange={handleChange('BRelationship')}
-                  selectedValue={values.BRelationship}
-                  onBlur={handleBlur('BRelationship')}
+                  onValueChange={handleChange('KinRelationship')}
+                  selectedValue={values.KinRelationship}
+                  onBlur={handleBlur('KinRelationship')}
                 />
 
                 <Button

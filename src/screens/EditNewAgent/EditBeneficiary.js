@@ -38,10 +38,10 @@ function Beneficiary(props) {
         <ScrollView style={Styles.scrollviewStyle}>
           <Formik
             initialValues={{
-              NameofBeneficiary: decline.NameofBeneficiary,
+              NextofKin: decline.NextofKin,
               Residence: decline.Residence,
-              BeneficiaryPhoneNumber: decline.BeneficiaryPhoneNumber,
-              BRelationship: decline.BRelationship,
+              KinPhoneNumber: decline.KinPhoneNumber,
+              KinRelationship: decline.KinRelationship,
             }}
             onSubmit={(values) => {
               dispatch(addNewAgentFormData(values))
@@ -53,7 +53,7 @@ function Beneficiary(props) {
               <>
                 <Field
                   component={TextField}
-                  name="NameofBeneficiary"
+                  name="NextofKin"
                   label="Beneficiary/Next of Kin Full Name"
                 />
 
@@ -65,19 +65,19 @@ function Beneficiary(props) {
 
                 <Field
                   component={TextField}
-                  name="BeneficiaryPhoneNumber"
+                  name="KinPhoneNumber"
                   label="Phone Number (07-- --- ---)"
                   keyboardType="numeric"
                 />
 
                 <Field
                   component={Select}
-                  name="BRelationship"
+                  name="KinRelationship"
                   label="Select Relationship"
                   data={relations}
-                  onValueChange={handleChange('BRelationship')}
-                  selectedValue={values.BRelationship}
-                  onBlur={handleBlur('BRelationship')}
+                  onValueChange={handleChange('KinRelationship')}
+                  selectedValue={values.KinRelationship}
+                  onBlur={handleBlur('KinRelationship')}
                 />
 
                 <Button

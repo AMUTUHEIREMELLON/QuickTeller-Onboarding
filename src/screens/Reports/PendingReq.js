@@ -17,7 +17,7 @@ export default function DeclinedReq() {
   const navigation = useNavigation();
 
   return (
-    <View style={Styles.mainContainer}>
+    <View style={Styles.declinedContainer}>
       <TopBar title="Pending Applications" onPress={() => navigation.goBack()} />
 
      

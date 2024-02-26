@@ -41,7 +41,7 @@ function CompanyInfo(props) {
               DirectorName: decline.DirectorName,
               UraTin: decline.TIN_No,
               NumberOfOutlets: decline.NumberOfOutlets,
-              NatureOfBusiness: decline.NatureOfBusiness,
+              NatureOfBusiness: decline.NatureofBusiness,
               IsLicensedBusiness: decline.NumberOfOutlets,
             }}
             onSubmit={(values) => {
@@ -70,6 +70,7 @@ function CompanyInfo(props) {
                   name="NumberOfOutlets"
                   label="Number of Outlets"
                   keyboardType="numeric"
+                  onChange={handleChange('NumberOfOutlets')}
                 />
 
                 <>
