@@ -50,30 +50,39 @@ const styles = StyleSheet.create({
     width: '190%',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 15,
+    borderRadius: 8,
     margin: '5%',
-    padding: '10%',
+    padding: '5%',
     backgroundColor: '#FFFFFF',
+    borderColor: '#E1E6ED',
+    borderWidth: 1,
   },
   header: {
     flexDirection: 'row',
     marginBottom: 10,
-    width: 190,
+    width: 200,
+    marginRight: '47%',
   },
   body: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
+    
   },
   leftSubsection: {
     flexDirection: 'column',
     alignItems: 'flex-start',
+    marginRight: '30%',
   },
   rightSubsection: {
     flexDirection: 'column',
     alignItems: 'flex-start',
+    marginRight: '2%',
   },
   footer: {
     marginTop: 10,
+    flexDirection: 'row',
+    width: 200,
+    marginRight: '47%',
   },
   textStyle: {
     textAlign: 'left',

@@ -13,10 +13,10 @@ export default function TopBar(props) {
       color={
         title === "New Agent" || title === "Reports" || title === "Card OnBoarding"
           ? Color.blueMunsell
-          : Color.yellow
+          : Color.blueMunsell
       }
       tintColor={ 
-        title === "New Agent" || title === "Reports"  || title === "Card OnBoarding" ? "white" : Color.black
+        title === "New Agent" || title === "Reports"  || title === "Card OnBoarding" ? "white" : "white"
       }
       titleStyle={[Styles.avertaExtraBold, { fontSize: 18 }]}
       leading={(props) => (

@@ -13,7 +13,7 @@ export default function ReportCard(props) {
       style={{
         width: "100%",
         height: 120,
-        borderRadius: 30,
+        borderRadius: 10,
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: backgroundColor,

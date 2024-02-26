@@ -16,8 +16,8 @@ export default function DeclinedReq() {
   const { declinedApplications } = route.params;
 
   return (
-    <View style={Styles.mainContainer}>
-      <TopBar title="Declined Applications" onPress={() => navigation.goBack()} />
+    <View style={Styles.declinedContainer}>
+      <TopBar title="Declined Applications"  onPress={() => navigation.goBack()} />
 
      
       
@@ -33,6 +33,7 @@ export default function DeclinedReq() {
               reason={<Text style={{ color: 'red' }}>{decline.Status}</Text>}
               date={decline.LogDate}
               nin={decline.AgentNin}
+              // comment={decline.AgentNin}
               onPress={() => navigation.navigate('EditAgentKyc', { decline })}
             />
           ))}

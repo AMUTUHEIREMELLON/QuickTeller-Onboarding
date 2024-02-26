@@ -38,7 +38,7 @@ export default function EditLocationInfo(props) {
   // const { TypeofShop } = useSelector((state) => state.formDataStore.newAgent);
   // const { RuralUrban } = useSelector((state) => state.formDataStore.newAgent);
   // const { ResidentinArea } = useSelector((state) => state.formDataStore.newAgent);
-  // const { Ownership } = useSelector((state) => state.formDataStore.newAgent);
+  // const { ShopOwnership } = useSelector((state) => state.formDataStore.newAgent);
 
   const handleDistrictChange = (value) => {
     setSelectedDistrict(value);
@@ -252,7 +252,7 @@ export default function EditLocationInfo(props) {
               TypeofShop: decline.TypeofShop,
               RuralUrban: decline.RuralUrban,
               ResidentinArea: decline.ResidentinArea,
-              Ownership: decline.Ownership,
+              ShopOwnership: decline.ShopOwnership,
               // PostalAddress: '',
               // StreetName: '',
               BuildingName: decline.BuildingName,
@@ -390,12 +390,12 @@ export default function EditLocationInfo(props) {
                 <Field
                   component={Radio}
                   data={ownership}
-                  onValueChange={handleChange('Ownership')}
+                  onValueChange={handleChange('ShopOwnership')}
                   label="Shop Ownership"
-                  value={values.Ownership}
+                  value={values.ShopOwnership}
                 />
-                {errors.Ownership && (
-                  <Text style={Styles.errorText}>{errors.Ownership}</Text>
+                {errors.ShopOwnership && (
+                  <Text style={Styles.errorText}>{errors.ShopOwnership}</Text>
                 )}
 
                 <Button

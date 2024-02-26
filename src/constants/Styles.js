@@ -86,6 +86,12 @@ export default {
     // height: 1800,
   },
 
+  declinedContainer: {
+    marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    backgroundColor: 'white',
+    height: '100%',
+  },
+
   dropContainer: {
     marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     backgroundColor: 'white',
