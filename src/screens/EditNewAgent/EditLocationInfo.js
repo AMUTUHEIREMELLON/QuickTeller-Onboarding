@@ -370,7 +370,8 @@ export default function EditLocationInfo(props) {
                   data={areas}
                   onValueChange={handleChange('RuralUrban')}
                   label="Area"
-                  value={values.RuralUrban}
+                  value={values.ResidentinArea}
+                  
                 />
                 {errors.RuralUrban && (
                   <Text style={Styles.errorText}>{errors.RuralUrban}</Text>
@@ -382,6 +383,7 @@ export default function EditLocationInfo(props) {
                   onValueChange={handleChange('ResidentinArea')}
                   label="Resident in Area"
                   value={values.ResidentinArea}
+                  
                 />
                 {errors.ResidentinArea && (
                   <Text style={Styles.errorText}>{errors.ResidentinArea}</Text>

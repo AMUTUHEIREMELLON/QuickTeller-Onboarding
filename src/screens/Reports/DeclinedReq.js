@@ -33,7 +33,7 @@ export default function DeclinedReq() {
               reason={<Text style={{ color: 'red' }}>{decline.Status}</Text>}
               date={decline.LogDate}
               nin={decline.AgentNin}
-              // comment={decline.AgentNin}
+              comment={decline.Memo}
               onPress={() => navigation.navigate('EditAgentKyc', { decline })}
             />
           ))}

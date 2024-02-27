@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 8,
     margin: '5%',
-    padding: '5%',
+    padding: '10%',
     backgroundColor: '#FFFFFF',
     borderColor: '#E1E6ED',
     borderWidth: 1,
@@ -60,8 +60,9 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     marginBottom: 10,
-    width: 200,
-    marginRight: '47%',
+    width: 216,
+    marginRight: '43%',
+    // backgroundColor: 'blue',
   },
   body: {
     flexDirection: 'row',
