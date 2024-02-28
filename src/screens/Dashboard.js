@@ -105,14 +105,14 @@ export default function Dashboard() {
               />
               <DashboardMenu
                 title="Reports"
-                subtitle="Insights and Analysis"
+                subtitle="Insights, Status and Analysis of TDRs Agent applications       "
                 color={Color.newblue}
                 icon="finance"
                 onPress={() => navigation.navigate('Reports')}
               />
               <DashboardMenu
                 title="Card Onboarding"
-                subtitle="Register and Activate Your New Card"
+                subtitle="Register & Activate Your New Card"
                 color={Color.newblue}
                 icon="credit-card"
                 onPress={() => navigation.navigate('CardOnBoarding')}

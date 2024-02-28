@@ -67,7 +67,7 @@ function ContactInfo(props) {
   const { snackbarVisible } = useSelector((store) => store.ninDataStore);
   const { snackbarMessage } = useSelector((store) => store.ninDataStore);
   const { gender } = useSelector((store) => store.ninDataStore);
-  console.log('logged date', gender);
+  // console.log('logged date', gender);
   const { isLoading } = useSelector((store) => store.ninDataStore);
   const ninError = useSelector((store) => store.ninDataStore.error);
   const { validationMode } = useSelector((store) => store.ninDataStore);

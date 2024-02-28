@@ -22,6 +22,9 @@ const formDataSlice = createSlice({
     clearExistingAgentFormData: (state) => {
       state.existingAgent = {};
     },
+    addSignature: (state, action) => {
+      state.newAgent.signature = action.payload;
+    },
   },
 });
 
@@ -30,6 +33,7 @@ export const {
   addExistingAgentFormData,
   clearNewAgentFormData,
   clearExistingAgentFormData,
+  addSignature,
 } = formDataSlice.actions;
 
 export default formDataSlice.reducer;
