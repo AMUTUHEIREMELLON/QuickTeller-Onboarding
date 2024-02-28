@@ -9,7 +9,8 @@ import Button from '../../components/Button';
 
 import Styles from '../../constants/Styles';
 
-function Attach() {
+function Attach(props) {
+  const { onFormSubmit } = props;
   const route = useRoute();
   const navigation = useNavigation();
 
@@ -33,7 +34,7 @@ function Attach() {
   }, []);
 
   return (
-    <View style={Styles.mainContainer}>
+    <View style={Styles.dropContainer}>
       {/* <TopBar title="Attach Docs" onPress={() => navigation.goBack()} /> */}
       <View style={Styles.formContainer}>
         <Text style={Styles.h1}>Edit Documents</Text>
@@ -73,9 +74,10 @@ function Attach() {
 
           <Button
             style={Styles.nextButtonStyle}
-            onPress={() =>
+            onPress={() =>{ 
+              onFormSubmit();
               navigation.navigate('EditTerms')
-            }
+            }}
             title="Next"
           />
         </ScrollView>

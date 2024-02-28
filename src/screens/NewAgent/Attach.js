@@ -69,7 +69,7 @@ function Attach(props) {
         <ScrollView style={Styles.scrollviewStyle}>
           <Attachment
             attach="Outlet Photo *"
-            subtitle="Photo of building where premises are located. no more than 10MB"
+            subtitle="Photo of premises Location. No more than 10MB"
             fileData={{ ...newData }}
             fileName="OutletPhoto"
             // onUploadSuccess={() => handleFileUpload(0)}
@@ -88,21 +88,21 @@ function Attach(props) {
               fileName="TradingLicence"
             />
           )}
-          <Attachment
+          {/* <Attachment
             attach="Agent Signature *"
             fileData={{ ...newData }}
             fileName="SignedAgreementForm"
-          />
+          /> */}
           <Attachment
             attach="National ID *"
-            subtitle="Photo of the national ID both back and forth. no more than 10MB"
+            subtitle="Photo of the NIN both back and forth. no more than 10MB"
             fileData={{ ...newData }}
             fileName="OperatorNationalId"
             // onUploadSuccess={() => handleFileUpload(2)}
           />
           <Attachment
             attach="Bank/MM Statement *"
-            subtitle="Bank or mobile money statement, at least 4 months back."
+            subtitle="Bank or MobileMoney statement, from 4 months back."
             fileData={{ ...newData }}
             fileName="BankStatement"
             // onUploadSuccess={() => handleFileUpload(3)}
