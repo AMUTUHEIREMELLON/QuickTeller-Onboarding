@@ -9,10 +9,12 @@ import {
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import Color from '../constants/Colors';
-import SignatureCapture from './sign';
+import SignatureComponent from './sign';
+import { useDispatch } from 'react-redux';
+import { addSignature } from '../redux/reducers/formSlice';
 
 export default function ModalButton(props) {
-  const { onPress, style, icon, color, title, Content, onSave  } = props;
+  const { onPress, style, icon, color, title, Content, onSave } = props;
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -31,23 +33,29 @@ export default function ModalButton(props) {
             onPress={() => setModalOpen(false)}
           />
           <View style={styles.signatureContainer}>
-
-          <SignatureCapture onSave={onSave} closeModal={closeModal} />
+            <SignatureComponent
+              onSignature={(signature) => {
+                // Handle the signature
+                // console.log(signature);
+              }}
+              onClear={() => {
+                // Handle the clear event
+                // console.log('Signature cleared');
+              }}
+            />
           </View>
-          
         </View>
       </Modal>
 
       <View>
         <TouchableOpacity
-          
           onPress={() => {
             setModalOpen(true);
             // setIconColor('green');
           }}
         >
           <View style={styles.contactbtn}>
-            <View >
+            <View>
               <View style={styles.textContainer}>
                 <Text style={styles.textstyle}> {title}</Text>
               </View>
@@ -81,19 +89,18 @@ const styles = StyleSheet.create({
   contactbtn: {
     flexDirection: 'column',
     paddingRight: 50,
-    width: 210,
-    height: 48,
+    width: '55%',
+    height: 43,
     marginBottom: 5,
     marginTop: 30,
-    marginLeft: 85,
-    borderWidth: 2,
-    borderColor: '#E1E6ED',
-    backgroundColor: '#FFFF',
-    borderRadius: 16,
+    marginLeft: 81,
+    // borderWidth: 2,
+    // borderColor: '#E1E6ED',
+    // backgroundColor: '#FFFF',
+    borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: Color.darkBlue,
-
   },
 
   textContainer: {
@@ -111,18 +118,17 @@ const styles = StyleSheet.create({
   },
 
   textstyle: {
-    fontSize: 15,
-    fontWeight: 'bold',
+    fontSize: 16,
+    // fontWeight: 'bold',
     color: 'white',
     textAlign: 'justify',
-    fontFamily: 'AvertaRegular',
+    fontFamily: 'AvertaBold',
   },
 
   signatureContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginTop: 20,
+    // flex: 1,
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
-
-
 });

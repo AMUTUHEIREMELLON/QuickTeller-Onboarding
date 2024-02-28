@@ -1,57 +1,71 @@
 import React, { useRef } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Button, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import SignatureCanvas from 'react-native-signature-canvas';
+import Signature from 'react-native-signature-canvas';
+import { useDispatch } from 'react-redux';
+import { addSignature } from '../redux/reducers/formSlice';
+
 import Styles from '../constants/Styles';
 
-const SignatureCapture = ({ onSave }) => {
-    const signatureRef = useRef();
+const SignatureComponent = ({ onSignature, onClear }) => {
+  const ref = useRef();
+  const dispatch = useDispatch();
 
-  const handleSave = () => {
-    signatureRef.current.readSignature();
+  const handleSignature = (signature) => {
+    // console.log(signature);
+    dispatch(addSignature(signature));
+    onSignature(signature);
   };
 
-  const handleConfirm = (signature) => {
-    // Do something with the captured signature (e.g., save, send to server)
-    onSave(signature);
-    console.log('Saved Signature:', signature);
+  const handleClear = () => {
+    ref.current.clearSignature();
+    onClear();
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.signatureText}>Sign Here:</Text>
-      <SignatureCanvas
-        ref={signatureRef}
-        onOK={handleConfirm}
-        style={styles.signatureCanvas}
-      />
-      {/* <TouchableOpacity style={Styles.saveButton} onPress={handleSave}>
-        <Text style={styles.saveButtonText}>Save Signature</Text>
-      </TouchableOpacity> */}
+    <View>
+      <View style={styles.signature}>
+        <Signature 
+          ref={ref}
+          onOK={handleSignature}
+          descriptionText="Sign"
+        />
+      </View>
+      {/* <Button title="Clear" onPress={handleClear} /> */}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    padding: 16,
-  },
-  signatureText: {
-    fontSize: 14,
-    marginBottom: 8,
-  },
-  signatureCanvas: {
-    width: 350,
-    height: 100,
-    borderColor: "#E1E6ED",
-    borderWidth: 0,
-    borderRadius: 10,
-    elevation: 5,
-  },
-  saveButtonText: {
-    color: 'white',
-    fontSize: 16,
+  signature: {
+    width: '100%',
+    height: 400,
   },
 });
 
-export default SignatureCapture;
+export default SignatureComponent;
+
+// const styles = StyleSheet.create({
+//   container: {
+//     alignItems: 'center',
+//     padding: 16,
+//   },
+//   signatureText: {
+//     fontSize: 14,
+//     marginBottom: 8,
+//   },
+//   signatureCanvas: {
+//     width: 350,
+//     height: 100,
+//     borderColor: "#E1E6ED",
+//     borderWidth: 0,
+//     borderRadius: 10,
+//     elevation: 5,
+//   },
+//   saveButtonText: {
+//     color: 'white',
+//     fontSize: 16,
+//   },
+// });
+
+// export default SignatureCapture;

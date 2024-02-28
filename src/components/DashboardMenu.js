@@ -10,7 +10,7 @@ export default function DashboardMenu(props) {
     <Pressable onPress={onPress} style={[{ width: "50%" }, style]}>
       <Surface elevation={0} style={styles.surfaceStyle}>
       <View>
-        <Icon name={icon} color={color} size={40} />
+        <Icon name={icon} color={color} size={30} />
         <Text style={styles.textStyles}>{title}</Text>
         <Text style={styles.textStyle}>{subtitle}</Text>
       </View>

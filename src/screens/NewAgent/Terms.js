@@ -20,7 +20,7 @@ import Button from '../../components/Button';
 import { source } from '../../constants/T&C';
 import Color from './../../constants/Colors';
 import Styles from '../../constants/Styles';
-
+import SignatureComponent from '../../components/sign';
 import * as validationSchema from '../../validation/ValidationSchemas';
 
 import { postApplication } from '../../helpers/request';
@@ -147,7 +147,16 @@ function Terms() {
                   /> */}
 
                 <ModalButton title="Sign Here" onSave={handleSaveSignature} />
-
+                {/* <SignatureComponent 
+  onSignature={(signature) => {
+    // Handle the signature
+    console.log(signature);
+  }}
+  onClear={() => {
+    // Handle the clear event
+    console.log('Signature cleared');
+  }}
+/> */}
                 <Button
                   style={Styles.nextButtonStyle}
                   onPress={handleSubmit}
