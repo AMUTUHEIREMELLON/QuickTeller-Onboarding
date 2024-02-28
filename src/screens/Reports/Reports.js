@@ -165,7 +165,9 @@ export default function Reports({ navigation }) {
               status="New"
               icon="account-check"
               applications={newReq.length.toString()}
-              onPress={() => navigation.navigate('NewReq')}
+              onPress={() => navigation.navigate('NewReq', {
+                newApplications: newReq,
+              })}
             />
           )}
           {pending && (
@@ -174,7 +176,9 @@ export default function Reports({ navigation }) {
               status="Pending"
               icon="account-clock"
               applications={pending.length.toString()}
-              onPress={() => navigation.navigate('PendingReq')}
+              onPress={() => navigation.navigate('PendingReq', {
+                pendingApplications: pending,
+              })}
             />
           )}
           {approved && (
@@ -183,7 +187,9 @@ export default function Reports({ navigation }) {
               status="Approved"
               icon="account-check"
               applications={approved.length.toString()}
-              onPress={() => navigation.navigate('ApprovedReq')}
+              onPress={() => navigation.navigate('ApprovedReq', {
+                approvedApplications: approved,
+              })}
             />
           )}
           {declined && (
