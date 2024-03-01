@@ -32,7 +32,7 @@ export const fetchSmileData = createAsyncThunk(
           },
         }
       );
-      console.info('response here' ,response.data);
+      console.info('response here', response.data);
 
       return response.data;
     } catch (error) {
@@ -122,7 +122,7 @@ const smileDataSlice = createSlice({
       state.snackbarVisible = action.payload;
     },
     setValidationMode: (state, action) => { // New reducer to set validationMode
-      state.validationMode = action.payload;
+      state.validationMode = action.payload.request.validationMode;
     },
   },
   extraReducers: (builder) => {
@@ -132,31 +132,27 @@ const smileDataSlice = createSlice({
       })
       .addCase(fetchSmileData.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log('Fetching ', action.payload)
+        console.log('Fetching ', action.payload);
         if (action.payload.responseCode === 90000) {
-
           if (action.payload.response.validationMode === 'nin') {
-
-          state.dateOfBirth = action.payload.response.dateOfBirth;
-          state.dateText = new Date(state.dateOfBirth).toLocaleDateString();
-          state.agentName = action.payload.response.name;
-          state.gender = action.payload.response.gender;
-          state.validationMode = action.payload.response.validationMode;
-
-        }if (action.payload.response.validationMode === 'phone') {
-
-          // state.dob = action.payload.FullData.dateOfBirth;
-          // state.dateText = new Date(state.dob).toLocaleDateString();
-          state.agentName = action.payload.response.name;
-          // console.info('payload here', action.payload.response.name);
-          // state.gender = action.payload.Gender;
-        
-        }else {
-          state.snackbarMessage = 'action.payload.ResultText';
-          state.snackbarVisible = true;
-          state.error = 'action.payload.ResultTex';
+            state.dateOfBirth = action.payload.response.dateOfBirth;
+            state.dateText = new Date(state.dateOfBirth).toLocaleDateString();
+            state.agentName = action.payload.response.name;
+            state.gender = action.payload.response.gender;
+            state.validationMode = action.payload.response.validationMode;
+          }
+          else if (action.payload.response.validationMode === 'phone') {
+            // state.dob = action.payload.FullData.dateOfBirth;
+            // state.dateText = new Date(state.dob).toLocaleDateString();
+            state.agentName = action.payload.response.name;
+            // console.info('payload here', action.payload.response.name);
+            // state.gender = action.payload.Gender;
+          } else {
+            state.snackbarMessage = 'action.payload.ResultText';
+            state.snackbarVisible = true;
+            state.error = 'action.payload.ResultTex';
+          }
         }
-      }
       })
       .addCase(fetchSmileData.rejected, (state, action) => {
         state.isLoading = false;

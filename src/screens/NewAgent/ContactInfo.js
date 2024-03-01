@@ -220,7 +220,7 @@ function ContactInfo(props) {
 
           <Formik
             enableReinitialize={true}
-            // validationSchema={validationSchema.contactInfoValidationSchema}
+            validationSchema={validationSchema.contactInfoValidationSchema}
             initialValues={{
               AgentName: AgentName || agentName,
               AgentNin: AgentNin || id,
@@ -230,25 +230,51 @@ function ContactInfo(props) {
               Phone: Phone || phone,
             }}
             onSubmit={(values) => {
-              dispatch(
-                addNewAgentFormData({
-                  ...values,
-                  Phone: values.Phone,
-                  DateOfBirth:
-                    validationMode === 'nin' ? dateOfBirth : values.DateOfBirth,
-                  Sex:
-                    validationMode === 'nin'
-                      ? gender === 'M'
-                        ? 1
-                        : 2
-                      : values.Sex,
-                  isNinValidated: validationMode === 'nin',
-                  NumberOfOutlets: agentType === 'Individual' ? 1 : undefined,
-                  DirectorName:
-                    agentType === 'Individual' ? values.AgentName : undefined,
-                  validationMode: validationMode,
-                })
-              );
+              if (validationMode === 'nin') {
+                dispatch(
+                  addNewAgentFormData({
+                    ...values,
+                    Phone: values.Phone,
+                    DateOfBirth: dateOfBirth,
+                    Sex: gender === 'M' ? 1 : 2,
+                    isNinValidated: true,
+                    NumberOfOutlets: agentType === 'Individual' ? 1 : undefined,
+                    DirectorName:
+                      agentType === 'Individual' ? values.AgentName : undefined,
+                  })
+                );
+              } else {
+                dispatch(
+                  addNewAgentFormData({
+                    ...values,
+                    Phone: values.Phone,
+                    DateOfBirth: new Date(noNinDob).toISOString(),
+                    isNinValidated: false,
+                    NumberOfOutlets: agentType === 'Individual' ? 1 : undefined,
+                    DirectorName:
+                      agentType === 'Individual' ? values.AgentName : undefined,
+                  })
+                );
+              }
+              // dispatch(
+              //   addNewAgentFormData({
+              //     ...values,
+              //     Phone: values.Phone,
+              //     DateOfBirth:
+              //       validationMode === 'nin' ? dateOfBirth : values.DateOfBirth,
+              //     Sex:
+              //       validationMode === 'nin'
+              //         ? gender === 'M'
+              //           ? 1
+              //           : 2
+              //         : values.Sex,
+              //     isNinValidated: validationMode === 'nin',
+              //     NumberOfOutlets: agentType === 'Individual' ? 1 : undefined,
+              //     DirectorName:
+              //       agentType === 'Individual' ? values.AgentName : undefined,
+              //     validationMode: validationMode,
+              //   })
+              // );
 
               onFormSubmit(); // Call the callback function from props
 
@@ -274,7 +300,7 @@ function ContactInfo(props) {
                   // editable={!ninError ? false : true}
                 />
 
-                {validationMode === 'phone' && (
+                {validationMode === '' && (
                   <>
                     <TextInput
                       label="Date of Birth"
@@ -325,7 +351,7 @@ function ContactInfo(props) {
                       name="DateOfBirth"
                       label="Date of Birth"
                       value={DateOfBirth || dateOfBirth}
-                      editable={false}
+                      editable={validationMode === 'nin' ? false : true}
                     />
 
                     <Field
@@ -333,7 +359,7 @@ function ContactInfo(props) {
                       name="Sex"
                       label="Gender"
                       value={Sex || gender}
-                      editable={false}
+                      editable={validationMode === 'nin' ? false : true}
                     />
                   </>
                 )}
