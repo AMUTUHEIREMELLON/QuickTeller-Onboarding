@@ -46,7 +46,7 @@ function Beneficiary(props) {
             onSubmit={(values) => {
               dispatch(addNewAgentFormData(values))
               onFormSubmit()
-              navigation.navigate('EditAgentKyc')
+              navigation.navigate('EditAgentKyc', { decline })
             }}
           >
             {({ handleSubmit, handleChange, handleBlur, values }) => (

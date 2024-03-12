@@ -4,14 +4,15 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSelector } from 'react-redux';
 import TopBar from '../../components/TopBar';
-import Attachment from '../../components/Attachment';
+import EditAttachment from '../../components/EditAttachment';
 import Button from '../../components/Button';
 
 import Styles from '../../constants/Styles';
 
-function Attach(props) {
+function EditAttach(props) {
   const { onFormSubmit } = props;
   const route = useRoute();
+  const { decline } = route.params;  
   const navigation = useNavigation();
 
   const [userDetails, setUserDetails] = useState(null);
@@ -39,34 +40,34 @@ function Attach(props) {
       <View style={Styles.formContainer}>
         <Text style={Styles.h1}>Edit Documents</Text>
         <ScrollView style={Styles.scrollviewStyle}>
-          <Attachment
+          <EditAttachment
             attach="Outlet Photo *"
             fileData={{ ...newData }}
             fileName="OutletPhoto"
           />
-          <Attachment
+          <EditAttachment
             attach="Agent Photo *"
             fileData={{ ...newData }}
             fileName="AgentPassportPhoto"
           />
           {agentType === 'Business' && (
-            <Attachment
+            <EditAttachment
               attach="Trading License *"
               fileData={{ ...newData }}
               fileName="TradingLicence"
             />)
           }
-          <Attachment
+          <EditAttachment
             attach="Agent Signature *"
             fileData={{ ...newData }}
             fileName="SignedAgreementForm"
           />
-          <Attachment
+          <EditAttachment
             attach="National ID *"
             fileData={{ ...newData }}
             fileName="OperatorNationalId"
           />
-          <Attachment
+          <EditAttachment
             attach="Bank/MM Statement *"
             fileData={{ ...newData }}
             fileName="BankStatement"
@@ -76,7 +77,7 @@ function Attach(props) {
             style={Styles.nextButtonStyle}
             onPress={() =>{ 
               onFormSubmit();
-              navigation.navigate('EditTerms')
+              navigation.navigate('EditTerms', { decline })
             }}
             title="Next"
           />
@@ -86,4 +87,4 @@ function Attach(props) {
   );
 }
 
-export default Attach;
+export default EditAttach;

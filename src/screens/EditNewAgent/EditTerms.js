@@ -1,7 +1,7 @@
 import { Formik } from 'formik';
 import { View, ScrollView, useWindowDimensions } from 'react-native';
 import { RadioButton } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { Text } from '@react-native-material/core';
 import RenderHTML from 'react-native-render-html';
 import { useSelector, useDispatch } from 'react-redux';
@@ -16,10 +16,17 @@ import Styles from '../../constants/Styles';
 
 import * as validationSchema from '../../validation/ValidationSchemas';
 
-import { postApplication } from '../../helpers/request';
+import { EditApplication } from '../../helpers/request';
 import { clearNewAgentFormData } from '../../redux/reducers/formSlice';
 
 function Terms() {
+
+  const route = useRoute();
+  const { decline } = route.params;
+  const ApplicationId = decline.ApplicationId;
+
+  console.log('this is Decline:', decline); // Log decline
+
   const agreedOption = [{ key: '1', value: 'Agreed' }];
   const verifiedOption = [{ key: '1', value: 'Verified' }];
 
@@ -35,8 +42,8 @@ function Terms() {
 
     const user = JSON.parse(savedUser);
 
-    const finalFormData = { ...formData, ...values, ...user };
-    await postApplication(finalFormData);
+    const finalFormData = { ...formData, ...values, ...user, ApplicationId};
+    await EditApplication(finalFormData);
     dispatch(clearNewAgentFormData());
     navigation.navigate('Dashboard');
   };

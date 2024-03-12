@@ -29,6 +29,69 @@ const postApplication = async (data) => {
   }
 };
 
+const EditApplication = async (data) => {
+  console.log('this is ',  data);
+  try {
+    if (data) {
+      const res = await paypointAxios.post(
+        '/api/AgentApplic/EditApplication',
+        data
+      );
+      let statusCode = res.data.code || res.data.Code;
+      if (statusCode === '9000') {
+        alert(Messages.successMessage);
+        console.log(res.data);
+      } else {
+        alert(Messages.failMessage);
+        // alert(res.data.Message)
+        console.log(res.data);
+      }
+    }
+  } catch (error) {
+    console.error(error.response);
+    alert(Messages.failMessage);
+  }
+};
+
+// const EditApplication = async (data) => {
+//   try {
+//     if (data) {
+//       const res = await paypointAxios.post(
+//         '/api/AgentApplic/EditApplication',
+//         data
+//       );
+
+//       // Check if the response contains data
+//       if (res && res.data) {
+//         const { code, message, response } = res.data;
+
+//         if (code === '9000') {
+//           // Transaction Approved
+//           alert(Messages.successMessage);
+
+//           // Log the updated agent information
+//           console.log(response);
+
+//           // Optionally, you can update your UI with the updated agent information
+//           // For example:
+//           // setAgentInfo(response);
+
+//         } else {
+//           // Transaction Failed
+//           alert(Messages.failMessage);
+//         }
+//       } else {
+//         // Invalid response format
+//         alert('Invalid response from server');
+//       }
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     alert('Failed to update application');
+//   }
+// };
+
+
 const getAgent = async (
   agentID,
   setAgentName,
@@ -345,4 +408,5 @@ export {
   pendingRes,
   declinedRes,
   approvedRes,
+  EditApplication,
 };
