@@ -34,7 +34,7 @@ export default function DeclinedReq() {
               date={decline.LogDate}
               nin={decline.AgentNin}
               comment={decline.Memo}
-              onPress={() => navigation.navigate('EditAgentKyc', { decline })}
+              onPress={() => navigation.navigate('EditAgentType', { decline })}
             />
           ))}
         </ScrollView>

@@ -20,6 +20,7 @@ function Attach(props) {
 
   const formData = useSelector((store) => store.formDataStore.newAgent);
   const newData = { ...formData, ...userDetails };
+  console.log('your newData:', newData);
   const { agentType } = useSelector((store) => store.formDataStore.newAgent);
 
   const getUserDetails = async () => {
