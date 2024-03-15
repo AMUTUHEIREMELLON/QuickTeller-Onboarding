@@ -45,7 +45,7 @@ const createFormData = (doc, fileData, fileName) => {
 };
 
 export default function Attachment(props) {
-  const { attach, fileData, fileName, subtitle, id } = props;
+  const { attach, fileData, fileName, subtitle, id, onUploadComplete } = props;
   const [attached, setAttached] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false);
@@ -75,6 +75,7 @@ export default function Attachment(props) {
         if (resCode === statusCode) {
           console.log('Attach Response: ', res.data);
           setUploadSuccess(true);
+          onUploadComplete();
         } else {
           setUploadSuccess(false);
           alert(Messages.failMessage);
@@ -128,6 +129,16 @@ export default function Attachment(props) {
   //     const formData = createFormData(result);
   //     uploadFile(result, formData);
   //   }
+  // };
+
+  // Attachment.propTypes = {
+  //   // ... other propTypes
+  //   onUploadComplete: PropTypes.func,
+  // };
+  
+  // Attachment.defaultProps = {
+  //   // ... other defaultProps
+  //   onUploadComplete: () => {},
   // };
 
   return (

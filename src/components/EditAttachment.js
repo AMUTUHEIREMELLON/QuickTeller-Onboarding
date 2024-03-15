@@ -16,7 +16,7 @@ import { paypointAxios } from '../helpers/axiosConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { baseUrl } from '../helpers/config';
 
-const createFormData = (doc, fileData, fileName) => {
+const createFormData = (doc, fileData, fileName, onUploadComplete) => {
   const Region = fileData.Region;
   const BranchName = fileData.BranchName;
   const AgentName = fileData.AgentName;
@@ -77,9 +77,10 @@ export default function EditAttachment(props) {
         let resCode = res.data.code || res.data.Code;
         
         if (resCode === statusCode) {
-          console.log('Attach Response: ');
-          console.log('Attach Response: ', res.data);
+          // console.log('Attach Response: ');
+          // console.log('Attach Response: ', res.data);
           setUploadSuccess(true);
+          onUploadComplete();
         } else {
           setUploadSuccess(false);
           alert(Messages.failMessage);
