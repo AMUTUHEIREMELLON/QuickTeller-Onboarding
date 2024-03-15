@@ -16,6 +16,16 @@ function EditAttach(props) {
   const navigation = useNavigation();
 
   const [userDetails, setUserDetails] = useState(null);
+  const[uploadsComplete, setUploadsComplete] = useState({
+    OutletPhoto: false,
+    AgentPassportPhoto: false,
+    
+    OperatorNationalId: false,
+    BankStatement: false,
+  })
+  console.log('uploadsComplete:', uploadsComplete);
+
+
 
   const formData = useSelector(store => store.formDataStore.newAgent)
   const newData = { ...formData, ...userDetails };
@@ -35,6 +45,15 @@ function EditAttach(props) {
     getUserDetails();
   }, []);
 
+  const handleUploadComplete = (fileName) => {
+    console.log(`Upload complete for ${fileName}`);
+    setUploadsComplete(prevState => ({ ...prevState, [fileName]: true }));
+  };
+
+
+  const allUploadsComplete = Object.values(uploadsComplete).every(Boolean);
+  console.log('allUploadsComplete:', allUploadsComplete);
+
   return (
     <View style={Styles.dropContainer}>
       {/* <TopBar title="Attach Docs" onPress={() => navigation.goBack()} /> */}
@@ -45,11 +64,15 @@ function EditAttach(props) {
             attach="Outlet Photo *"
             fileData={{ ...newData }}
             fileName="OutletPhoto"
+            onUploadComplete={() => handleUploadComplete('OutletPhoto')}
+
           />
           <EditAttachment
             attach="Agent Photo *"
             fileData={{ ...newData }}
             fileName="AgentPassportPhoto"
+            onUploadComplete={() => handleUploadComplete('AgentPassportPhoto')}
+
           />
           {agentType === 'Business' && (
             <EditAttachment
@@ -62,16 +85,22 @@ function EditAttach(props) {
             attach="Agent Signature *"
             fileData={{ ...newData }}
             fileName="SignedAgreementForm"
+            onUploadComplete={() => handleUploadComplete('SignedAgreementForm')}
+
           />
           <EditAttachment
             attach="National ID *"
             fileData={{ ...newData }}
             fileName="OperatorNationalId"
+            onUploadComplete={() => handleUploadComplete('OperatorNationalId')}
+
           />
           <EditAttachment
             attach="Bank/MM Statement *"
             fileData={{ ...newData }}
             fileName="BankStatement"
+            onUploadComplete={() => handleUploadComplete('BankStatement')}
+
           />
 
           <Button
@@ -81,6 +110,7 @@ function EditAttach(props) {
               navigation.navigate('EditTerms', { decline })
             }}
             title="Next"
+            disabled={!allUploadsComplete}
           />
         </ScrollView>
       </View>
