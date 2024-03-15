@@ -19,6 +19,7 @@ function EditAttach(props) {
 
   const formData = useSelector(store => store.formDataStore.newAgent)
   const newData = { ...formData, ...userDetails };
+  console.log('MY newData:', newData);
   const { agentType } = useSelector((store) => store.formDataStore.newAgent)
 
   const getUserDetails = async () => {

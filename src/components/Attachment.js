@@ -26,6 +26,7 @@ const createFormData = (doc, fileData, fileName) => {
   const UserId = fileData.UserId;
   const InstName = fileData.InstName;
 
+
   const data = new FormData();
   data.append(fileName, {
     name: doc.name,

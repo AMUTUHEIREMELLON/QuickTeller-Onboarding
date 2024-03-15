@@ -25,7 +25,9 @@ const createFormData = (doc, fileData, fileName) => {
   const UploadedBy = fileData.Recruiter;
   const UserId = fileData.UserId;
   const InstName = fileData.InstName;
-  console.log('this is file:', fileData); // Log decline
+
+  console.log('this is fileData:', fileData);
+
   const data = new FormData();
   data.append(fileName, {
     name: doc.name,
@@ -70,8 +72,12 @@ export default function EditAttachment(props) {
             },
           }
         );
+
+        console.log('Attach Response: ', res.data);
         let resCode = res.data.code || res.data.Code;
+        
         if (resCode === statusCode) {
+          console.log('Attach Response: ');
           console.log('Attach Response: ', res.data);
           setUploadSuccess(true);
         } else {
@@ -195,3 +201,4 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
 });
+
