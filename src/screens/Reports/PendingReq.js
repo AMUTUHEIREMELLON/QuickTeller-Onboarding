@@ -25,7 +25,7 @@ export default function DeclinedReq() {
         <ScrollView>
           {pendingApplications.map((decline) => (
             <DeclinedCard
-              key={decline.id}
+              key={decline.AgentId}
               icon="account"
               color={Color.newblue}
               name={decline.AgentName}
