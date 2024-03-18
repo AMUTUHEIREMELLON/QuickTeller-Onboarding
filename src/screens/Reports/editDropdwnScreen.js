@@ -18,7 +18,7 @@ export default function EditDropdownForms() {
 
   const navigation = useNavigation();
   const route = useRoute();
-
+  const { decline } = route.params;
   return (
     <ScrollView>
       <View style={Styles.dropContainer}>
@@ -35,33 +35,33 @@ export default function EditDropdownForms() {
             <DropButton
               title="Contact Information"
               subtitle="Agents contact details"
-              form={<EditContactInfo />}
+              form={<EditContactInfo decline={decline}/>}
               onOpenModal={() => setModalOpen(true)} // Pass setModalOpen as a prop
             />
 
             <DropButton
               title="Company Information"
               subtitle="About the agent's company"
-              form={<EditCompanyInfo />}
+              form={<EditCompanyInfo decline={decline}/>}
               onOpenModal={() => setModalOpen(true)} // Pass setModalOpen as a prop
             />
 
             <DropButton
               title="Location Information"
               subtitle="Where is the agent location"
-              form={<EditLocationInfo />}
+              form={<EditLocationInfo decline={decline}/>}
             />
 
             <DropButton
               title="Next of Kin"
               subtitle="Agent Next of Kin contact"
-              form={<EditBeneficiary />}
+              form={<EditBeneficiary decline={decline}/>}
             />
 
             <DropButton
               title="Documentation"
               subtitle="Attach all relevant documents"
-              form={<EditAttach />}
+              form={<EditAttach decline={decline}/>}
             />
 
           </>

@@ -18,10 +18,11 @@ export default function NewAccount() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const route = useRoute();
-
-  const agentData = route.params;
-  const terminalDateOfRegistration = agentData.response.StageLastUpdatedOn;
-  const terminalAgentName = agentData.response.AgentName
+  const { decline } = route.params;
+  
+  // const agentData = route.params;
+  // const terminalDateOfRegistration = agentData.response.StageLastUpdatedOn;
+  // const terminalAgentName = agentData.response.AgentName
 
   const agentTypes = [
     { key: '1', value: 'Individual' },
@@ -37,18 +38,18 @@ export default function NewAccount() {
         <ScrollView style={Styles.scrollviewStyle}>
           <Formik
             enableReinitialize={true}
-            validationSchema={validationSchema.agentInfoValidationSchema}
+            // validationSchema={validationSchema.agentInfoValidationSchema}
             initialValues={{
-              terminalDateOfRegistration,
-              terminalAgentName,
+              terminalDateOfRegistration: decline.StageLastUpdatedOn,
+              // terminalAgentName,
             }}
-            onSubmit={() => {
-              let agentData = route.params;
-              console.info({ ...agentData });
-              console.log({ ...agentData.response });
-              console.log(agentData.response.ActivityStatus);
-              // dispatch(addNewAgentFormData({ ...values, ...agentData }))
-              navigation.navigate('EditContactInfo', { ...agentData });
+            onSubmit={(values) => {
+              const { ApplicationId } = decline;;
+              console.info({ ApplicationId });
+              
+              // console.log(agentData.response.ActivityStatus);
+              dispatch(addNewAgentFormData({ ...values, ApplicationId }))
+              navigation.navigate('EditAgentKyc', { decline });
             }}
           >
             {({ handleSubmit, errors, values, handleChange, isValid }) => (

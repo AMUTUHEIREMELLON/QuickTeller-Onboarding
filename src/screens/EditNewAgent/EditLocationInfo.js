@@ -259,7 +259,7 @@ export default function EditLocationInfo(props) {
             }}
             onSubmit={(values) => {
               dispatch(addNewAgentFormData(values));
-              navigation.navigate('EditAgentKyc');
+              navigation.navigate('EditAgentKyc', { decline });
               onFormSubmit(); // Call the callback function from props
             }}
           >

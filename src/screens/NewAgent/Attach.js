@@ -17,9 +17,21 @@ function Attach(props) {
   const navigation = useNavigation();
 
   const [userDetails, setUserDetails] = useState(null);
+  const[uploadsComplete, setUploadsComplete] = useState({
+    OutletPhoto: false,
+    AgentPassportPhoto: false,
+    
+    OperatorNationalId: false,
+    BankStatement: false,
+  })
+  console.log('uploadsComplete:', uploadsComplete);
+
+
+
 
   const formData = useSelector((store) => store.formDataStore.newAgent);
   const newData = { ...formData, ...userDetails };
+  console.log('your newData:', newData);
   const { agentType } = useSelector((store) => store.formDataStore.newAgent);
 
   const getUserDetails = async () => {
@@ -35,6 +47,14 @@ function Attach(props) {
     getUserDetails();
   }, []);
 
+  const handleUploadComplete = (fileName) => {
+    console.log(`Upload complete for ${fileName}`);
+    setUploadsComplete(prevState => ({ ...prevState, [fileName]: true }));
+  };
+
+  const allUploadsComplete = Object.values(uploadsComplete).every(Boolean);
+  console.log('allUploadsComplete:', allUploadsComplete);
+
   return (
     <View style={Styles.dropContainer}>
       {/* <TopBar title="New Agent" onPress={() => navigation.goBack()} /> */}
@@ -46,18 +66,21 @@ function Attach(props) {
             subtitle="Photo of premises Location. No more than 10MB"
             fileData={{ ...newData }}
             fileName="OutletPhoto"
+            onUploadComplete={() => handleUploadComplete('OutletPhoto')}
           />
           <Attachment
             attach="Agent Photo *"
             subtitle="Photo of the Agent. no more than 10MB"
             fileData={{ ...newData }}
             fileName="AgentPassportPhoto"
+            onUploadComplete={() => handleUploadComplete('AgentPassportPhoto')}
           />
           {agentType === 'Business' && (
             <Attachment
               attach="Trading License *"
               fileData={{ ...newData }}
               fileName="TradingLicence"
+              
             />
           )}
           {/* <Attachment
@@ -70,12 +93,14 @@ function Attach(props) {
             subtitle="Photo of the NIN both back and forth. no more than 10MB"
             fileData={{ ...newData }}
             fileName="OperatorNationalId"
+            onUploadComplete={() => handleUploadComplete('OperatorNationalId')}
           />
           <Attachment
             attach="Bank/MM Statement *"
             subtitle="Bank or MobileMoney statement, from 4 months back."
             fileData={{ ...newData }}
             fileName="BankStatement"
+            onUploadComplete={() => handleUploadComplete('BankStatement')}
           />
 
           <Button
@@ -87,6 +112,8 @@ function Attach(props) {
               
              }}
              title="Next"
+            disabled={!allUploadsComplete}
+             
           />
         </ScrollView>
       </View>

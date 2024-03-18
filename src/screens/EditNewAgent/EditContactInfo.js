@@ -79,7 +79,8 @@ export default function NewAccount(props) {
               // dispatch(addNewAgentFormData({ ...values, ...agentData }))
               // navigation.navigate('EditAttach', { ...agentData });
               onFormSubmit();
-              navigation.navigate('EditAgentKyc');
+              
+              navigation.navigate('EditAgentKyc', { decline });
             }}
           >
             {({

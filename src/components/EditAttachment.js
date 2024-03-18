@@ -16,16 +16,17 @@ import { paypointAxios } from '../helpers/axiosConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { baseUrl } from '../helpers/config';
 
-const createFormData = (doc, fileData, fileName) => {
+const createFormData = (doc, fileData, fileName, onUploadComplete) => {
   const Region = fileData.Region;
   const BranchName = fileData.BranchName;
   const AgentName = fileData.AgentName;
-  const TempUseSessionId = fileData.TempUseSessionId;
+  const ApplicationId = fileData.ApplicationId;
   const InstCode = fileData.InstitutionCode;
   const UploadedBy = fileData.Recruiter;
   const UserId = fileData.UserId;
   const InstName = fileData.InstName;
 
+  console.log('this is fileData:', fileData);
 
   const data = new FormData();
   data.append(fileName, {
@@ -36,7 +37,7 @@ const createFormData = (doc, fileData, fileName) => {
   data.append('Region', Region);
   data.append('BranchName', BranchName);
   data.append('AgentName', AgentName);
-  data.append('TempUseSessionId', TempUseSessionId);
+  data.append('ApplicationId', ApplicationId);
   data.append('InstCode', InstCode);
   data.append('UserId', UserId);
   data.append('UploadedBy', UploadedBy);
@@ -44,8 +45,8 @@ const createFormData = (doc, fileData, fileName) => {
   return data;
 };
 
-export default function Attachment(props) {
-  const { attach, fileData, fileName, subtitle, id, onUploadComplete } = props;
+export default function EditAttachment(props) {
+  const { attach, fileData, fileName, subtitle, id } = props;
   const [attached, setAttached] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false);
@@ -62,7 +63,7 @@ export default function Attachment(props) {
 
       if (result) {
         const res = await axios.post(
-          `${baseUrl}/AgentFile/uploadApplicationAttachment`,
+          `${baseUrl}/AgentFile/EditApplicationAttachment`,
           formData,
           {
             headers: {
@@ -71,9 +72,13 @@ export default function Attachment(props) {
             },
           }
         );
+
+        console.log('Attach Response: ', res.data);
         let resCode = res.data.code || res.data.Code;
+        
         if (resCode === statusCode) {
-          console.log('Attach Response: ', res.data);
+          // console.log('Attach Response: ');
+          // console.log('Attach Response: ', res.data);
           setUploadSuccess(true);
           onUploadComplete();
         } else {
@@ -129,16 +134,6 @@ export default function Attachment(props) {
   //     const formData = createFormData(result);
   //     uploadFile(result, formData);
   //   }
-  // };
-
-  // Attachment.propTypes = {
-  //   // ... other propTypes
-  //   onUploadComplete: PropTypes.func,
-  // };
-  
-  // Attachment.defaultProps = {
-  //   // ... other defaultProps
-  //   onUploadComplete: () => {},
   // };
 
   return (
@@ -207,3 +202,4 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
 });
+
