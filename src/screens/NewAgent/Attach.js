@@ -112,7 +112,7 @@ function Attach(props) {
               
              }}
              title="Next"
-            disabled={!allUploadsComplete}
+            // disabled={!allUploadsComplete}
              
           />
         </ScrollView>
