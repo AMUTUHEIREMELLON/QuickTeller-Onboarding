@@ -28,6 +28,7 @@
     "expo": "^47.0.13",
     "expo-dev-client": "~2.0.1",
     "expo-document-picker": "~11.0.1",
+    "expo-file-system": "~15.1.1",
     "expo-font": "~11.0.1",
     "expo-linking": "~3.3.1",
     "expo-location": "~15.0.1",
