@@ -96,9 +96,10 @@ function ContactInfo(props) {
   };
 
   const genders = [
-    { label: 'Male', value: '1' },
-    { label: 'Female', value: '2' },
-    { label: 'Not Applicable', value: '0' },
+    { label: 'Male', value: '0' },
+    { label: 'Female', value: '1' },
+    { label: 'Artificial Person', value: '2' },
+    { label: 'Unknown', value: '3' },
   ];
 
   const smileData = {
