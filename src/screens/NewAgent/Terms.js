@@ -12,7 +12,7 @@ import RenderHTML from 'react-native-render-html';
 import { useSelector, useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SignatureCapture from '../../components/sign';
-import ModalButton from '../../components/modal';
+// import ModalButton from '../../components/modal';
 
 import TopBar from '../../components/TopBar';
 import Button from '../../components/Button';
@@ -146,7 +146,7 @@ function Terms() {
                     }}
                   /> */}
 
-                <ModalButton title="Sign Here" onSave={handleSaveSignature} />
+                {/* <ModalButton title="Sign Here" onSave={handleSaveSignature} /> */}
                 {/* <SignatureComponent 
   onSignature={(signature) => {
     // Handle the signature
