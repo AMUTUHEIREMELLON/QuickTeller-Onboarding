@@ -50,7 +50,8 @@ const getEnvVars = () => {
   }
 };
 
-const env = __DEV__ ? ENV.dev : ENV.prod;
+// const env = __DEV__ ? ENV.dev : ENV.prod;
+const env = __DEV__ ? ENV.prod : ENV.dev;
 // const env = ENV.dev;
 
 export const {

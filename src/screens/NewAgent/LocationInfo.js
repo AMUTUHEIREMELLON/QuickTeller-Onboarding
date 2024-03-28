@@ -232,7 +232,7 @@ const { ShopOwnership } = useSelector((state) => state.formDataStore.newAgent);
         <ScrollView style={Styles.scrollviewStyle}>
           <Formik
             enableReinitialize={true}
-            // validationSchema={validationSchema.locationInfoValidationSchema}
+            validationSchema={validationSchema.locationInfoValidationSchema}
             validateOnBlur={true}
             validateOnMount={true}
             initialValues={{

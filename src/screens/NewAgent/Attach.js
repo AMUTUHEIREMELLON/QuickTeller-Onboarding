@@ -20,7 +20,8 @@ function Attach(props) {
   const[uploadsComplete, setUploadsComplete] = useState({
     OutletPhoto: false,
     AgentPassportPhoto: false,
-    
+    SignedAgreementForm: false,
+    TDRSignedAgreementForm: false,
     OperatorNationalId: false,
     BankStatement: false,
   })
@@ -83,11 +84,20 @@ function Attach(props) {
               
             />
           )}
-          {/* <Attachment
+          <Attachment
             attach="Agent Signature *"
+            subtitle="Photo of Agent signature"
             fileData={{ ...newData }}
             fileName="SignedAgreementForm"
-          /> */}
+            onUploadComplete={() => handleUploadComplete('SignedAgreementForm')}
+          />
+          <Attachment
+            attach="TDR Signature *"
+            subtitle="Photo of TDR signature"
+            fileData={{ ...newData }}
+            fileName="TDRSignedAgreementForm"
+            onUploadComplete={() => handleUploadComplete('TDRSignedAgreementForm')}
+          />
           <Attachment
             attach="National ID *"
             subtitle="Photo of the NIN both back and forth. no more than 10MB"

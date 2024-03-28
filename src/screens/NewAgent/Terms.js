@@ -146,7 +146,7 @@ function Terms() {
                     }}
                   /> */}
 
-                <ModalButton title="Sign Here" onSave={handleSaveSignature} />
+                {/* <ModalButton title="Sign Here" onSave={handleSaveSignature} /> */}
                 {/* <SignatureComponent 
   onSignature={(signature) => {
     // Handle the signature
